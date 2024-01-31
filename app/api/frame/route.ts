@@ -6,7 +6,7 @@ import { getFrameAccountAddress } from "@coinbase/onchainkit";
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
-  let mintedNFT: boolean = false;
+  let mintedNFT;
 
   const searchParams = req.nextUrl.searchParams;
   const imageSearch = searchParams.get("image") || "";
@@ -17,7 +17,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // redirect to Lenspost
   console.log("mintedNFT-> ", mintedNFT);
-  if (mintedNFT) {
+  if (true) {
     console.log("redirecting to Lenspost");
     return NextResponse.redirect("https://app.lenspost.xyz", {
       status: 302,
