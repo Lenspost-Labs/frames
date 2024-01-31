@@ -5,36 +5,36 @@ import { APP_URL } from "@/constants";
 import { getFrameAccountAddress } from "@coinbase/onchainkit";
 
 // Based on https://github.com/coinbase/build-onchain-apps/blob/b0afac264799caa2f64d437125940aa674bf20a2/template/app/api/frame/route.ts#L13
-async function getAddrByFid(fid: number) {
-  console.log("Extracting address for FID: ", fid);
-  const options = {
-    method: "GET",
-    url: `https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`,
-    headers: {
-      accept: "application/json",
-      api_key: process.env.NEYNAR_API_KEY || "",
-    },
-  };
-  console.log("Fetching user address from Neynar API");
-  const resp = await fetch(options.url, { headers: options.headers });
-  console.log("Response: ", resp);
-  const responseBody = await resp.json(); // Parse the response body as JSON
+// async function getAddrByFid(fid: number) {
+//   console.log("Extracting address for FID: ", fid);
+//   const options = {
+//     method: "GET",
+//     url: `https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`,
+//     headers: {
+//       accept: "application/json",
+//       api_key: process.env.NEYNAR_API_KEY || "",
+//     },
+//   };
+//   console.log("Fetching user address from Neynar API");
+//   const resp = await fetch(options.url, { headers: options.headers });
+//   console.log("Response: ", resp);
+//   const responseBody = await resp.json(); // Parse the response body as JSON
 
-  if (responseBody.users) {
-    const userVerifications = responseBody.users[0];
+//   if (responseBody.users) {
+//     const userVerifications = responseBody.users[0];
 
-    if (userVerifications.verifications) {
-      console.log(
-        "User address from Neynar API: ",
-        userVerifications.verifications[0]
-      );
-      return userVerifications.verifications[0].toString();
-      // 0x855c4e93109fecaf0bc139aa6d4328b485caca09
-    }
-  }
-  console.log("Could not fetch user address from Neynar API for FID: ", fid);
-  return "0x0000000000000000000000000000000000000000";
-}
+//     if (userVerifications.verifications) {
+//       console.log(
+//         "User address from Neynar API: ",
+//         userVerifications.verifications[0]
+//       );
+//       return userVerifications.verifications[0].toString();
+//       // 0x855c4e93109fecaf0bc139aa6d4328b485caca09
+//     }
+//   }
+//   console.log("Could not fetch user address from Neynar API for FID: ", fid);
+//   return "0x0000000000000000000000000000000000000000";
+// }
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -46,20 +46,30 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
-  // @ts-ignore
-  const fid = req?.body?.untrustedData?.fid;
-  const addressFromFid = await getAddrByFid(fid);
-
-  if (!addressFromFid) {
-    console.log("Could not find user address");
-    btnText = "Could not find user address";
-    return new NextResponse(`
-        <!DOCTYPE html><html><head>
-        <meta property="fc:frame" content="vNext" />
-        <meta property="fc:frame:image" content="${imageUrl}" />
-        <meta property="fc:frame:button:1" content="${btnText}" />
-      </head></html>`);
+  let accountAddress: string | undefined = "";
+  try {
+    const body: { trustedData?: { messageBytes?: string } } = await req.json();
+    accountAddress = await getFrameAccountAddress(body, {
+      NEYNAR_API_KEY: process.env.NEYNAR_API_KEY || "",
+    });
+  } catch (err) {
+    console.error("Error getting account address: ", err);
   }
+
+  // @ts-ignore
+  //   const fid = req?.body?.untrustedData?.fid;
+  //   const addressFromFid = await getAddrByFid(fid);
+
+  //   if (!addressFromFid) {
+  //     console.log("Could not find user address");
+  //     btnText = "Could not find user address";
+  //     return new NextResponse(`
+  //         <!DOCTYPE html><html><head>
+  //         <meta property="fc:frame" content="vNext" />
+  //         <meta property="fc:frame:image" content="${imageUrl}" />
+  //         <meta property="fc:frame:button:1" content="${btnText}" />
+  //       </head></html>`);
+  //   }
 
   console.log("Extracted address from FID-> ", addressFromFid);
 
