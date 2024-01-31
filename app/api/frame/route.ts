@@ -13,7 +13,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const tokenUri = searchParams.get("tokenUri") || "";
 
   console.log("req.body-> ", req.body);
-  
+
   try {
     const body: { trustedData?: { messageBytes?: string } } = await req.json();
     accountAddress = await getFrameAccountAddress(body, {
@@ -74,7 +74,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
-        <meta name="fc:frame:button:2:post_redirect" content="Check Lenspost">
+        <meta property="fc:frame:button:2:post_redirect" content="Check Lenspost">
       </head></html>
         `);
   } catch (error) {

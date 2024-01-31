@@ -9,16 +9,7 @@ const imageUrl =
 const tokenUri = "wow";
 
 const frameMetadata = getFrameMetadata({
-  buttons: [
-    {
-      label: 'Click Me',
-      action: "post"
-    },
-    {
-      label: "Go to lenspost",
-      action: "post_redirect",
-    }
-  ] as any,
+  buttons: ["Mint"] as any,
   image: imageUrl,
   post_url: `${APP_URL}/api/frame?image=${encodeURIComponent(
     imageUrl
