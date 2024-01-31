@@ -6,10 +6,14 @@ import { APP_URL } from "@/constants";
 const imageUrl =
   "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
 
+const tokenUri = "wow";
+
 const frameMetadata = getFrameMetadata({
   buttons: ["Mint"] as any,
   image: imageUrl,
-  post_url: `${APP_URL}/api/frame`,
+  post_url: `${APP_URL}/api/frame?image=${encodeURIComponent(
+    imageUrl
+  )}&tokenUri="${tokenUri}"`,
 });
 
 export const metadata: Metadata = {
