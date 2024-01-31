@@ -1,1 +1,1 @@
-export const APP_URL = "https://fc-frames-starters131.vercel.app";
+export const APP_URL = "https://fc-frames-starters133.vercel.app";
