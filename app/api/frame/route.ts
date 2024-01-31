@@ -14,6 +14,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
+  // redirect to Lenspost
+  if (req.url.includes("?redirect=true")) {
+    console.log("redirecting to Lenspost");
+
+    return NextResponse.redirect("https://lenspost.app", {
+      status: 302,
+    });
+  }
+
   try {
     const body: { trustedData?: { messageBytes?: string } } = await req.json();
     accountAddress = await getFrameAccountAddress(body, {
@@ -27,7 +36,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="${imageUrl}" />
           <meta property="fc:frame:button:1" content="${btnText}" />
-          <meta name="fc:frame:post_url" content="">
+          <meta name="fc:frame:post_url" content="none">
         </head></html>`);
   }
 
@@ -74,8 +83,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
-        <meta name="fc:frame:post_url" content="">
-        <meta name="fc:frame:button:2:action" content="https://lenspost.xyz/">
+        <meta name="fc:frame:button:2:action" content="post_redirect">
+        <meta name="fc:frame:post_url" content="none">
       </head></html>
         `);
   } catch (error) {
@@ -86,7 +95,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     <meta property="fc:frame" content="vNext" />
     <meta property="fc:frame:image" content="${imageUrl}" />
     <meta property="fc:frame:button:1" content="${btnText}" />
-    <meta name="fc:frame:post_url" content="">
+    <meta name="fc:frame:post_url" content="none">
   </head></html>
     `);
   }
