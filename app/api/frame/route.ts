@@ -84,7 +84,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
         <meta name="fc:frame:button:2:action" content="post_redirect">
-        <meta name="fc:frame:post_url" content="none">
       </head></html>
         `);
   } catch (error) {
