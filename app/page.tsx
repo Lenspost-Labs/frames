@@ -9,7 +9,7 @@ const imageUrl =
 const tokenUri = "wow";
 
 const frameMetadata = getFrameMetadata({
-  buttons: ["Mint", "Share", "Buy", "Sell"],
+  buttons: ["Mint"],
   image: imageUrl,
   post_url: `${APP_URL}/api/frame?image=${encodeURIComponent(
     imageUrl
