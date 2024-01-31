@@ -115,11 +115,11 @@ async function postResponse(req: NextRequest): Promise<NextResponse> {
   }
 }
 
-export async function POST(req: NextRequest): Promise<Response> {
-  return postResponse(req);
-}
+// export async function POST(req: NextRequest): Promise<Response> {
+//   return postResponse(req);
+// }
 
-export async function GET(req: NextRequest): Promise<Response> {
+export async function POST(req: NextRequest): Promise<Response> {
   let btnText = "Mint";
   const APP_URL = "https://frames-lenspost.vercel.app";
 
