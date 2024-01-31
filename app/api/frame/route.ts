@@ -13,16 +13,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const tokenUri = searchParams.get("tokenUri") || "";
 
   console.log("req.body-> ", req.body);
-
-  // redirect to Lenspost
-  if (req.url.includes("?redirect=true")) {
-    console.log("redirecting to Lenspost");
-
-    return NextResponse.redirect("https://lenspost.app", {
-      status: 302,
-    });
-  }
-
+  
   try {
     const body: { trustedData?: { messageBytes?: string } } = await req.json();
     accountAddress = await getFrameAccountAddress(body, {
