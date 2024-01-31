@@ -20,9 +20,8 @@ export const metadata: Metadata = {
   title: "Frames Lenspost",
   description: "Share farcater frames from Lenspost",
   openGraph: {
-    title: "Land, Sea, and Sky",
-    description:
-      "A complex, fully onchain NFT, minted exclusively from a Frame!",
+    title: "Frames Lenspost",
+    description: "Share farcater frames from Lenspost",
     images: [imageUrl],
   },
   other: {

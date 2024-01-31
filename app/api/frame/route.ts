@@ -27,6 +27,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="${imageUrl}" />
           <meta property="fc:frame:button:1" content="${btnText}" />
+          <meta name="fc:frame:post_url" content="">
         </head></html>`);
   }
 
@@ -73,6 +74,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
+        <meta name="fc:frame:post_url" content="">
+        <meta name="fc:frame:button:2:action" content="https://lenspost.xyz/">
       </head></html>
         `);
   } catch (error) {
@@ -83,6 +86,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     <meta property="fc:frame" content="vNext" />
     <meta property="fc:frame:image" content="${imageUrl}" />
     <meta property="fc:frame:button:1" content="${btnText}" />
+    <meta name="fc:frame:post_url" content="">
   </head></html>
     `);
   }
