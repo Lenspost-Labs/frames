@@ -34,109 +34,101 @@ async function getAddrByFid(fid: number) {
   return "0x0000000000000000000000000000000000000000";
 }
 
-async function postResponse(req: NextRequest): Promise<NextResponse> {
+async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText;
+  const APP_URL = "https://frame-example.vercel.app";
 
   const searchParams = req.nextUrl.searchParams;
   const imageUrl = searchParams.get("image") || "";
   const tokenUri = searchParams.get("tokenUri") || "";
 
-  console.log("req.body-> ", req.body);
+  if (req?.method === "POST") {
+    console.log("req.body-> ", req.body);
 
-  // @ts-ignore
-  const fid = req?.body?.untrustedData?.fid;
-  const addressFromFid = await getAddrByFid(fid);
+    // @ts-ignore
+    const fid = req?.body?.untrustedData?.fid;
+    const addressFromFid = await getAddrByFid(fid);
 
-  if (!addressFromFid) {
-    btnText = "Could not find user address";
-    return new NextResponse(`
+    if (!addressFromFid) {
+      btnText = "Could not find user address";
+      return new NextResponse(`
         <!DOCTYPE html><html><head>
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
       </head></html>`);
-  }
+    }
 
-  console.log("Extracted address from FID-> ", addressFromFid);
+    console.log("Extracted address from FID-> ", addressFromFid);
 
-  try {
-    // ----- NFT minting logic goes here -----
+    try {
+      // ----- NFT minting logic goes here -----
 
-    // Wallet private key
-    const privateKey = process.env.WALLET_PRIVATE_KEY || "";
+      // Wallet private key
+      const privateKey = process.env.WALLET_PRIVATE_KEY || "";
 
-    // Contract address
-    const contractAddress = "0x364fEa7309c2364453C01Adcba2058BAF9747A13";
+      // Contract address
+      const contractAddress = "0x364fEa7309c2364453C01Adcba2058BAF9747A13";
 
-    // Network provider (e.g., Infura)
-    const provider = new ethers.JsonRpcProvider(
-      "https://polygon-mumbai.infura.io/v3/204efb1ccc384775857ef27ec34795e8"
-    );
+      // Network provider (e.g., Infura)
+      const provider = new ethers.JsonRpcProvider(
+        "https://polygon-mumbai.infura.io/v3/204efb1ccc384775857ef27ec34795e8"
+      );
 
-    // Wallet instance
-    const wallet = new ethers.Wallet(privateKey, provider);
+      // Wallet instance
+      const wallet = new ethers.Wallet(privateKey, provider);
 
-    // Contract instance
-    const contract = new ethers.Contract(contractAddress, abi, wallet);
+      // Contract instance
+      const contract = new ethers.Contract(contractAddress, abi, wallet);
 
-    // Address to mint the NFT to
-    const toAddress = addressFromFid;
+      // Address to mint the NFT to
+      const toAddress = addressFromFid;
 
-    // Token URI
-    const tokenURI = tokenUri;
+      // Token URI
+      const tokenURI = tokenUri;
 
-    // Mint NFT
-    const tx = await contract.mint(toAddress, tokenURI);
+      // Mint NFT
+      const tx = await contract.mint(toAddress, tokenURI);
 
-    // Wait for the transaction to be mined
-    await tx.wait();
+      // Wait for the transaction to be mined
+      await tx.wait();
 
-    console.log("NFT minted successfully!", tx);
+      console.log("NFT minted successfully!", tx);
 
-    btnText = "NFT minted successfully!";
+      btnText = "NFT minted successfully!";
 
-    return new NextResponse(`
+      return new NextResponse(`
         <!DOCTYPE html><html><head>
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
       </head></html>
         `);
-  } catch (error) {
-    console.log("Error minting NFT-> ", error);
-    btnText = "Error minting NFT";
+    } catch (error) {
+      console.log("Error minting NFT-> ", error);
+      btnText = "Error minting NFT";
+      return new NextResponse(`
+    <!DOCTYPE html><html><head>
+    <meta property="fc:frame" content="vNext" />
+    <meta property="fc:frame:image" content="${imageUrl}" />
+    <meta property="fc:frame:button:1" content="${btnText}" />
+  </head></html>
+    `);
+    }
+  } else {
+    btnText = "Mint NFT";
     return new NextResponse(`
     <!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
     <meta property="fc:frame:image" content="${imageUrl}" />
     <meta property="fc:frame:button:1" content="${btnText}" />
-  </head></html>
-    `);
+    <meta property="fc:frame:post_url" content="${APP_URL}/api/frame" />
+  </head></html>`);
   }
 }
 
-// export async function POST(req: NextRequest): Promise<Response> {
-//   return postResponse(req);
-// }
-
 export async function POST(req: NextRequest): Promise<Response> {
-  let btnText = "Mint";
-  const APP_URL = "https://frames-lenspost.vercel.app";
-
-  const searchParams = req.nextUrl.searchParams;
-  const imageUrl =
-    searchParams.get("image") ||
-    "https://frames-lenspost.vercel.app/api/frame?image=https://images.unsplash.com/photo-1683009427513-28e163402d16?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&tokenUri=%22wow";
-  const tokenUri = searchParams.get("tokenUri") || "";
-
-  return new NextResponse(`
-    <!DOCTYPE html><html><head>
-    <meta property="fc:frame" content="vNext" />
-    <meta property="fc:frame:image" content="${imageUrl}" />
-    <meta property="fc:frame:button:1" content="${btnText}" />
-    <meta name="fc:frame:post_url" content="${APP_URL}/api/frame?image=${imageUrl}&tokenUri=${tokenUri}" />
-  </head></html>
-    `);
+  return getResponse(req);
 }
 
 export const dynamic = "force-dynamic";
