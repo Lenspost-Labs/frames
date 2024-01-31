@@ -16,7 +16,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("req.body-> ", req.body);
 
   // redirect to Lenspost
+  console.log("mintedNFT-> ", mintedNFT);
   if (mintedNFT) {
+    console.log("redirecting to Lenspost");
     return NextResponse.redirect("https://app.lenspost.xyz", {
       status: 302,
     });
