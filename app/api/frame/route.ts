@@ -71,7 +71,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //       </head></html>`);
   //   }
 
-  console.log("Extracted address from FID-> ", addressFromFid);
+  console.log("Extracted address from FID-> ", accountAddress);
 
   try {
     // ----- NFT minting logic goes here -----
