@@ -6,6 +6,7 @@ import { getFrameAccountAddress } from "@coinbase/onchainkit";
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
+  let mintedNFT: boolean = false;
 
   const searchParams = req.nextUrl.searchParams;
   const imageSearch = searchParams.get("image") || "";
@@ -15,10 +16,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("req.body-> ", req.body);
 
   // redirect to Lenspost
-  if (req.url.includes("?redirect=true")) {
-    console.log("redirecting to Lenspost");
-
-    return NextResponse.redirect("https://lenspost.app", {
+  if (mintedNFT) {
+    return NextResponse.redirect("https://app.lenspost.xyz", {
       status: 302,
     });
   }
@@ -74,9 +73,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     // Wait for the transaction to be mined
     await tx.wait();
 
+    if (tx?.hash) mintedNFT = true;
+
     console.log("NFT minted successfully!", tx?.hash);
 
-    btnText = "NFT minted successfully!";
+    btnText = "Check Lenspost";
 
     return new NextResponse(`
         <!DOCTYPE html><html><head>
