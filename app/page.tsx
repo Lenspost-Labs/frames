@@ -9,7 +9,7 @@ const imageUrl =
 const tokenUri = "wow";
 
 const frameMetadata = getFrameMetadata({
-  buttons: ["Mint"] as any,
+  buttons: ["Mint", "Share", "Buy", "Sell"],
   image: imageUrl,
   post_url: `${APP_URL}/api/frame?image=${encodeURIComponent(
     imageUrl
@@ -19,12 +19,6 @@ const frameMetadata = getFrameMetadata({
 export const metadata: Metadata = {
   title: "Frames Lenspost",
   description: "Share farcater frames from Lenspost",
-  openGraph: {
-    title: "Land, Sea, and Sky",
-    description:
-      "A complex, fully onchain NFT, minted exclusively from a Frame!",
-    images: [imageUrl],
-  },
   other: {
     ...frameMetadata,
   },
