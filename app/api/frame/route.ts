@@ -40,7 +40,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
 
   const searchParams = req.nextUrl.searchParams;
-  const imageUrl = searchParams.get("image") || "";
+  const imageSearch = searchParams.get("image") || "";
+  const imageUrl = decodeURIComponent(imageSearch);
   const tokenUri = searchParams.get("tokenUri") || "";
 
   console.log("req.body-> ", req.body);
@@ -50,6 +51,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const addressFromFid = await getAddrByFid(fid);
 
   if (!addressFromFid) {
+    console.log("Could not find user address");
     btnText = "Could not find user address";
     return new NextResponse(`
         <!DOCTYPE html><html><head>
