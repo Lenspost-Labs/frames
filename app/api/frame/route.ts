@@ -132,7 +132,7 @@ export async function GET(req: NextRequest): Promise<Response> {
     <meta property="fc:frame" content="vNext" />
     <meta property="fc:frame:image" content="${imageUrl}" />
     <meta property="fc:frame:button:1" content="${btnText}" />
-    <meta name="fc:frame:post_url" content="${APP_URL}/api/on-chain-cow-farcaster-frame" />
+    <meta name="fc:frame:post_url" content="${APP_URL}/api/frame?image=${imageUrl}&tokenUri=${tokenUri}" />
   </head></html>
     `);
 }
