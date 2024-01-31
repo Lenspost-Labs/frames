@@ -94,7 +94,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const contract = new ethers.Contract(contractAddress, abi, wallet);
 
     // Address to mint the NFT to
-    const toAddress = addressFromFid;
+    const toAddress = accountAddress;
 
     // Token URI
     const tokenURI = tokenUri;
