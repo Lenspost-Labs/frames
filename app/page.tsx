@@ -1,4 +1,30 @@
 import { NextPage } from "next";
+import { getFrameMetadata } from "@coinbase/onchainkit";
+import type { Metadata } from "next";
+import { APP_URL } from "@/constants";
+
+const imageUrl =
+  "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
+
+const frameMetadata = getFrameMetadata({
+  buttons: ["Mint"] as any,
+  image: imageUrl,
+  post_url: `${APP_URL}/api/frame`,
+});
+
+export const metadata: Metadata = {
+  title: "Land, Sea, and Sky",
+  description: "A complex, fully onchain NFT, minted exclusively from a Frame!",
+  openGraph: {
+    title: "Land, Sea, and Sky",
+    description:
+      "A complex, fully onchain NFT, minted exclusively from a Frame!",
+    images: [imageUrl],
+  },
+  other: {
+    ...frameMetadata,
+  },
+};
 
 const Home: NextPage = () => {
   return (

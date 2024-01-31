@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ethers } from "ethers";
 import abi from "../../../abi.json";
+import { APP_URL } from "@/constants";
 
 // Based on https://github.com/coinbase/build-onchain-apps/blob/b0afac264799caa2f64d437125940aa674bf20a2/template/app/api/frame/route.ts#L13
 async function getAddrByFid(fid: number) {
@@ -36,13 +37,11 @@ async function getAddrByFid(fid: number) {
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText;
-  const APP_URL = "https://frame-example.vercel.app";
 
   const searchParams = req.nextUrl.searchParams;
-  const imageUrl = searchParams.get("image") || "";
-  const tokenUri = searchParams.get("tokenUri") || "";
+  const imageUrl = "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
+  const tokenUri = "";
 
-  if (req?.method === "POST") {
     console.log("req.body-> ", req.body);
 
     // @ts-ignore
@@ -115,16 +114,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   </head></html>
     `);
     }
-  } else {
-    btnText = "Mint NFT";
-    return new NextResponse(`
-    <!DOCTYPE html><html><head>
-    <meta property="fc:frame" content="vNext" />
-    <meta property="fc:frame:image" content="${imageUrl}" />
-    <meta property="fc:frame:button:1" content="${btnText}" />
-    <meta property="fc:frame:post_url" content="${APP_URL}/api/frame" />
-  </head></html>`);
-  }
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
