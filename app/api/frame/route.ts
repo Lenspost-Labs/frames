@@ -16,7 +16,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const searchParams = req.nextUrl.searchParams;
   const imageSearch = searchParams.get("image") || "";
   const imageUrl = decodeURIComponent(imageSearch);
-  const tokenUri = searchParams.get("tokenUri") || "";
+  const tokenUriSearch = searchParams.get("tokenUri") || "";
+  const tokenUri = decodeURIComponent(tokenUriSearch);
 
   console.log("req.body-> ", req.body);
 
