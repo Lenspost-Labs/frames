@@ -10,6 +10,7 @@ import {
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
+  let status: any;
   let mintedNFT;
 
   const searchParams = req.nextUrl.searchParams;
@@ -50,11 +51,19 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // Frame Meassage
   try {
-    const status = await getFrameValidatedMessage(body);
+    status = await getFrameValidatedMessage(body);
 
     console.log("Frame message status-> ", status);
   } catch (error) {
     console.log("Error getting Frame message-> ", error);
+  }
+
+  // redirect to Lenspost
+  if (status?.frameActionBody?.buttonIndex === 2) {
+    console.log("redirecting to Lenspost");
+    return NextResponse.redirect("https://app.lenspost.xyz", {
+      status: 302,
+    });
   }
 
   try {
