@@ -11,7 +11,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
   let status: any;
-  let mintedNFT;
 
   const searchParams = req.nextUrl.searchParams;
   const imageSearch = searchParams.get("image") || "";
@@ -20,15 +19,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const tokenUri = decodeURIComponent(tokenUriSearch);
 
   console.log("req.body-> ", req.body);
-
-  // redirect to Lenspost
-  // console.log("mintedNFT-> ", mintedNFT);
-  // if (mintedNFT) {
-  //   console.log("redirecting to Lenspost");
-  //   return NextResponse.redirect("https://app.lenspost.xyz", {
-  //     status: 302,
-  //   });
-  // }
 
   const body: { trustedData?: { messageBytes?: string } } = await req.json();
 
@@ -94,14 +84,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const tokenURI = tokenUri;
 
     // Mint NFT
-    const tx = await contract.mint(toAddress, tokenURI);
+    // const tx = await contract.mint(toAddress, tokenURI);
 
-    // Wait for the transaction to be mined
-    await tx.wait();
+    // // Wait for the transaction to be mined
+    // await tx.wait();
 
-    if (tx?.hash) mintedNFT = true;
-
-    console.log("NFT minted successfully!", tx?.hash);
+    // console.log("NFT minted successfully!", tx?.hash);
 
     btnText = "Minted";
 
