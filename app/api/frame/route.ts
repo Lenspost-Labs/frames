@@ -16,7 +16,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imageSearch = searchParams.get("image") || "";
   const imageUrl = decodeURIComponent(imageSearch);
   const tokenUriSearch = searchParams.get("tokenUri") || "";
-  const tokenUri = decodeURIComponent(tokenUriSearch);
+  const tokenUri = "";
 
   console.log("req.body-> ", req.body);
 
@@ -84,12 +84,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const tokenURI = tokenUri;
 
     // Mint NFT
-    // const tx = await contract.mint(toAddress, tokenURI);
+    const tx = await contract.mint(toAddress, tokenURI);
 
-    // // Wait for the transaction to be mined
-    // await tx.wait();
+    // Wait for the transaction to be mined
+    await tx.wait();
 
-    // console.log("NFT minted successfully!", tx?.hash);
+    console.log("NFT minted successfully!", tx?.hash);
 
     btnText = "Minted";
 

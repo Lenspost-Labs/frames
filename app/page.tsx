@@ -14,7 +14,7 @@ const frameMetadata = getFrameMetadata({
   image: imageUrl,
   post_url: `${APP_URL}/api/frame?image=${encodeURIComponent(
     imageUrl
-  )}&tokenUri="${encodeURIComponent(tokenUri)}"`,
+  )}&tokenUri="wow"`,
 });
 
 export const metadata: Metadata = {
