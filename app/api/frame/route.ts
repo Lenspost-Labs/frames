@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ethers } from "ethers";
 import abi from "../../../abi.json";
-import { getFrameAccountAddress } from "@coinbase/onchainkit";
+import {
+  getFrameAccountAddress,
+  getFrameValidatedMessage,
+} from "@coinbase/onchainkit";
 // import lighthouse from "@lighthouse-web3/sdk";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -25,8 +28,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //   });
   // }
 
+  const body: { trustedData?: { messageBytes?: string } } = await req.json();
+
   try {
-    const body: { trustedData?: { messageBytes?: string } } = await req.json();
     accountAddress = await getFrameAccountAddress(body, {
       NEYNAR_API_KEY: process.env.NEYNAR_API_KEY || "",
     });
@@ -43,6 +47,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
+
+  // Frame Meassage
+  try {
+    const status = await getFrameValidatedMessage(body);
+
+    console.log("Frame message status-> ", status);
+  } catch (error) {
+    console.log("Error getting Frame message-> ", error);
+  }
 
   try {
     // ----- NFT minting logic goes here -----
@@ -80,13 +93,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     console.log("NFT minted successfully!", tx?.hash);
 
-    btnText = "Check Lenspost";
+    btnText = "Minted";
 
     return new NextResponse(`
         <!DOCTYPE html><html><head>
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
+        <meta property="fc:frame:button:1:action" content="none">
+        <meta property="fc:frame:button:2" content="Check Lenspost" />
         <meta property="fc:frame:button:1:action" content="post_redirect">
       </head></html>
         `);
