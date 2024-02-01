@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { ethers } from "ethers";
 import abi from "../../../abi.json";
 import { getFrameAccountAddress } from "@coinbase/onchainkit";
-import lighthouse from "@lighthouse-web3/sdk";
+// import lighthouse from "@lighthouse-web3/sdk";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -12,7 +12,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const searchParams = req.nextUrl.searchParams;
   const imageSearch = searchParams.get("image") || "";
   const imageUrl = decodeURIComponent(imageSearch);
-  // const tokenUri = searchParams.get("tokenUri") || "";
+  const tokenUri = searchParams.get("tokenUri") || "";
 
   console.log("req.body-> ", req.body);
 
@@ -68,7 +68,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const toAddress = accountAddress;
 
     // Token URI
-    const tokenURI = await uploadMetadata(imageUrl);
+    const tokenURI = tokenUri;
 
     // Mint NFT
     const tx = await contract.mint(toAddress, tokenURI);
@@ -113,56 +113,56 @@ export const dynamic = "force-dynamic";
 //  ----- upload to IPFS -----
 
 // get the image blob
-const getImageBlob = async (imageUrl: string) => {
-  const response = await fetch(imageUrl);
-  const arrayBuffer = await response.arrayBuffer();
-  const blob = Buffer.from(arrayBuffer);
+// const getImageBlob = async (imageUrl: string) => {
+//   const response = await fetch(imageUrl);
+//   const arrayBuffer = await response.arrayBuffer();
+//   const blob = Buffer.from(arrayBuffer);
 
-  return blob;
-};
+//   return blob;
+// };
 
 // upload image to IPFS
-const uploadMediaToIpfs = async (imageUrl: string) => {
-  const blobImage = await getImageBlob(imageUrl);
-  console.log("imageUrl-> ", blobImage);
+// const uploadMediaToIpfs = async (imageUrl: string) => {
+//   const blobImage = await getImageBlob(imageUrl);
+//   console.log("imageUrl-> ", blobImage);
 
-  try {
-    const result = await lighthouse.uploadBuffer(
-      blobImage,
-      process.env.LIGHTHOUSE_API_KEY || ""
-    );
+//   try {
+//     const result = await lighthouse.uploadBuffer(
+//       blobImage,
+//       process.env.LIGHTHOUSE_API_KEY || ""
+//     );
 
-    console.log("result-> ", result?.data);
+//     console.log("result-> ", result?.data);
 
-    return result.data.Hash;
-  } catch (error) {
-    console.log("Error uploading image to IPFS-> ", error);
-  }
-};
+//     return result.data.Hash;
+//   } catch (error) {
+//     console.log("Error uploading image to IPFS-> ", error);
+//   }
+// };
 
 // upload metadata (JSON text) to IPFS
-const uploadMetadata = async (imageUrl: string) => {
-  const imageHash = await uploadMediaToIpfs(imageUrl);
-  console.log("imageHash-> ", imageHash);
+// const uploadMetadata = async (imageUrl: string) => {
+//   const imageHash = await uploadMediaToIpfs(imageUrl);
+//   console.log("imageHash-> ", imageHash);
 
-  try {
-    const metadata = {
-      name: "my NFT",
-      description: "my NFT description",
-      image: `ipfs://${imageHash}`,
-    };
+//   try {
+//     const metadata = {
+//       name: "my NFT",
+//       description: "my NFT description",
+//       image: `ipfs://${imageHash}`,
+//     };
 
-    let { data } = await lighthouse.uploadText(
-      JSON.stringify(metadata),
-      process.env.LIGHTHOUSE_API_KEY || ""
-    );
+//     let { data } = await lighthouse.uploadText(
+//       JSON.stringify(metadata),
+//       process.env.LIGHTHOUSE_API_KEY || ""
+//     );
 
-    console.log("uploadMetadata-> ", data);
+//     console.log("uploadMetadata-> ", data);
 
-    return data.Hash;
-  } catch (error) {
-    console.log("Error uploading metadata to IPFS-> ", error);
-  }
-};
+//     return data.Hash;
+//   } catch (error) {
+//     console.log("Error uploading metadata to IPFS-> ", error);
+//   }
+// };
 
 //  ----- upload to IPFS -----

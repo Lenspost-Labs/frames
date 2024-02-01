@@ -6,13 +6,15 @@ import { APP_URL } from "@/constants";
 const imageUrl =
   "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
 
-// const tokenUri =
-//   "ipfs://QmbFk3Tcnf5WhybqLvhGodf3naru3bFtHudSbBuzAwqxLy/on-chain-cow-happy-cow.json";
+const tokenUri =
+  "ipfs://QmbFk3Tcnf5WhybqLvhGodf3naru3bFtHudSbBuzAwqxLy/on-chain-cow-happy-cow.json";
 
 const frameMetadata = getFrameMetadata({
   buttons: ["Mint"] as any,
   image: imageUrl,
-  post_url: `${APP_URL}/api/frame?image=${encodeURIComponent(imageUrl)}`,
+  post_url: `${APP_URL}/api/frame?image=${encodeURIComponent(
+    imageUrl
+  )}&tokenUri="${tokenUri}"`,
 });
 
 export const metadata: Metadata = {
