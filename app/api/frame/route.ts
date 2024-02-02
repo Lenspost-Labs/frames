@@ -62,7 +62,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       },
       body: JSON.stringify({
         frameTrustedData: body?.trustedData?.messageBytes,
-        args: ["{frame-user}", 1],
+        args: [accountAddress, 1],
       }),
     });
 
