@@ -18,8 +18,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
-  // @ts-ignore
-  console.log("req trustedData-> ", req?.body?.trustedData);
+  console.log("req.json-> ", await req.json());
 
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
