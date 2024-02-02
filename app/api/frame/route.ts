@@ -42,7 +42,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //   console.log("Error getting Frame message-> ", error);
   // }
 
-  // // redirect to Lenspost
+  // // // redirect to Lenspost
   // if (status?.frameActionBody?.buttonIndex === 2) {
   //   console.log("redirecting to Lenspost");
   //   return NextResponse.redirect("https://app.lenspost.xyz", {

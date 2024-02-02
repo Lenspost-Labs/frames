@@ -17,6 +17,8 @@ const frameMetadata = getFrameMetadata({
   )}&tokenUri=${encodeURIComponent(tokenUri)}`,
 });
 
+console.log(`${APP_URL}/api/frame?image=${encodeURIComponent(imageUrl)}&tokenUri=${encodeURIComponent(tokenUri)}`);
+
 export const metadata: Metadata = {
   title: "Frames Lenspost",
   description: "Share farcater frames from Lenspost",
