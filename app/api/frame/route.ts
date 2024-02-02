@@ -18,6 +18,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
+  // @ts-ignore
+  console.log("req trustedData-> ", req?.body?.trustedData);
+
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY || "",
