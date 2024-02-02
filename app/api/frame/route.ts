@@ -37,7 +37,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // redirect to Lenspost --> (redirect url should be same as host url)
   if (message?.button === 2) {
     console.log("redirecting to Lenspost");
-    return NextResponse.redirect("https://staging-lenspost.vercel.app/redirect", {
+    return NextResponse.redirect("https://test-frame-app5.vercel.app/redirect", {
       status: 302,
     });
   }
