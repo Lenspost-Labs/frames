@@ -18,8 +18,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
-  const { trustedData } = await req.json();
-
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY || "",
@@ -39,7 +37,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (message?.button === 2) {
     console.log("redirecting to Lenspost");
     return NextResponse.redirect(
-      "https://test-frame-app5.vercel.app/redirect",
+      "https://test-frame-app6.vercel.app/redirect",
       {
         status: 302,
       }
@@ -63,7 +61,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         Authorization: "Bearer " + process.env.SYNDICATE_FRAME_API_KEY,
       },
       body: JSON.stringify({
-        frameTrustedData: trustedData.messageBytes,
+        frameTrustedData: body?.trustedData?.messageBytes,
       }),
     });
 
