@@ -16,9 +16,7 @@ const frameMetadata = getFrameMetadata({
     },
   ],
   image: imageUrl,
-  post_url: `https://randome.vercel.app/api/frame?image=${encodeURIComponent(
-    imageUrl
-  )}&tokenUri=${encodeURIComponent(tokenUri)}`,
+  post_url: `https://test-frame-app1.vercel.app/api/frame?image=${imageUrl}&tokenUri=${tokenUri}`,
 });
 
 export const metadata: Metadata = {

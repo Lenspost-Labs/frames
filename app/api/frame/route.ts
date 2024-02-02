@@ -10,11 +10,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   let status: any;
 
   const searchParams = req.nextUrl.searchParams;
-  const imageSearch = searchParams.get("image") || "";
-  const imageUrl = encodeURIComponent(imageSearch);
-
-  const tokenUriSearch = searchParams.get("tokenUri") || "";
-  const tokenUri = encodeURIComponent(tokenUriSearch);
+  const imageUrl = searchParams.get("image") || "";
+  const tokenUri = searchParams.get("tokenUri") || "";
 
   console.log("imageUrl-> ", imageUrl);
   console.log("tokenUri-> ", tokenUri);
