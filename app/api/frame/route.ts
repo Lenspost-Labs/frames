@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ethers } from "ethers";
 import abi from "../../../abi.json";
-import { getFrameAccountAddress } from "@coinbase/onchainkit";
+import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 // import lighthouse from "@lighthouse-web3/sdk";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -20,25 +20,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
-  
-  try {
-    const body: { trustedData?: { messageBytes?: string } } = await req.json();
-    accountAddress = await getFrameAccountAddress(body, {
-      NEYNAR_API_KEY: process.env.NEYNAR_API_KEY || "",
-    });
-  } catch (err) {
-    console.error("Error getting account address: ", err);
-    btnText = "Could not find user address";
-    return new NextResponse(`
-          <!DOCTYPE html><html><head>
-          <meta property="fc:frame" content="vNext" />
-          <meta property="fc:frame:image" content="${imageUrl}" />
-          <meta property="fc:frame:button:1" content="${btnText}" />
-          <meta property="fc:frame:post_url" content="none">
-        </head></html>`);
+  const body: FrameRequest = await req.json();
+  const { isValid, message } = await getFrameMessage(body, {
+    neynarApiKey: process.env.NEYNAR_API_KEY || "",
+  });
+
+  if (isValid) {
+    accountAddress = message.interactor.verified_accounts[0];
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
+
+  console.log("frame message-> ", message);
 
   // Frame Meassage
   // try {

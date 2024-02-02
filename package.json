@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@coinbase/onchainkit": "^0.1.6",
+    "@coinbase/onchainkit": "0.4.1",
     "@lighthouse-web3/sdk": "^0.3.0",
     "ethers": "^6.10.0",
     "ipfs-http-client": "^60.0.1",
