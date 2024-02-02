@@ -11,9 +11,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const searchParams = req.nextUrl.searchParams;
   const imageSearch = searchParams.get("image") || "";
-  const imageUrl = decodeURIComponent(imageSearch);
+  const imageUrl =
+    "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
+
   const tokenUriSearch = searchParams.get("tokenUri") || "";
-  const tokenUri = decodeURIComponent(tokenUriSearch);
+  const tokenUri =
+    "ipfs://QmbFk3Tcnf5WhybqLvhGodf3naru3bFtHudSbBuzAwqxLy/on-chain-cow-happy-cow.json";
 
   console.log("imageUrl-> ", imageUrl);
   console.log("tokenUri-> ", tokenUri);
