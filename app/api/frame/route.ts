@@ -3,7 +3,6 @@ import { ethers } from "ethers";
 import abi from "../../../abi.json";
 import {
   getFrameAccountAddress,
-  getFrameValidatedMessage,
 } from "@coinbase/onchainkit";
 // import lighthouse from "@lighthouse-web3/sdk";
 
@@ -16,7 +15,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imageSearch = searchParams.get("image") || "";
   const imageUrl = decodeURIComponent(imageSearch);
   const tokenUriSearch = searchParams.get("tokenUri") || "";
-  const tokenUri = "";
+  const tokenUri = decodeURIComponent(tokenUriSearch);
+
+  console.log("imageUrl-> ", imageUrl);
+  console.log("tokenUri-> ", tokenUri);
 
   console.log("req.body-> ", req.body);
 
@@ -41,21 +43,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("Extracted address from FID-> ", accountAddress);
 
   // Frame Meassage
-  try {
-    status = await getFrameValidatedMessage(body);
+  // try {
+  //   status = await getFrameValidatedMessage(body);
 
-    console.log("Frame message status-> ", status);
-  } catch (error) {
-    console.log("Error getting Frame message-> ", error);
-  }
+  //   console.log("Frame message status-> ", status);
+  // } catch (error) {
+  //   console.log("Error getting Frame message-> ", error);
+  // }
 
-  // redirect to Lenspost
-  if (status?.frameActionBody?.buttonIndex === 2) {
-    console.log("redirecting to Lenspost");
-    return NextResponse.redirect("https://app.lenspost.xyz", {
-      status: 302,
-    });
-  }
+  // // redirect to Lenspost
+  // if (status?.frameActionBody?.buttonIndex === 2) {
+  //   console.log("redirecting to Lenspost");
+  //   return NextResponse.redirect("https://app.lenspost.xyz", {
+  //     status: 302,
+  //   });
+  // }
 
   try {
     // ----- NFT minting logic goes here -----
@@ -98,6 +100,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
+        <meta property="fc:frame:button:1:action" content="none">
         <meta property="fc:frame:button:2" content="Check Lenspost" />
         <meta property="fc:frame:button:2:action" content="post_redirect">
       </head></html>
