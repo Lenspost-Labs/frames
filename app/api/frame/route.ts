@@ -18,7 +18,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
-  console.log("req.json-> ", await req.json());
+  const { trustedData } = await req.json();
+
+  console.log(
+    "req.json-> ",
+    JSON.stringify({
+      frameTrustedData: trustedData?.messageBytes,
+    })
+  );
 
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
@@ -39,9 +46,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // redirect to Lenspost --> (redirect url should be same as host url)
   if (message?.button === 2) {
     console.log("redirecting to Lenspost");
-    return NextResponse.redirect("https://test-frame-app5.vercel.app/redirect", {
-      status: 302,
-    });
+    return NextResponse.redirect(
+      "https://test-frame-app5.vercel.app/redirect",
+      {
+        status: 302,
+      }
+    );
   }
 
   // check if post is liked | recasted | following
