@@ -25,6 +25,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
+  } else {
+    status = 400;
+    return new NextResponse("Invalid request", { status });
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
@@ -34,9 +37,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // redirect to Lenspost --> (redirect url should be same as host url)
   if (message?.button === 2) {
     console.log("redirecting to Lenspost");
-    return NextResponse.redirect("https://test-frame-app4.vercel.app", {
+    return NextResponse.redirect("https://test-frame-app5.vercel.app", {
       status: 302,
     });
+  }
+
+  // check if post is liked | recasted | following
+  if (!message?.liked || !message?.recasted || !message?.following) {
+    console.log("User didn't like or recasted or following");
+    return new NextResponse(`User didn't like or recast or follow the post`);
   }
 
   try {
