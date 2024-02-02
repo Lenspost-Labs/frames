@@ -49,45 +49,44 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const contractAddress = "0x364fEa7309c2364453C01Adcba2058BAF9747A13";
 
     // Network provider (e.g., Infura)
-    const provider = new ethers.JsonRpcProvider(
-      "https://polygon-mumbai.infura.io/v3/204efb1ccc384775857ef27ec34795e8"
-    );
+    // const provider = new ethers.JsonRpcProvider(
+    //   "https://polygon-mumbai.infura.io/v3/204efb1ccc384775857ef27ec34795e8"
+    // );
 
-    // Wallet instance
-    const wallet = new ethers.Wallet(privateKey, provider);
+    // // Wallet instance
+    // const wallet = new ethers.Wallet(privateKey, provider);
 
-    // Contract instance
-    const contract = new ethers.Contract(contractAddress, abi, wallet);
+    // // Contract instance
+    // const contract = new ethers.Contract(contractAddress, abi, wallet);
 
-    // Address to mint the NFT to
-    const toAddress = accountAddress;
+    // // Address to mint the NFT to
+    // const toAddress = accountAddress;
 
-    // Token URI
-    const tokenURI = tokenUri;
+    // // Token URI
+    // const tokenURI = tokenUri;
 
     // Mint NFT
-    const tx = await contract.mint(toAddress, tokenURI);
+    // const tx = await contract.mint(toAddress, tokenURI);
 
-    // Wait for the transaction to be mined
-    await tx.wait();
+    // // Wait for the transaction to be mined
+    // await tx.wait();
 
-    console.log("NFT minted successfully!", tx?.hash);
+    console.log("NFT minted successfully!");
 
-    btnText = "Minted";
+    btnText = "Mint Again";
 
     return new NextResponse(`
         <!DOCTYPE html><html><head>
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
-        <meta property="fc:frame:button:1:action" content="None">
         <meta property="fc:frame:button:2" content="Check Lenspost" />
         <meta property="fc:frame:button:2:action" content="post_redirect">
       </head></html>
         `);
   } catch (error) {
     console.log("Error minting NFT-> ", error);
-    btnText = "Error minting NFT";
+    btnText = "Try Again";
     return new NextResponse(`
     <!DOCTYPE html><html><head>
     <meta property="fc:frame" content="vNext" />
