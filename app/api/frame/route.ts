@@ -31,13 +31,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
+
   console.log("frame message-> ", message);
 
   // redirect to Lenspost --> (redirect url should be same as host url)
   if (message?.button === 2) {
     console.log("redirecting to Lenspost");
     return NextResponse.redirect(
-      "https://test-frame-app6.vercel.app/redirect",
+      "https://test-frame-app5.vercel.app/redirect",
       {
         status: 302,
       }
@@ -50,24 +51,39 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //   return new NextResponse(`User didn't like or recast or follow the post`);
   // }
 
+  // ----- NFT minting logic goes here -----
+
+  // Wallet private key
+  const privateKey = process.env.WALLET_PRIVATE_KEY || "";
+
+  // Contract address
+  const contractAddress = "0x364fEa7309c2364453C01Adcba2058BAF9747A13";
+
+  // Network provider (e.g., Infura)
+  const provider = new ethers.JsonRpcProvider(
+    "https://polygon-mumbai.infura.io/v3/204efb1ccc384775857ef27ec34795e8"
+  );
+
+  // Wallet instance
+  const wallet = new ethers.Wallet(privateKey, provider);
+
   try {
-    // ----- NFT minting logic goes here -----
+    // Contract instance
+    const contract = new ethers.Contract(contractAddress, abi, wallet);
 
-    // Once your contract is registered, you can mint an NFT using the following code
-    const syndicateRes = await fetch("https://frame.syndicate.io/api/mint", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        Authorization: "Bearer " + process.env.SYNDICATE_FRAME_API_KEY,
-      },
-      body: JSON.stringify({
-        frameTrustedData: body?.trustedData?.messageBytes,
-        args: [accountAddress, 1],
-      }),
-    });
+    // Address to mint the NFT to
+    const toAddress = accountAddress;
 
-    console.log("Syndicate response:", syndicateRes);
-    console.log("Sending confirmation as Farcaster Frame response");
+    // Token URI
+    const tokenURI = tokenUri;
+
+    // Mint NFT
+    const tx = await contract.mint(toAddress, tokenURI);
+
+    // Wait for the transaction to be mined
+    await tx.wait();
+
+    console.log("NFT minted successfully!", tx?.hash);
 
     btnText = "Mint Again";
 
