@@ -31,19 +31,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("frame message-> ", message);
 
-  // Frame Meassage
-  // try {
-  //   status = await getFrameValidatedMessage(body);
-
-  //   console.log("Frame message status-> ", status);
-  // } catch (error) {
-  //   console.log("Error getting Frame message-> ", error);
-  // }
-
-  // // // redirect to Lenspost
+  // redirect to Lenspost --> (redirect url should be same as host url)
   if (message?.button === 2) {
     console.log("redirecting to Lenspost");
-    return NextResponse.redirect("https://test-frame-app3.vercel.app", {
+    return NextResponse.redirect("https://test-frame-app4.vercel.app", {
       status: 302,
     });
   }
@@ -89,6 +80,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${imageUrl}" />
         <meta property="fc:frame:button:1" content="${btnText}" />
+        <meta property="fc:frame:button:1:action" content="None">
         <meta property="fc:frame:button:2" content="Check Lenspost" />
         <meta property="fc:frame:button:2:action" content="post_redirect">
       </head></html>
