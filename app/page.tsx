@@ -16,7 +16,9 @@ const frameMetadata = getFrameMetadata({
     },
   ],
   image: imageUrl,
-  post_url: `https://fc-frames-starters503.vercel.app/api/frame`,
+  post_url: `https://fc-frames-starters504.vercel.app/api/frame?image=${encodeURIComponent(
+    imageUrl
+  )}&tokenUri=${encodeURIComponent(tokenUri)}`,
 });
 
 console.log(

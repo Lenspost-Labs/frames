@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ethers } from "ethers";
 import abi from "../../../abi.json";
-import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
+import {
+  FrameRequest,
+  getFrameMessage,
+  getFrameHtmlResponse,
+} from "@coinbase/onchainkit";
 // import lighthouse from "@lighthouse-web3/sdk";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -11,12 +15,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const searchParams = req.nextUrl.searchParams;
   const imageSearch = searchParams.get("image") || "";
-  const imageUrl =
-    "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
+  const imageUrl = encodeURIComponent(imageSearch);
 
   const tokenUriSearch = searchParams.get("tokenUri") || "";
-  const tokenUri =
-    "ipfs://QmbFk3Tcnf5WhybqLvhGodf3naru3bFtHudSbBuzAwqxLy/on-chain-cow-happy-cow.json";
+  const tokenUri = encodeURIComponent(tokenUriSearch);
 
   console.log("imageUrl-> ", imageUrl);
   console.log("tokenUri-> ", tokenUri);
@@ -46,12 +48,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // }
 
   // // // redirect to Lenspost
-  // if (status?.frameActionBody?.buttonIndex === 2) {
-  //   console.log("redirecting to Lenspost");
-  //   return NextResponse.redirect("https://app.lenspost.xyz", {
-  //     status: 302,
-  //   });
-  // }
+  if (message?.button === 2) {
+    console.log("redirecting to Lenspost");
+    return NextResponse.redirect("https://app.lenspost.xyz", {
+      status: 302,
+    });
+  }
 
   try {
     // ----- NFT minting logic goes here -----
@@ -89,27 +91,25 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     btnText = "Minted";
 
-    return new NextResponse(`
-        <!DOCTYPE html><html><head>
-        <meta property="fc:frame" content="vNext" />
-        <meta property="fc:frame:image" content="${imageUrl}" />
-        <meta property="fc:frame:button:1" content="${btnText}" />
-        <meta property="fc:frame:button:1:action" content="none">
-        <meta property="fc:frame:button:2" content="Check Lenspost" />
-        <meta property="fc:frame:button:2:action" content="post_redirect">
-      </head></html>
-        `);
+    return new NextResponse(
+      getFrameHtmlResponse({
+        buttons: [
+          {
+            label: `${btnText}`,
+          },
+        ],
+        image: `${imageUrl}`,
+        post_url: `https://fc-frames-starters504.vercel.app/api/frame?image=${encodeURIComponent(
+          imageUrl
+        )}&tokenUri=${encodeURIComponent(tokenUri)}`,
+      })
+    );
   } catch (error) {
     console.log("Error minting NFT-> ", error);
     btnText = "Error minting NFT";
-    return new NextResponse(`
-    <!DOCTYPE html><html><head>
-    <meta property="fc:frame" content="vNext" />
-    <meta property="fc:frame:image" content="${imageUrl}" />
-    <meta property="fc:frame:button:1" content="${btnText}" />
-    <meta property="fc:frame:post_url" content="none">
-  </head></html>
-    `);
+    return NextResponse.json({
+      error: "Error minting NFT",
+    });
   }
 }
 
