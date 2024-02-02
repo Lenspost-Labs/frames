@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ethers } from "ethers";
 import abi from "../../../abi.json";
-import {
-  getFrameAccountAddress,
-} from "@coinbase/onchainkit";
+import { getFrameAccountAddress } from "@coinbase/onchainkit";
 // import lighthouse from "@lighthouse-web3/sdk";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -22,9 +20,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
-  const body: { trustedData?: { messageBytes?: string } } = await req.json();
-
+  
   try {
+    const body: { trustedData?: { messageBytes?: string } } = await req.json();
     accountAddress = await getFrameAccountAddress(body, {
       NEYNAR_API_KEY: process.env.NEYNAR_API_KEY || "",
     });
