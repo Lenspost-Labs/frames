@@ -43,10 +43,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   // check if post is liked | recasted | following
-  if (!message?.liked || !message?.recasted || !message?.following) {
-    console.log("User didn't like or recasted or following");
-    return new NextResponse(`User didn't like or recast or follow the post`);
-  }
+  // if (!message?.liked || !message?.recasted || !message?.following) {
+  //   console.log("User didn't like or recasted or following");
+  //   return new NextResponse(`User didn't like or recast or follow the post`);
+  // }
 
   try {
     // ----- NFT minting logic goes here -----
