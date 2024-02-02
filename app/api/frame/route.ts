@@ -18,6 +18,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
+  const { trustedData } = await req.json();
+
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY || "",
@@ -31,7 +33,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
-
   console.log("frame message-> ", message);
 
   // redirect to Lenspost --> (redirect url should be same as host url)
@@ -54,36 +55,20 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   try {
     // ----- NFT minting logic goes here -----
 
-    // Wallet private key
-    const privateKey = process.env.WALLET_PRIVATE_KEY || "";
+    // Once your contract is registered, you can mint an NFT using the following code
+    const syndicateRes = await fetch("https://frame.syndicate.io/api/mint", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        Authorization: "Bearer " + process.env.SYNDICATE_FRAME_API_KEY,
+      },
+      body: JSON.stringify({
+        frameTrustedData: trustedData.messageBytes,
+      }),
+    });
 
-    // Contract address
-    const contractAddress = "0x364fEa7309c2364453C01Adcba2058BAF9747A13";
-
-    // Network provider (e.g., Infura)
-    // const provider = new ethers.JsonRpcProvider(
-    //   "https://polygon-mumbai.infura.io/v3/204efb1ccc384775857ef27ec34795e8"
-    // );
-
-    // // Wallet instance
-    // const wallet = new ethers.Wallet(privateKey, provider);
-
-    // // Contract instance
-    // const contract = new ethers.Contract(contractAddress, abi, wallet);
-
-    // // Address to mint the NFT to
-    // const toAddress = accountAddress;
-
-    // // Token URI
-    // const tokenURI = tokenUri;
-
-    // Mint NFT
-    // const tx = await contract.mint(toAddress, tokenURI);
-
-    // // Wait for the transaction to be mined
-    // await tx.wait();
-
-    console.log("NFT minted successfully!");
+    console.log("Syndicate response:", syndicateRes);
+    console.log("Sending confirmation as Farcaster Frame response");
 
     btnText = "Mint Again";
 
