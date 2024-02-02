@@ -12,9 +12,7 @@ const tokenUri =
 const frameMetadata = getFrameMetadata({
   buttons: ["Mint"] as any,
   image: imageUrl,
-  post_url: `${APP_URL}/api/frame?image=${encodeURIComponent(
-    imageUrl
-  )}&tokenUri=${tokenUri}`,
+  post_url: `${APP_URL}/api/frame?image=${imageUrl}&tokenUri=${tokenUri}`,
 });
 
 export const metadata: Metadata = {
