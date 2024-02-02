@@ -16,16 +16,10 @@ const frameMetadata = getFrameMetadata({
     },
   ],
   image: imageUrl,
-  post_url: `https://fc-frames-starters504.vercel.app/api/frame?image=${encodeURIComponent(
+  post_url: `https://randome.vercel.app/api/frame?image=${encodeURIComponent(
     imageUrl
   )}&tokenUri=${encodeURIComponent(tokenUri)}`,
 });
-
-console.log(
-  `${APP_URL}/api/frame?image=${encodeURIComponent(
-    imageUrl
-  )}&tokenUri=${encodeURIComponent(tokenUri)}`
-);
 
 export const metadata: Metadata = {
   title: "Frames Lenspost",

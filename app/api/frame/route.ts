@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ethers } from "ethers";
 import abi from "../../../abi.json";
-import {
-  FrameRequest,
-  getFrameMessage,
-  getFrameHtmlResponse,
-} from "@coinbase/onchainkit";
+import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 // import lighthouse from "@lighthouse-web3/sdk";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -91,25 +87,26 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     btnText = "Minted";
 
-    return new NextResponse(
-      getFrameHtmlResponse({
-        buttons: [
-          {
-            label: `${btnText}`,
-          },
-        ],
-        image: `${imageUrl}`,
-        post_url: `https://fc-frames-starters504.vercel.app/api/frame?image=${encodeURIComponent(
-          imageUrl
-        )}&tokenUri=${encodeURIComponent(tokenUri)}`,
-      })
-    );
+    return new NextResponse(`
+        <!DOCTYPE html><html><head>
+        <meta property="fc:frame" content="vNext" />
+        <meta property="fc:frame:image" content="${imageUrl}" />
+        <meta property="fc:frame:button:1" content="${btnText}" />
+        <meta property="fc:frame:button:2" content="Check Lenspost" />
+        <meta property="fc:frame:button:2:action" content="post_redirect">
+      </head></html>
+        `);
   } catch (error) {
     console.log("Error minting NFT-> ", error);
     btnText = "Error minting NFT";
-    return NextResponse.json({
-      error: "Error minting NFT",
-    });
+    return new NextResponse(`
+    <!DOCTYPE html><html><head>
+    <meta property="fc:frame" content="vNext" />
+    <meta property="fc:frame:image" content="${imageUrl}" />
+    <meta property="fc:frame:button:1" content="${btnText}" />
+    <meta property="fc:frame:post_url" content="none">
+  </head></html>
+    `);
   }
 }
 
