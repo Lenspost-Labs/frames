@@ -52,7 +52,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // }
 
   try {
-    console.log("private key-> ", config?.wallet);
 
     // NFT minting
     const result = await writeContract(wagmiConfig, {
@@ -85,7 +84,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     <meta property="fc:frame" content="vNext" />
     <meta property="fc:frame:image" content="${imageUrl}" />
     <meta property="fc:frame:button:1" content="${btnText}" />
-    <meta property="fc:frame:post_url" content="none">
   </head></html>
     `);
   }
