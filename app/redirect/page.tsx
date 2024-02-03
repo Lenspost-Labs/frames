@@ -9,7 +9,7 @@ export default function RedirectPage() {
     const appUrl = "https://app.lenspost.xyz";
 
     // Perform the redirect
-    // window.location.href = appUrl; // For a full page reload redirect
+    window.location.href = appUrl; // For a full page reload redirect
     // Or use Next.js router for client-side redirect (comment out the line above if using this)
     // router.push(appUrl);
   }, [router]);
@@ -17,7 +17,7 @@ export default function RedirectPage() {
   return (
     <div>
       <p>
-        Redirecting to <a href="https://app.lenspost.xyz"> Lenspost app</a>
+        Redirecting to <a href="https://app.lenspost.xyz"> Lenspost app ...</a>
       </p>
     </div>
   );

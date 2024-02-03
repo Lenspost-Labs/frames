@@ -40,7 +40,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // redirect to Lenspost --> (redirect url should be same as host url)
   if (message?.button === 2) {
     console.log("redirecting to Lenspost", `${config?.APP_URL}/redirect`);
-    return NextResponse.redirect(`https://test-frame-app9.vercel.app/redirect`, {
+    return NextResponse.redirect(`${config?.APP_URL}/redirect`, {
       status: 302,
     });
   }
@@ -52,7 +52,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // }
 
   try {
-
     // NFT minting
     // const result = await writeContract(wagmiConfig, {
     //   abi,
