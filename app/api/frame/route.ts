@@ -16,7 +16,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const searchParams = req.nextUrl.searchParams;
   const imageUrl = searchParams.get("image") || "";
-  const tokenUri = searchParams.get("tokenUri") || "";
+  // const tokenUri = searchParams.get("tokenUri") || "";
 
   console.log("imageUrl-> ", imageUrl);
   // console.log("tokenUri-> ", tokenUri);
@@ -52,7 +52,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //   return new NextResponse(`User didn't like or recast or follow the post`);
   // }
 
-  // const tokenUri = await uploadMetadataToIpfs();
+  const tokenUri = await uploadMetadataToIpfs();
 
   try {
     // NFT minting
