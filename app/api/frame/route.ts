@@ -55,10 +55,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     // NFT minting
     const result = await writeContract(wagmiConfig, {
       abi,
-      address: config?.contractAddress as `0x${string}`,
+      address: config?.contractAddress,
       functionName: "mint",
       args: [accountAddress, tokenUri],
-      account: privateKeyToAccount(config?.wallet as `0x${string}`),
+      account: privateKeyToAccount(config?.wallet),
       chainId: polygonMumbai?.id,
     });
 
