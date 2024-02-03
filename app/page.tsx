@@ -7,7 +7,7 @@ const imageUrl =
   "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
 
 const tokenUri =
-  "ipfs://QmbFk3Tcnf5WhybqLvhGodf3naru3bFtHudSbBuzAwqxLy/on-chain-cow-happy-cow.json";
+  "https://ipfs.io/ipfs/Qmey27iWG41PTiSgdiCbkk7eQet632LhCmwVzXhuJy4kg8";
 
 const frameMetadata = getFrameMetadata({
   buttons: [
