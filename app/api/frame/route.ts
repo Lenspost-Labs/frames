@@ -52,6 +52,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // }
 
   try {
+    console.log("private key-> ", config?.wallet);
+
     // NFT minting
     const result = await writeContract(wagmiConfig, {
       abi,
