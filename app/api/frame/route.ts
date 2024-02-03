@@ -39,7 +39,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // redirect to Lenspost --> (redirect url should be same as host url)
   if (message?.button === 2) {
-    console.log("redirecting to Lenspost");
+    console.log("redirecting to Lenspost", `${config?.APP_URL}/redirect`);
     return NextResponse.redirect(`${config?.APP_URL}/redirect`, {
       status: 302,
     });
