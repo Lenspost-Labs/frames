@@ -10,5 +10,5 @@ export const config = {
   nftStorageApiKey: process.env.NFT_STORAGE_API_KEY || "",
   lightHouseApiKey: process.env.LIGHTHOUSE_API_KEY || "",
 
-  APP_URL: process.env.APP_URL || "https://test-frame-app10.vercel.app",
+  APP_URL: process.env.APP_URL || "https://test-frame-app11.vercel.app",
 };
