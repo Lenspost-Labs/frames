@@ -16,7 +16,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const searchParams = req.nextUrl.searchParams;
   const imageUrl = searchParams.get("image") || "";
-  const tokenUri = searchParams.get("tokenUri") || "";
+  // const tokenUri = searchParams.get("tokenUri") || "";
 
   console.log("imageUrl-> ", imageUrl);
   // console.log("tokenUri-> ", tokenUri);
@@ -52,20 +52,20 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //   return new NextResponse(`User didn't like or recast or follow the post`);
   // }
 
-  // const tokenUri = await uploadMetadataToIpfs();
+  const tokenUri = await uploadMetadataToIpfs(imageUrl);
 
   try {
     // NFT minting
-    const result = await writeContract(wagmiConfig, {
-      abi,
-      address: config?.contractAddress,
-      functionName: "mint",
-      args: ["0x37Fd8B1724e9B34DBC6263f50e18857008Fb88AB", tokenUri],
-      account: privateKeyToAccount(config?.wallet),
-      chainId: polygonMumbai?.id,
-    });
+    // const result = await writeContract(wagmiConfig, {
+    //   abi,
+    //   address: config?.contractAddress,
+    //   functionName: "mint",
+    //   args: ["0x37Fd8B1724e9B34DBC6263f50e18857008Fb88AB", tokenUri],
+    //   account: privateKeyToAccount(config?.wallet),
+    //   chainId: polygonMumbai?.id,
+    // });
 
-    console.log("NFT minted successfully!", result);
+    // console.log("NFT minted successfully!", result);
 
     btnText = "Mint Again";
 

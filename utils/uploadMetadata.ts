@@ -1,10 +1,7 @@
 import { config } from "@/config/config";
 import lighthouse from "@lighthouse-web3/sdk";
 
-const imageUrl =
-  "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
-
-const uploadMediaToIpfs = async () => {
+const uploadMediaToIpfs = async (imageUrl: string) => {
   const res = await fetch(imageUrl);
   const myBuffer = await res.arrayBuffer();
   const myBlob = Buffer.from(myBuffer);
@@ -23,11 +20,11 @@ const uploadMediaToIpfs = async () => {
   }
 };
 
-export const uploadMetadataToIpfs = async () => {
+export const uploadMetadataToIpfs = async (imageUrl: string) => {
   const metadata = {
     name: "My NFT",
     description: "My NFT description",
-    image: "ipfs://" + (await uploadMediaToIpfs()),
+    image: "ipfs://" + (await uploadMediaToIpfs(imageUrl)),
   };
   try {
     let { data } = await lighthouse.uploadText(

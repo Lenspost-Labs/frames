@@ -6,6 +6,8 @@ import lighthouse from "@lighthouse-web3/sdk";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
+  const imageUrl =
+    "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
 
   // ----------------- NFT Storage -----------------
   // const storeNFT = async () => {
@@ -64,7 +66,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // ----------------- Pinata -----------------
 
   return NextResponse.json(
-    { MetadataPath: await uploadMetadataToIpfs() },
+    { MetadataPath: await uploadMetadataToIpfs(imageUrl) },
     { status: 200, headers: { "Content-Type": "application/json" } }
   );
 }
