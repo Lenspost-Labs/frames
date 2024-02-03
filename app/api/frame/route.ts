@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { ethers } from "ethers";
 import abi from "../../../abi.json";
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
-// import lighthouse from "@lighthouse-web3/sdk";
+import { config } from "@/config/config";
+import { writeContract } from "@wagmi/core";
+import { wagmiConfig } from "@/config/wagmi";
+import { polygonMumbai } from "@wagmi/core/chains";
+import { privateKeyToAccount } from "viem/accounts";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -20,14 +24,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
-    neynarApiKey: process.env.NEYNAR_API_KEY || "",
+    neynarApiKey: config?.neynar?.apiKey,
   });
 
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
   } else {
-    status = 400;
-    return new NextResponse("Invalid request", { status });
+    return new NextResponse("No wallet found", { status });
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
@@ -37,12 +40,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // redirect to Lenspost --> (redirect url should be same as host url)
   if (message?.button === 2) {
     console.log("redirecting to Lenspost");
-    return NextResponse.redirect(
-      "https://test-frame-app5.vercel.app/redirect",
-      {
-        status: 302,
-      }
-    );
+    return NextResponse.redirect(`${config?.APP_URL}/redirect`, {
+      status: 302,
+    });
   }
 
   // check if post is liked | recasted | following
@@ -51,39 +51,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //   return new NextResponse(`User didn't like or recast or follow the post`);
   // }
 
-  // ----- NFT minting logic goes here -----
-
-  // Wallet private key
-  const privateKey = process.env.WALLET_PRIVATE_KEY || "";
-
-  // Contract address
-  const contractAddress = "0x364fEa7309c2364453C01Adcba2058BAF9747A13";
-
-  // Network provider (e.g., Infura)
-  const provider = new ethers.JsonRpcProvider(
-    "https://polygon-mumbai.infura.io/v3/204efb1ccc384775857ef27ec34795e8"
-  );
-
-  // Wallet instance
-  const wallet = new ethers.Wallet(privateKey, provider);
-
   try {
-    // Contract instance
-    const contract = new ethers.Contract(contractAddress, abi, wallet);
+    // NFT minting
+    const result = await writeContract(wagmiConfig, {
+      abi,
+      address: config?.contractAddress as `0x${string}`,
+      functionName: "mint",
+      args: [accountAddress, tokenUri],
+      account: privateKeyToAccount(config?.wallet as `0x${string}`),
+      chainId: polygonMumbai?.id,
+    });
 
-    // Address to mint the NFT to
-    const toAddress = accountAddress;
-
-    // Token URI
-    const tokenURI = tokenUri;
-
-    // Mint NFT
-    const tx = await contract.mint(toAddress, tokenURI);
-
-    // Wait for the transaction to be mined
-    await tx.wait();
-
-    console.log("NFT minted successfully!", tx?.hash);
+    console.log("NFT minted successfully!", result);
 
     btnText = "Mint Again";
 
@@ -115,60 +94,3 @@ export async function POST(req: NextRequest): Promise<Response> {
 }
 
 export const dynamic = "force-dynamic";
-
-//  ----- upload to IPFS -----
-
-// get the image blob
-// const getImageBlob = async (imageUrl: string) => {
-//   const response = await fetch(imageUrl);
-//   const arrayBuffer = await response.arrayBuffer();
-//   const blob = Buffer.from(arrayBuffer);
-
-//   return blob;
-// };
-
-// upload image to IPFS
-// const uploadMediaToIpfs = async (imageUrl: string) => {
-//   const blobImage = await getImageBlob(imageUrl);
-//   console.log("imageUrl-> ", blobImage);
-
-//   try {
-//     const result = await lighthouse.uploadBuffer(
-//       blobImage,
-//       process.env.LIGHTHOUSE_API_KEY || ""
-//     );
-
-//     console.log("result-> ", result?.data);
-
-//     return result.data.Hash;
-//   } catch (error) {
-//     console.log("Error uploading image to IPFS-> ", error);
-//   }
-// };
-
-// upload metadata (JSON text) to IPFS
-// const uploadMetadata = async (imageUrl: string) => {
-//   const imageHash = await uploadMediaToIpfs(imageUrl);
-//   console.log("imageHash-> ", imageHash);
-
-//   try {
-//     const metadata = {
-//       name: "my NFT",
-//       description: "my NFT description",
-//       image: `ipfs://${imageHash}`,
-//     };
-
-//     let { data } = await lighthouse.uploadText(
-//       JSON.stringify(metadata),
-//       process.env.LIGHTHOUSE_API_KEY || ""
-//     );
-
-//     console.log("uploadMetadata-> ", data);
-
-//     return data.Hash;
-//   } catch (error) {
-//     console.log("Error uploading metadata to IPFS-> ", error);
-//   }
-// };
-
-//  ----- upload to IPFS -----

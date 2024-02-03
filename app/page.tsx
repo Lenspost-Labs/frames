@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata } from "next";
-import { APP_URL } from "@/constants";
+import { config } from "@/config/config";
 
 const imageUrl =
   "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
@@ -16,7 +16,7 @@ const frameMetadata = getFrameMetadata({
     },
   ],
   image: imageUrl,
-  post_url: `https://test-frame-app6.vercel.app/api/frame?image=${imageUrl}&tokenUri=${tokenUri}`,
+  post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}&tokenUri=${tokenUri}`,
 });
 
 export const metadata: Metadata = {
