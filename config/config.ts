@@ -7,5 +7,5 @@ export const config = {
   contractAddress: (process.env.SMART_CONTRACT as `0x${string}`) || "",
   wallet: (`0x${process.env.WALLET_PRIVATE_KEY}` as Hex) || undefined,
 
-  APP_URL: process.env.APP_URL || "https://test-frame-app8.vercel.app",
+  APP_URL: process.env.APP_URL || "https://test-frame-app9.vercel.app",
 };
