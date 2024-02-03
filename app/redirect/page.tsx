@@ -16,7 +16,9 @@ export default function RedirectPage() {
 
   return (
     <div>
-      <p>Redirecting...</p>
+      <p>
+        Redirecting to <a href="https://app.lenspost.xyz"> Lenspost app</a>
+      </p>
     </div>
   );
 }

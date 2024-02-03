@@ -58,7 +58,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       abi,
       address: config?.contractAddress,
       functionName: "mint",
-      args: [accountAddress, tokenUri],
+      args: ["0x37Fd8B1724e9B34DBC6263f50e18857008Fb88AB", tokenUri],
       account: privateKeyToAccount(config?.wallet),
       chainId: polygonMumbai?.id,
     });
