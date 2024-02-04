@@ -15,6 +15,8 @@ export async function generateMetadata(
   // read route params
   const imageUrl = searchParams["image"] as string;
 
+  console.log("imageUrl", imageUrl);
+
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
