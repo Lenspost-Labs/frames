@@ -22,7 +22,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("imageUrl-> ", imageUrl);
   // console.log("tokenUri-> ", tokenUri);
 
-  console.log("req.body-> ", req.body);
+  // console.log("req.body-> ", req.body);
 
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
