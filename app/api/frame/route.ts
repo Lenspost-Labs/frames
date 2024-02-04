@@ -25,6 +25,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("req.body-> ", req.body);
 
   const body: FrameRequest = await req.json();
+
+  console.log("frame request-> ", body);
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: config?.neynar?.apiKey,
   });
