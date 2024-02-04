@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata, ResolvingMetadata } from "next";
 import { config } from "@/config/config";
+import axios from "axios";
 
 type Props = {
   params: { id: string };
@@ -16,6 +17,14 @@ export async function generateMetadata(
   const id = params.id;
   console.log("id", id);
 
+  const res = await axios.get(
+    `https://lenspost-development.up.railway.app/util/get-image-canvas?id=${id}`
+  );
+
+  const { message } = res.data;
+
+  console.log("imageUrl-->", message);
+
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
@@ -23,7 +32,7 @@ export async function generateMetadata(
       },
     ],
     // image: `${config?.APP_URL}/api/image?id=${id}`,
-    image: "https://lenspost.s3.ap-south-1.amazonaws.com/user/19/canvases/19975-0.png",
+    image: message,
     post_url: `${config?.APP_URL}/api/frame?id=${id}`,
   });
 
@@ -33,8 +42,8 @@ export async function generateMetadata(
     openGraph: {
       title: "Frames Lenspost",
       description: "Share farcater frames from Lenspost",
-    //   images: [`/api/image?id=${id}`],
-      images: ["https://lenspost.s3.ap-south-1.amazonaws.com/user/19/canvases/19975-0.png"],
+      //   images: [`/api/image?id=${id}`],
+      images: [message],
     },
     other: {
       ...frameMetadata,
