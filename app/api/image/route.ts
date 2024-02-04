@@ -17,13 +17,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const { message } = res.data;
 
-  // const img = Buffer.from(message);
+  const img = Buffer.from(message);
 
-  console.log("imageUrl-> ", message);
+  console.log("imageUrl-> ", img);
 
   return NextResponse.json(
     {
-      message,
+      img,
     },
     {
       status: 200,
