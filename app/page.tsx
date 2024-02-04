@@ -1,36 +1,72 @@
 import { NextPage } from "next";
 import { getFrameMetadata } from "@coinbase/onchainkit";
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { config } from "@/config/config";
 
-const imageUrl =
-  "https://lenspost.s3.ap-south-1.amazonaws.com/user/109/canvases/19942-0.png";
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
-const tokenUri =
-  "https://ipfs.io/ipfs/Qmey27iWG41PTiSgdiCbkk7eQet632LhCmwVzXhuJy4kg8";
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const imageUrl = searchParams["image"] as string;
 
-const frameMetadata = getFrameMetadata({
-  buttons: [
-    {
-      label: "Mint",
-    },
-  ],
-  image: imageUrl,
-  post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
-});
+  const frameMetadata = getFrameMetadata({
+    buttons: [
+      {
+        label: "Mint",
+      },
+    ],
+    image: imageUrl,
+    post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
+  });
 
-export const metadata: Metadata = {
-  title: "Frames Lenspost",
-  description: "Share farcater frames from Lenspost",
-  openGraph: {
+  return {
     title: "Frames Lenspost",
     description: "Share farcater frames from Lenspost",
-    images: [imageUrl],
-  },
-  other: {
-    ...frameMetadata,
-  },
-};
+    openGraph: {
+      title: "Frames Lenspost",
+      description: "Share farcater frames from Lenspost",
+      images: [imageUrl],
+    },
+    other: {
+      ...frameMetadata,
+    },
+  };
+}
+
+// const imageUrl =
+//   "https://lenspost.s3.ap-south-1.amazonaws.com/user/109/canvases/19942-0.png";
+
+// const tokenUri =
+//   "https://ipfs.io/ipfs/Qmey27iWG41PTiSgdiCbkk7eQet632LhCmwVzXhuJy4kg8";
+
+// const frameMetadata = getFrameMetadata({
+//   buttons: [
+//     {
+//       label: "Mint",
+//     },
+//   ],
+//   image: imageUrl,
+//   post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
+// });
+
+// export const metadata: Metadata = {
+//   title: "Frames Lenspost",
+//   description: "Share farcater frames from Lenspost",
+//   openGraph: {
+//     title: "Frames Lenspost",
+//     description: "Share farcater frames from Lenspost",
+//     images: [imageUrl],
+//   },
+//   other: {
+//     ...frameMetadata,
+//   },
+// };
 
 const Home: NextPage = () => {
   return (
