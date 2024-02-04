@@ -28,7 +28,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     {
       status: 200,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "image/png",
       },
     }
   );
