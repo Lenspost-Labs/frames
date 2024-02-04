@@ -17,18 +17,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const { message } = res.data;
 
-  const img = Buffer.from(message);
+  // const img = Buffer.from(message);
 
-  console.log("imageUrl-> ", img);
+  console.log("imageUrl-> ", message);
 
   return NextResponse.json(
     {
-      img,
+      message,
     },
     {
       status: 200,
       headers: {
-        "Content-Type": "image/png",
+        "Content-Type": "application/json",
       },
     }
   );

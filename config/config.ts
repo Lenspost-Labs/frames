@@ -9,5 +9,5 @@ export const config = {
 
   pinataJwtKey: process.env.PINATA_JWT_KEY || "",
 
-  APP_URL: process.env.APP_URL || "https://test-frame-app17.vercel.app",
+  APP_URL: process.env.APP_URL || "https://test-frame-app18.vercel.app",
 };

@@ -14,6 +14,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   // read route params
   const id = params.id;
+  console.log("id", id);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
