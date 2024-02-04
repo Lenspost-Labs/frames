@@ -4,6 +4,8 @@ import { NFTStorage, File } from "nft.storage";
 import PinataClient from "@pinata/sdk";
 import lighthouse from "@lighthouse-web3/sdk";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
+import { Readable } from "stream";
+import axios from "axios";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imageUrl =
@@ -32,41 +34,55 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // ----------------- NFT Storage -----------------
 
   // ----------------- Pinata -----------------
-  // const pinata = new PinataClient({
-  //   pinataJWTKey: process.env.PINATA_JWT_KEY,
-  // });
+  const res = await fetch(imageUrl);
+  const arrayBuffer = await res.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  const stream = Readable.from(buffer);
 
-  // const imageFileToIpfs = async () => {
-  //   const cid = await pinata.pinFileToIPFS(myBlob, {
-  //     pinataMetadata: {
-  //       name: "My NFT",
-  //     },
-  //     pinataOptions: {
-  //       cidVersion: 0,
-  //     },
-  //   });
+  const pinata = new PinataClient({
+    pinataJWTKey: process.env.PINATA_JWT_KEY,
+  });
 
-  //   return `https://ipfs.io/ipfs/${cid.IpfsHash}`;
-  // };
+  const imageFileToIpfs = async () => {
+    try {
+      const cid = await pinata.pinFileToIPFS(stream, {
+        pinataMetadata: {
+          name: "My NFT",
+        },
+        pinataOptions: {
+          cidVersion: 0,
+        },
+      });
+
+      return cid.IpfsHash;
+    } catch (error) {
+      console.log("Error uploading media to IPFS-> ", error);
+    }
+  };
 
   // console.log("imageFileToIpfs-> ", await imageFileToIpfs());
 
-  // const uploadToIPFS = async () => {
-  //   const metadata = {
-  //     name: "My NFT",
-  //     description: "My NFT description",
-  //     image: myBlob,
-  //   };
-  //   const cid = await pinata.pinJSONToIPFS(metadata);
-  //   return `https://ipfs.io/ipfs/${cid.IpfsHash}`;
-  // };
+  const uploadToIPFS = async () => {
+    const metadata = {
+      name: "My NFT",
+      description: "My NFT description",
+      image: "ipfs://" + (await imageFileToIpfs()),
+    };
+
+    try {
+      const cid = await pinata.pinJSONToIPFS(metadata);
+      return `https://ipfs.io/ipfs/${cid.IpfsHash}`;
+    } catch (error) {
+      console.log("Error uploading metadata to IPFS-> ", error);
+    }
+  };
 
   // console.log("metadata-> ", await uploadToIPFS());
 
   // ----------------- Pinata -----------------
 
   return NextResponse.json(
-    { MetadataPath: await uploadMetadataToIpfs(imageUrl) },
+    { MetadataPath: await uploadToIPFS() },
     { status: 200, headers: { "Content-Type": "application/json" } }
   );
 }
