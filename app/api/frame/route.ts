@@ -22,30 +22,30 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("imageUrl-> ", imageUrl);
   // console.log("tokenUri-> ", tokenUri);
 
-  // console.log("req.body-> ", req.body);
+  console.log("req.body-> ", req.body);
 
-  // const body: FrameRequest = await req.json();
-  // const { isValid, message } = await getFrameMessage(body, {
-  //   neynarApiKey: config?.neynar?.apiKey,
-  // });
+  const body: FrameRequest = await req.json();
+  const { isValid, message } = await getFrameMessage(body, {
+    neynarApiKey: config?.neynar?.apiKey,
+  });
 
-  // if (isValid) {
-  //   accountAddress = message.interactor.verified_accounts[0];
-  // } else {
-  //   return new NextResponse("No wallet found", { status });
-  // }
+  if (isValid) {
+    accountAddress = message.interactor.verified_accounts[0];
+  } else {
+    return new NextResponse("No wallet found", { status });
+  }
 
-  // console.log("Extracted address from FID-> ", accountAddress);
+  console.log("Extracted address from FID-> ", accountAddress);
 
-  // console.log("frame message-> ", message);
+  console.log("frame message-> ", message);
 
   // redirect to Lenspost --> (redirect url should be same as host url)
-  // if (message?.button === 2) {
-  //   console.log("redirecting to Lenspost", config?.APP_URL + "/redirect");
-  //   return NextResponse.redirect(config?.APP_URL + "/redirect", {
-  //     status: 302,
-  //   });
-  // }
+  if (message?.button === 2) {
+    console.log("redirecting to Lenspost", config?.APP_URL + "/redirect");
+    return NextResponse.redirect(config?.APP_URL + "/redirect", {
+      status: 302,
+    });
+  }
 
   // check if post is liked | recasted | following
   // if (!message?.liked || !message?.recasted || !message?.following) {

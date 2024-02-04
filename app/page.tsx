@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { config } from "@/config/config";
 
 const imageUrl =
-  "https://lenspost.s3.ap-south-1.amazonaws.com/user/58/canvases/19242-0.png";
+  "https://lenspost.s3.ap-south-1.amazonaws.com/user/109/canvases/19942-0.png";
 
 const tokenUri =
   "https://ipfs.io/ipfs/Qmey27iWG41PTiSgdiCbkk7eQet632LhCmwVzXhuJy4kg8";
