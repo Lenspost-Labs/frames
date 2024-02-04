@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { NFTStorage, File } from "nft.storage";
 import PinataClient from "@pinata/sdk";
 import lighthouse from "@lighthouse-web3/sdk";
-import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
+// import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
 import { Readable } from "stream";
 import axios from "axios";
 
@@ -34,16 +34,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // ----------------- NFT Storage -----------------
 
   // ----------------- Pinata -----------------
-  const res = await fetch(imageUrl);
-  const arrayBuffer = await res.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-  const stream = Readable.from(buffer);
-
+  
   const pinata = new PinataClient({
     pinataJWTKey: process.env.PINATA_JWT_KEY,
   });
-
+  
   const imageFileToIpfs = async () => {
+    const res = await fetch(imageUrl);
+    const arrayBuffer = await res.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const stream = Readable.from(buffer);
     try {
       const cid = await pinata.pinFileToIPFS(stream, {
         pinataMetadata: {

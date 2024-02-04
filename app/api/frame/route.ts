@@ -54,37 +54,32 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // }
 
   const tokenUri = await uploadMetadataToIpfs(imageUrl);
-
   console.log("tokenUri-> ", tokenUri);
 
   try {
     // NFT minting
-    // const result = await writeContract(wagmiConfig, {
-    //   abi,
-    //   address: config?.contractAddress,
-    //   functionName: "mint",
-    //   args: ["0x37Fd8B1724e9B34DBC6263f50e18857008Fb88AB", tokenUri],
-    //   account: privateKeyToAccount(config?.wallet),
-    //   chainId: polygonMumbai?.id,
-    // });
+    const result = await writeContract(wagmiConfig, {
+      abi,
+      address: config?.contractAddress,
+      functionName: "mint",
+      args: ["0x37Fd8B1724e9B34DBC6263f50e18857008Fb88AB", tokenUri],
+      account: privateKeyToAccount(config?.wallet),
+      chainId: polygonMumbai?.id,
+    });
 
-    // console.log("NFT minted successfully!", result);
+    console.log("NFT minted successfully!", result);
 
     btnText = "Mint Again";
 
-    return NextResponse.json({
-      MetadataPath: tokenUri,
-    });
-
-    // return new NextResponse(`
-    //     <!DOCTYPE html><html><head>
-    //     <meta property="fc:frame" content="vNext" />
-    //     <meta property="fc:frame:image" content="${imageUrl}" />
-    //     <meta property="fc:frame:button:1" content="${btnText}" />
-    //     <meta property="fc:frame:button:2" content="Check Lenspost" />
-    //     <meta property="fc:frame:button:2:action" content="post_redirect">
-    //   </head></html>
-    //     `);
+    return new NextResponse(`
+        <!DOCTYPE html><html><head>
+        <meta property="fc:frame" content="vNext" />
+        <meta property="fc:frame:image" content="${imageUrl}" />
+        <meta property="fc:frame:button:1" content="${btnText}" />
+        <meta property="fc:frame:button:2" content="Check Lenspost" />
+        <meta property="fc:frame:button:2:action" content="post_redirect">
+      </head></html>
+        `);
   } catch (error) {
     console.log("Error minting NFT-> ", error);
     btnText = "Try Again";

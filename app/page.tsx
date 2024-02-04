@@ -16,7 +16,7 @@ const frameMetadata = getFrameMetadata({
     },
   ],
   image: imageUrl,
-  post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}&tokenUri=${tokenUri}`,
+  post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
 });
 
 const metadata: Metadata = {
