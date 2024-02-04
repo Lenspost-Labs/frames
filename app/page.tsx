@@ -9,28 +9,28 @@ const imageUrl =
 const tokenUri =
   "https://ipfs.io/ipfs/Qmey27iWG41PTiSgdiCbkk7eQet632LhCmwVzXhuJy4kg8";
 
-// const frameMetadata = getFrameMetadata({
-//   buttons: [
-//     {
-//       label: "Mint",
-//     },
-//   ],
-//   image: imageUrl,
-//   post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
-// });
+const frameMetadata = getFrameMetadata({
+  buttons: [
+    {
+      label: "Mint",
+    },
+  ],
+  image: imageUrl,
+  post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
+});
 
-// export const metadata: Metadata = {
-//   title: "Frames Lenspost",
-//   description: "Share farcater frames from Lenspost",
-//   openGraph: {
-//     title: "Frames Lenspost",
-//     description: "Share farcater frames from Lenspost",
-//     images: [imageUrl],
-//   },
-//   other: {
-//     ...frameMetadata,
-//   },
-// };
+export const metadata: Metadata = {
+  title: "Frames Lenspost",
+  description: "Share farcater frames from Lenspost",
+  openGraph: {
+    title: "Frames Lenspost",
+    description: "Share farcater frames from Lenspost",
+    images: [imageUrl],
+  },
+  other: {
+    ...frameMetadata,
+  },
+};
 
 const Home: NextPage = () => {
   return (

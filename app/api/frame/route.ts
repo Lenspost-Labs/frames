@@ -22,57 +22,56 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("imageUrl-> ", imageUrl);
   // console.log("tokenUri-> ", tokenUri);
 
-  if (req?.method === "POST") {
-    // console.log("req.body-> ", req.body);
+  // console.log("req.body-> ", req.body);
 
-    const body: FrameRequest = await req.json();
-    const { isValid, message } = await getFrameMessage(body, {
-      neynarApiKey: config?.neynar?.apiKey,
+  const body: FrameRequest = await req.json();
+  const { isValid, message } = await getFrameMessage(body, {
+    neynarApiKey: config?.neynar?.apiKey,
+  });
+
+  if (isValid) {
+    accountAddress = message.interactor.verified_accounts[0];
+  } else {
+    return new NextResponse("No wallet found", { status });
+  }
+
+  console.log("Extracted address from FID-> ", accountAddress);
+
+  console.log("frame message-> ", message);
+
+  // redirect to Lenspost --> (redirect url should be same as host url)
+  if (message?.button === 2) {
+    console.log("redirecting to Lenspost", config?.APP_URL + "/redirect");
+    return NextResponse.redirect(config?.APP_URL + "/redirect", {
+      status: 302,
+    });
+  }
+
+  // check if post is liked | recasted | following
+  // if (!message?.liked || !message?.recasted || !message?.following) {
+  //   console.log("User didn't like or recasted or following");
+  //   return new NextResponse(`User didn't like or recast or follow the post`);
+  // }
+
+  const tokenUri = await uploadMetadataToIpfs(imageUrl);
+  console.log("tokenUri-> ", tokenUri);
+
+  try {
+    // NFT minting
+    const result = await writeContract(wagmiConfig, {
+      abi,
+      address: config?.contractAddress,
+      functionName: "mint",
+      args: [accountAddress, tokenUri],
+      account: privateKeyToAccount(config?.wallet),
+      chainId: polygonMumbai?.id,
     });
 
-    if (isValid) {
-      accountAddress = message.interactor.verified_accounts[0];
-    } else {
-      return new NextResponse("No wallet found", { status });
-    }
+    console.log("NFT minted successfully!", result);
 
-    console.log("Extracted address from FID-> ", accountAddress);
+    btnText = "Mint Again";
 
-    console.log("frame message-> ", message);
-
-    // redirect to Lenspost --> (redirect url should be same as host url)
-    if (message?.button === 2) {
-      console.log("redirecting to Lenspost", config?.APP_URL + "/redirect");
-      return NextResponse.redirect(config?.APP_URL + "/redirect", {
-        status: 302,
-      });
-    }
-
-    // check if post is liked | recasted | following
-    // if (!message?.liked || !message?.recasted || !message?.following) {
-    //   console.log("User didn't like or recasted or following");
-    //   return new NextResponse(`User didn't like or recast or follow the post`);
-    // }
-
-    const tokenUri = await uploadMetadataToIpfs(imageUrl);
-    console.log("tokenUri-> ", tokenUri);
-
-    try {
-      // NFT minting
-      const result = await writeContract(wagmiConfig, {
-        abi,
-        address: config?.contractAddress,
-        functionName: "mint",
-        args: [accountAddress, tokenUri],
-        account: privateKeyToAccount(config?.wallet),
-        chainId: polygonMumbai?.id,
-      });
-
-      console.log("NFT minted successfully!", result);
-
-      btnText = "Mint Again";
-
-      return new NextResponse(`
+    return new NextResponse(`
           <!DOCTYPE html><html><head>
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="${imageUrl}" />
@@ -81,21 +80,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           <meta property="fc:frame:button:2:action" content="post_redirect">
         </head></html>
           `);
-    } catch (error) {
-      console.log("Error minting NFT-> ", error);
-      btnText = "Try Again";
-      return new NextResponse(`
-      <!DOCTYPE html><html><head>
-      <meta property="fc:frame" content="vNext" />
-      <meta property="fc:frame:image" content="${imageUrl}" />
-      <meta property="fc:frame:button:1" content="${btnText}" />
-    </head></html>
-      `);
-    }
-  } else {
-    console.log("GET request");
-
-    btnText = "Mint NFT";
+  } catch (error) {
+    console.log("Error minting NFT-> ", error);
+    btnText = "Try Again";
     return new NextResponse(`
       <!DOCTYPE html><html><head>
       <meta property="fc:frame" content="vNext" />
