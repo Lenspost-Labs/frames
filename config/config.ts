@@ -11,5 +11,5 @@ export const config = {
   lightHouseApiKey: process.env.LIGHTHOUSE_API_KEY || "",
   pinataJwtKey: process.env.PINATA_JWT_KEY || "",
 
-  APP_URL: process.env.APP_URL || "https://test-frame-app13.vercel.app",
+  APP_URL: process.env.APP_URL || "https://test-frame-app14.vercel.app",
 };
