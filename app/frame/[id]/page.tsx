@@ -14,14 +14,29 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   // read route params
   const id = params.id;
-  const imageUrl = searchParams["image"];
+
+  const frameMetadata = getFrameMetadata({
+    buttons: [
+      {
+        label: "Mint",
+      },
+    ],
+    image: `${config?.APP_URL}/api/frame?id=${id}`,
+    post_url: `${config?.APP_URL}/api/frame?id=${id}`,
+  });
 
   return {
     title: "Frames Lenspost",
+    description: "Share farcater frames from Lenspost",
     openGraph: {
       title: "Frames Lenspost",
-      images: [`/api/image?id=${id}`],
+      description: "Share farcater frames from Lenspost",
+      images: [`/api/frame?id=${id}`],
     },
+    other: {
+      ...frameMetadata,
+    },
+    metadataBase: new URL(config?.APP_URL || ""),
   };
 }
 
