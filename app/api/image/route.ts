@@ -9,6 +9,7 @@ import axios from "axios";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const canvasID = req.nextUrl.searchParams.get("id");
+  console.log("canvasID-> ", canvasID);
 
   const res = await axios.get(
     `https://lenspost-development.up.railway.app/util/get-image-canvas?id=${canvasID}`
