@@ -16,17 +16,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const searchParams = req.nextUrl.searchParams;
   const imageUrl = searchParams.get("image") || "";
-  // const imageUrl = decodeURIComponent(imageUrlParam);
-  // const tokenUri = searchParams.get("tokenUri") || "";
 
   console.log("imageUrl-> ", imageUrl);
-  // console.log("tokenUri-> ", tokenUri);
 
   console.log("req.body-> ", req.body);
 
   const body: FrameRequest = await req.json();
-
-  console.log("frame request-> ", body);
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: config?.neynar?.apiKey,
   });
@@ -34,7 +29,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
   } else {
-    return new NextResponse("No wallet found", { status });
+    return new NextResponse("No wallet found");
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
