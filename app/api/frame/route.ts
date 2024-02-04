@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ethers } from "ethers";
-import abi from "../../../abi.json";
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
 import { writeContract } from "@wagmi/core";
@@ -8,6 +6,7 @@ import { wagmiConfig } from "@/config/wagmi";
 import { polygonMumbai } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
+import { abi, contractAddress } from "@/contract/contract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -56,8 +55,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   try {
     // NFT minting
     const result = await writeContract(wagmiConfig, {
-      abi,
-      address: config?.contractAddress,
+      abi: abi,
+      address: contractAddress,
       functionName: "mint",
       args: [accountAddress, tokenUri],
       account: privateKeyToAccount(config?.wallet),
