@@ -19,7 +19,7 @@ const frameMetadata = getFrameMetadata({
   post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
 });
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   title: "Frames Lenspost",
   description: "Share farcater frames from Lenspost",
   openGraph: {
