@@ -1,4 +1,3 @@
-"use client";
 import { NextPage } from "next";
 import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata } from "next";
@@ -34,16 +33,6 @@ const metadata: Metadata = {
 };
 
 const Home: NextPage = () => {
-  const handlePost = async () => {
-    const res = await fetch(`/api/frame?image=${imageUrl}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    console.log("res", res);
-  };
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-12 p-24">
       <h1 className="font-bold text-5xl">Frames Lenspost</h1>
@@ -63,8 +52,6 @@ const Home: NextPage = () => {
           A web3 onchain canvas.
         </p>
       </a>
-
-      <button onClick={handlePost}>Post</button>
     </main>
   );
 };
