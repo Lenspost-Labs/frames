@@ -66,6 +66,7 @@ export async function generateMetadata(
     other: {
       ...frameMetadata,
     },
+    metadataBase: new URL(config?.APP_URL || '')
   };
 }
 
