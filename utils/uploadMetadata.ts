@@ -30,7 +30,7 @@ const imageFileToIpfs = async (imageUrl: string) => {
 export const uploadMetadataToIpfs = async (imageUrl: string) => {
   const metadata = {
     name: "My NFT",
-    description: "My NFT description",
+    description: "Awsome NFT from Frames Lenspost",
     image: "ipfs://" + (await imageFileToIpfs(imageUrl)),
   };
 
