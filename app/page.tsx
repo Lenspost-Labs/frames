@@ -32,44 +32,6 @@ import { config } from "@/config/config";
 //   },
 // };
 
-type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  // read route params
-  const id = params.id;
-  const imageUrl = searchParams["image"] as string;
-
-  const frameMetadata = getFrameMetadata({
-    buttons: [
-      {
-        label: "Mint",
-      },
-    ],
-    image: imageUrl,
-    post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
-  });
-
-  return {
-    title: "Frames Lenspost",
-    description: "Share farcater frames from Lenspost",
-    openGraph: {
-      title: "Frames Lenspost",
-      description: "Share farcater frames from Lenspost",
-      images: [imageUrl],
-    },
-    other: {
-      ...frameMetadata,
-    },
-    metadataBase: new URL(config?.APP_URL || '')
-  };
-}
-
 const Home: NextPage = () => {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-12 p-24">
