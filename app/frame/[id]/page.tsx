@@ -21,7 +21,7 @@ export async function generateMetadata(
         label: "Mint",
       },
     ],
-    image: `${config?.APP_URL}/api/frame?id=${id}`,
+    image: `${config?.APP_URL}/api/image?id=${id}`,
     post_url: `${config?.APP_URL}/api/frame?id=${id}`,
   });
 
@@ -31,7 +31,7 @@ export async function generateMetadata(
     openGraph: {
       title: "Frames Lenspost",
       description: "Share farcater frames from Lenspost",
-      images: [`/api/frame?id=${id}`],
+      images: [`/api/image?id=${id}`],
     },
     other: {
       ...frameMetadata,
