@@ -22,7 +22,8 @@ export async function generateMetadata(
         label: "Mint",
       },
     ],
-    image: `${config?.APP_URL}/api/image?id=${id}`,
+    // image: `${config?.APP_URL}/api/image?id=${id}`,
+    image: "https://lenspost.s3.ap-south-1.amazonaws.com/user/19/canvases/19975-0.png",
     post_url: `${config?.APP_URL}/api/frame?id=${id}`,
   });
 
@@ -32,7 +33,8 @@ export async function generateMetadata(
     openGraph: {
       title: "Frames Lenspost",
       description: "Share farcater frames from Lenspost",
-      images: [`/api/image?id=${id}`],
+    //   images: [`/api/image?id=${id}`],
+      images: ["https://lenspost.s3.ap-south-1.amazonaws.com/user/19/canvases/19975-0.png"],
     },
     other: {
       ...frameMetadata,
