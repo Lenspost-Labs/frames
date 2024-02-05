@@ -6,7 +6,7 @@ import { wagmiConfig } from "@/config/wagmi";
 import { polygonMumbai } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
-import { abi, contractAddress } from "@/contract/Testcontract";
+import { testAbi, testContractAddress } from "@/contract/Testcontract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -36,7 +36,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("frame message-> ", message);
 
   // redirect to Tx explorer --> (redirect url should be same as host url)
-  if (message?.button === 1) {
+  if (txHash && message?.button === 1) {
     console.log(
       "redirecting to explorer",
       `https://mumbai.polygonscan.com/tx/${txHash}`
@@ -66,8 +66,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   try {
     // NFT minting
     const result = await writeContract(wagmiConfig, {
-      abi: abi,
-      address: contractAddress,
+      abi: testAbi,
+      address: testContractAddress,
       functionName: "mint",
       args: [accountAddress, tokenUri],
       account: privateKeyToAccount(config?.wallet),
