@@ -3,7 +3,7 @@ import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
 import { writeContract } from "@wagmi/core";
 import { wagmiConfig } from "@/config/wagmi";
-import { polygonMumbai } from "@wagmi/core/chains";
+import { base } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
 import { BaseAbi, BaseContractAddress } from "@/contract/BaseContract";
@@ -75,7 +75,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       functionName: "mint",
       args: [accountAddress, tokenUri],
       account: privateKeyToAccount(config?.wallet),
-      chainId: polygonMumbai?.id,
+      chainId: base?.id,
     });
 
     console.log("NFT minted successfully!", result);
