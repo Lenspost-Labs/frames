@@ -12,7 +12,7 @@ export default function RedirectPage() {
   const params = useParams();
 
   useEffect(() => {
-    const appUrl = `https://mumbai.polygonscan.com/tx/${params?.id}`;
+    const appUrl = `https://mumbai.polygonscan.com/address/${params?.id}`;
 
     // Perform the redirect
     window.location.href = appUrl; // For a full page reload redirect

@@ -1,8 +1,6 @@
-// polygon mumbai
+export const BaseContractAddress = "0x769C1417485ad9d74FbB27F4be47890Fd00A96ad";
 
-export const TestContractAddress = "0xe4C9139bA8B6D314200Ea3Fb20d645e20eB8D11d";
-
-export const TestAbi = [
+export const BaseAbi = [
   {
     inputs: [],
     stateMutability: "nonpayable",

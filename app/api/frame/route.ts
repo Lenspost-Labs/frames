@@ -6,12 +6,13 @@ import { wagmiConfig } from "@/config/wagmi";
 import { polygonMumbai } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
-import { testAbi, testContractAddress } from "@/contract/Testcontract";
+import { BaseAbi, BaseContractAddress } from "@/contract/BaseContract";
+import { TestAbi, TestContractAddress } from "@/contract/Testcontract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
-  let txHash: string | undefined = "";
+  // let txHash: string | undefined = "";
 
   const searchParams = req.nextUrl.searchParams;
   const imageUrl = searchParams.get("image") || "";
@@ -36,18 +37,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("frame message-> ", message);
 
   // redirect to Tx explorer --> (redirect url should be same as host url)
-  if (txHash && message?.button === 1) {
+  if (message?.button === 2) {
     console.log(
       "redirecting to explorer",
-      `https://mumbai.polygonscan.com/tx/${txHash}`
+      `https://mumbai.polygonscan.com/tx/${accountAddress}`
     );
-    return NextResponse.redirect(config?.APP_URL + "/redirect/" + txHash, {
-      status: 302,
-    });
+    return NextResponse.redirect(
+      config?.APP_URL + "/redirect/" + accountAddress,
+      {
+        status: 302,
+      }
+    );
   }
 
   // redirect to Lenspost --> (redirect url should be same as host url)
-  if (message?.button === 2) {
+  if (message?.button === 3) {
     console.log("redirecting to Lenspost", config?.APP_URL + "/redirect");
     return NextResponse.redirect(config?.APP_URL + "/redirect", {
       status: 302,
@@ -66,26 +70,25 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   try {
     // NFT minting
     const result = await writeContract(wagmiConfig, {
-      abi: testAbi,
-      address: testContractAddress,
+      abi: TestAbi,
+      address: TestContractAddress,
       functionName: "mint",
       args: [accountAddress, tokenUri],
       account: privateKeyToAccount(config?.wallet),
       chainId: polygonMumbai?.id,
     });
 
-    txHash = result;
-
     console.log("NFT minted successfully!", result);
 
-    btnText = "View tx";
+    btnText = "Minted";
 
     return new NextResponse(`
           <!DOCTYPE html><html><head>
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="${imageUrl}" />
           <meta property="fc:frame:button:1" content="${btnText}" />
-          <meta property="fc:frame:button:1:action" content="post_redirect">
+          <meta property="fc:frame:button:2" content="View Tx" />
+          <meta property="fc:frame:button:2:action" content="post_redirect">
           <meta property="fc:frame:button:2" content="Remix on Lenspost" />
           <meta property="fc:frame:button:2:action" content="post_redirect">
         </head>
