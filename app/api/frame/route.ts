@@ -11,7 +11,7 @@ import { abi, contractAddress } from "@/contract/Testcontract";
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
-  let status: any;
+  let txHash: string | undefined = "";
 
   const searchParams = req.nextUrl.searchParams;
   const imageUrl = searchParams.get("image") || "";
@@ -34,6 +34,17 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("Extracted address from FID-> ", accountAddress);
 
   console.log("frame message-> ", message);
+
+  // redirect to Tx explorer --> (redirect url should be same as host url)
+  if (message?.button === 1) {
+    console.log(
+      "redirecting to explorer",
+      `https://mumbai.polygonscan.com/tx/${txHash}`
+    );
+    return NextResponse.redirect(config?.APP_URL + "/redirect/" + txHash, {
+      status: 302,
+    });
+  }
 
   // redirect to Lenspost --> (redirect url should be same as host url)
   if (message?.button === 2) {
@@ -63,16 +74,19 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       chainId: polygonMumbai?.id,
     });
 
+    txHash = result;
+
     console.log("NFT minted successfully!", result);
 
-    btnText = "Mint Again";
+    btnText = "View tx";
 
     return new NextResponse(`
           <!DOCTYPE html><html><head>
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="${imageUrl}" />
           <meta property="fc:frame:button:1" content="${btnText}" />
-          <meta property="fc:frame:button:2" content="Check Lenspost" />
+          <meta property="fc:frame:button:2:action" content="post_redirect">
+          <meta property="fc:frame:button:2" content="Remix on Lenspost" />
           <meta property="fc:frame:button:2:action" content="post_redirect">
         </head>
         <body>
