@@ -37,21 +37,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("frame message-> ", message);
 
   // redirect to Tx explorer --> (redirect url should be same as host url)
-  if (message?.button === 2) {
-    console.log(
-      "redirecting to explorer",
-      `https://mumbai.polygonscan.com/tx/${accountAddress}`
-    );
-    return NextResponse.redirect(
-      config?.APP_URL + "/redirect/" + accountAddress,
-      {
-        status: 302,
-      }
-    );
-  }
+  // if (message?.button === 1) {
+  //   console.log(
+  //     "redirecting to explorer",
+  //     `https://mumbai.polygonscan.com/tx/${accountAddress}`
+  //   );
+  //   return NextResponse.redirect(
+  //     config?.APP_URL + "/redirect/" + accountAddress,
+  //     {
+  //       status: 302,
+  //     }
+  //   );
+  // }
 
   // redirect to Lenspost --> (redirect url should be same as host url)
-  if (message?.button === 3) {
+  if (message?.button === 2) {
     console.log("redirecting to Lenspost", config?.APP_URL + "/redirect");
     return NextResponse.redirect(config?.APP_URL + "/redirect", {
       status: 302,
@@ -87,10 +87,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="${imageUrl}" />
           <meta property="fc:frame:button:1" content="${btnText}" />
-          <meta property="fc:frame:button:2" content="View Tx" />
+          <meta property="fc:frame:button:1:action" content="none" />
+          <meta property="fc:frame:button:2" content="Remix on Lenspost" />
           <meta property="fc:frame:button:2:action" content="post_redirect">
-          <meta property="fc:frame:button:3" content="Remix on Lenspost" />
-          <meta property="fc:frame:button:3:action" content="post_redirect">
         </head>
         <body>
           <h1>NFT Minted Successfully!</h1>
