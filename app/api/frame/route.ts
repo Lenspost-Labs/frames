@@ -87,7 +87,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="${imageUrl}" />
           <meta property="fc:frame:button:1" content="${btnText}" />
-          <meta property="fc:frame:button:1:action" content="none" />
           <meta property="fc:frame:button:2" content="Remix on Lenspost" />
           <meta property="fc:frame:button:2:action" content="post_redirect">
         </head>
