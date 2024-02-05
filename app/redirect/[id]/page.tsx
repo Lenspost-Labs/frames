@@ -2,11 +2,6 @@
 import { useRouter, useParams } from "next/navigation";
 import { useEffect } from "react";
 
-type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 export default function RedirectPage() {
   const router = useRouter();
   const params = useParams();

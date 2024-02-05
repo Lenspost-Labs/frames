@@ -17,7 +17,7 @@ export async function generateMetadata(
   console.log("id", id);
 
   const res = await axios.get(
-    `https://lenspost-development.up.railway.app/util/get-image-canvas?id=${id}`
+    `https://api.lenspost.xyz/util/get-image-canvas?id=${id}`
   );
 
   const { message } = res.data;
