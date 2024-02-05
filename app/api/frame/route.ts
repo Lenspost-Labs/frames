@@ -6,7 +6,7 @@ import { wagmiConfig } from "@/config/wagmi";
 import { polygonMumbai } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
-import { abi, contractAddress } from "@/contract/contract";
+import { abi, contractAddress } from "@/contract/Testcontract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -74,7 +74,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           <meta property="fc:frame:button:1" content="${btnText}" />
           <meta property="fc:frame:button:2" content="Check Lenspost" />
           <meta property="fc:frame:button:2:action" content="post_redirect">
-        </head></html>
+        </head>
+        <body>
+          <h1>NFT Minted Successfully!</h1>
+          <p>Tx Hash: ${result}</p>
+        </body>
+        </html>
           `);
   } catch (error) {
     console.log("Error minting NFT-> ", error);
