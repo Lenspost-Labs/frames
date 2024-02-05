@@ -9,17 +9,11 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 contract OnChainCow is ERC721URIStorage {
     uint256 private currentTokenId = 0;
 
-    constructor() ERC721("OnChainCow", "COW") {}
-
-    string public tokenURI;
+    constructor() ERC721("Frames Lenspost", "FLP") {}
 
     function mint(address to, string memory tokenURI) public {
         currentTokenId++;
         _mint(to, currentTokenId);
         _setTokenURI(currentTokenId, tokenURI);
-    }
-
-    function setTokenURI(string memory _tokenURI) external {
-        tokenURI = _tokenURI;
     }
 }

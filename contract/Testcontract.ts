@@ -1,6 +1,6 @@
 // polygon mumbai
 
-export const contractAddress = "0xCA634bd657D274614463a6883FF69eDC617106D1";
+export const contractAddress = "0xe4C9139bA8B6D314200Ea3Fb20d645e20eB8D11d";
 
 export const abi = [
   {
@@ -313,7 +313,7 @@ export const abi = [
     ],
     name: "mint",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
