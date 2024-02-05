@@ -40,3 +40,7 @@ export async function GET(req: NextRequest): Promise<Response> {
 
 // id: 19975
 // http://localhost:3000/api/image?id=19975
+
+
+
+// des = Remixed on @lenspost and directly sharing on warpcast as a Frame.
