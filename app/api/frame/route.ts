@@ -64,23 +64,23 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //   return new NextResponse(`User didn't like or recast or follow the post`);
   // }
 
-  const tokenUri = await uploadMetadataToIpfs(imageUrl);
-  console.log("tokenUri-> ", tokenUri);
+  // const tokenUri = await uploadMetadataToIpfs(imageUrl);
+  // console.log("tokenUri-> ", tokenUri);
 
   try {
     // NFT minting
-    const result = await writeContract(wagmiConfig, {
-      abi: BaseAbi,
-      address: BaseContractAddress,
-      functionName: "mint",
-      args: [accountAddress, tokenUri],
-      account: privateKeyToAccount(config?.wallet),
-      chainId: base?.id,
-    });
+    // const result = await writeContract(wagmiConfig, {
+    //   abi: BaseAbi,
+    //   address: BaseContractAddress,
+    //   functionName: "mint",
+    //   args: [accountAddress, tokenUri],
+    //   account: privateKeyToAccount(config?.wallet),
+    //   chainId: base?.id,
+    // });
 
-    console.log("NFT minted successfully!", result);
+    // console.log("NFT minted successfully!", result);
 
-    btnText = "Minted";
+    btnText = "under maintenance";
 
     return new NextResponse(`
           <!DOCTYPE html><html><head>
@@ -90,10 +90,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           <meta property="fc:frame:button:2" content="Remix on Lenspost" />
           <meta property="fc:frame:button:2:action" content="post_redirect">
         </head>
-        <body>
-          <h1>NFT Minted Successfully!</h1>
-          <p>Tx Hash: ${result}</p>
-        </body>
         </html>
           `);
   } catch (error) {
