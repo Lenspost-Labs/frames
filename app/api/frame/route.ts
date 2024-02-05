@@ -89,8 +89,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           <meta property="fc:frame:button:1" content="${btnText}" />
           <meta property="fc:frame:button:2" content="View Tx" />
           <meta property="fc:frame:button:2:action" content="post_redirect">
-          <meta property="fc:frame:button:2" content="Remix on Lenspost" />
-          <meta property="fc:frame:button:2:action" content="post_redirect">
+          <meta property="fc:frame:button:3" content="Remix on Lenspost" />
+          <meta property="fc:frame:button:3:action" content="post_redirect">
         </head>
         <body>
           <h1>NFT Minted Successfully!</h1>
