@@ -7,7 +7,7 @@ import { base } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
 import { BaseAbi, BaseContractAddress } from "@/contract/BaseContract";
-import { TestAbi, TestContractAddress } from "@/contract/Testcontract";
+// import { TestAbi, TestContractAddress } from "@/contract/Testcontract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -64,23 +64,23 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //   return new NextResponse(`User didn't like or recast or follow the post`);
   // }
 
-  // const tokenUri = await uploadMetadataToIpfs(imageUrl);
-  // console.log("tokenUri-> ", tokenUri);
+  const tokenUri = await uploadMetadataToIpfs(imageUrl);
+  console.log("tokenUri-> ", tokenUri);
 
   try {
     // NFT minting
-    // const result = await writeContract(wagmiConfig, {
-    //   abi: BaseAbi,
-    //   address: BaseContractAddress,
-    //   functionName: "mint",
-    //   args: [accountAddress, tokenUri],
-    //   account: privateKeyToAccount(config?.wallet),
-    //   chainId: base?.id,
-    // });
+    const result = await writeContract(wagmiConfig, {
+      abi: BaseAbi,
+      address: BaseContractAddress,
+      functionName: "mint",
+      args: [accountAddress, tokenUri],
+      account: privateKeyToAccount(config?.wallet),
+      chainId: base?.id,
+    });
 
-    // console.log("NFT minted successfully!", result);
+    console.log("NFT minted successfully!", result);
 
-    btnText = "under maintenance";
+    btnText = "Minted";
 
     return new NextResponse(`
           <!DOCTYPE html><html><head>
