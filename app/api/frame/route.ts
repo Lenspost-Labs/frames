@@ -89,19 +89,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     console.log("env", config?.environment);
 
     const result = await writeContract(wagmiConfig, {
-      abi: config?.environment === "development" ? TestAbi : BaseAbi,
-      address:
-        config?.environment === "development"
-          ? TestContractAddress
-          : BaseContractAddress,
+      abi: TestAbi,
+      address: TestContractAddress,
       functionName: "mint",
       args: [accountAddress, tokenUri],
-      account:
-        config?.environment === "development"
-          ? privateKeyToAccount(config?.testWallet)
-          : privateKeyToAccount(config?.wallet),
-      chainId:
-        config?.environment === "development" ? polygonMumbai.id : base.id,
+      account: privateKeyToAccount(config?.testWallet),
+      chainId: polygonMumbai.id,
     });
 
     console.log("NFT minted successfully!", result);
