@@ -28,7 +28,9 @@ export async function generateMetadata(
     isLike,
     isRecast,
     isFollow,
-  } = res.data;
+  } = res.data?.data;
+
+  console.log("data", imageUrl);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
