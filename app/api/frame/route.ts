@@ -96,7 +96,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         config?.environment === "development" ? polygonMumbai.id : base.id,
     });
 
-    // console.log("NFT minted successfully!", result);
+    console.log("NFT minted successfully!", result);
 
     btnText = "under maintenance";
 
