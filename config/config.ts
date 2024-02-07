@@ -11,5 +11,5 @@ export const config = {
 
   pinataJwtKey: process.env.PINATA_JWT_KEY || "",
 
-  APP_URL: "https://frames.lenspost.xyz",
+  APP_URL: "https://test-frame-lenspost.vercel.app",
 };
