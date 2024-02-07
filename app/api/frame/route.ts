@@ -25,6 +25,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("quries-> ", {
     imageUrl,
+    tokenUri,
     minterAddress,
     txHash,
     isLike,
