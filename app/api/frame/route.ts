@@ -6,8 +6,7 @@ import { wagmiConfig } from "@/config/wagmi";
 import { base, polygonMumbai } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
-import { TestAbi, TestContractAddress } from "@/contract/TestContract";
-import { BaseAbi, BaseContractAddress } from "@/contract/BaseContract";
+import { BaseAbi, BaseContractAddress, TestAbi, TestContractAddress } from "@/contract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -33,7 +32,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isFollow,
   });
 
-  console.log("req url-> ", req.url);
+  console.log("req url->  ", req.url);
 
   console.log("req.body-> ", req.body);
 
