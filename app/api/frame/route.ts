@@ -14,6 +14,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // let txHash: string | undefined = "";
 
   const searchParams = req.nextUrl.searchParams;
+  
   const imageUrl = searchParams.get("imageUrl") || "";
   const tokenUri = searchParams.get("tokenUri") || "";
   const minterAddress = searchParams.get("minterAddress") || "";
