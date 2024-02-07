@@ -17,12 +17,10 @@ export async function generateMetadata(
   console.log("id", id);
 
   const res = await axios.get(
-    `https://api.lenspost.xyz/util/get-image-canvas?id=${id}`
+    `https://lenspost-development.up.railway.app/util/get-frame-data?frameId=${id}`
   );
 
-  const { message } = res.data;
-
-  console.log("imageUrl-->", message);
+  const { imageUrl, tokenUri, isLike, isRecast, isFollow } = res.data;
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -30,8 +28,8 @@ export async function generateMetadata(
         label: "Mint",
       },
     ],
-    image: message,
-    post_url: `${config?.APP_URL}/api/frame?image=${message}`,
+    image: imageUrl,
+    post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
   });
 
   return {
@@ -40,7 +38,7 @@ export async function generateMetadata(
     openGraph: {
       title: "Frames Lenspost",
       description: "Share farcater frames from Lenspost",
-      images: [message],
+      images: [imageUrl],
     },
     other: {
       ...frameMetadata,
