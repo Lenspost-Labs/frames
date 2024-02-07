@@ -6,7 +6,7 @@ import { wagmiConfig } from "@/config/wagmi";
 import { base, polygonMumbai } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
-import { TestAbi, TestContractAddress } from "@/contract/TestContract";
+import { TestAbi, TestContractAddress } from "@/contract/Testcontract";
 import { BaseAbi, BaseContractAddress } from "@/contract/BaseContract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
