@@ -3,11 +3,11 @@ import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
 import { writeContract } from "@wagmi/core";
 import { wagmiConfig } from "@/config/wagmi";
-import { base } from "@wagmi/core/chains";
+import { base, polygonMumbai } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
 import { BaseAbi, BaseContractAddress } from "@/contract/BaseContract";
-// import { TestAbi, TestContractAddress } from "@/contract/Testcontract";
+import { TestAbi, TestContractAddress } from "@/contract/TestContract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -80,14 +80,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   try {
     // NFT minting
-    // const result = await writeContract(wagmiConfig, {
-    //   abi: BaseAbi,
-    //   address: BaseContractAddress,
-    //   functionName: "mint",
-    //   args: [accountAddress, tokenUri],
-    //   account: privateKeyToAccount(config?.wallet),
-    //   chainId: base?.id,
-    // });
+    const result = await writeContract(wagmiConfig, {
+      abi: config?.environment === "development" ? TestAbi : BaseAbi,
+      address:
+        config?.environment === "development"
+          ? TestContractAddress
+          : BaseContractAddress,
+      functionName: "mint",
+      args: [accountAddress, tokenUri],
+      account:
+        config?.environment === "development"
+          ? privateKeyToAccount(config?.testWallet)
+          : privateKeyToAccount(config?.wallet),
+      chainId:
+        config?.environment === "development" ? polygonMumbai.id : base.id,
+    });
 
     // console.log("NFT minted successfully!", result);
 
