@@ -82,18 +82,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   try {
     // NFT minting
-    const result = await writeContract(wagmiConfig, {
-      abi: BaseAbi,
-      address: BaseContractAddress,
-      functionName: "mint",
-      args: [accountAddress, tokenUri],
-      account: privateKeyToAccount(config?.wallet),
-      chainId: base?.id,
-    });
+    // const result = await writeContract(wagmiConfig, {
+    //   abi: BaseAbi,
+    //   address: BaseContractAddress,
+    //   functionName: "mint",
+    //   args: [accountAddress, tokenUri],
+    //   account: privateKeyToAccount(config?.wallet),
+    //   chainId: base?.id,
+    // });
 
-    console.log("NFT minted successfully!", result);
+    // console.log("NFT minted successfully!", result);
 
-    btnText = "Minted";
+    btnText = "under maintenance";
 
     return new NextResponse(`
           <!DOCTYPE html><html><head>
