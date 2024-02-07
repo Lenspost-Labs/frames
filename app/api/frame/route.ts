@@ -6,7 +6,12 @@ import { wagmiConfig } from "@/config/wagmi";
 import { base, polygonMumbai } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
-import { BaseAbi, BaseContractAddress, TestAbi, TestContractAddress } from "@/contract";
+import {
+  BaseAbi,
+  BaseContractAddress,
+  TestAbi,
+  TestContractAddress,
+} from "@/contract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -14,7 +19,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // let txHash: string | undefined = "";
 
   const searchParams = req.nextUrl.searchParams;
-  
+
   const imageUrl = searchParams.get("imageUrl") || "";
   const tokenUri = searchParams.get("tokenUri") || "";
   const minterAddress = searchParams.get("minterAddress") || "";
@@ -32,8 +37,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isRecast,
     isFollow,
   });
-
-  console.log("req url->  ", req.url);
 
   console.log("req.body-> ", req.body);
 
@@ -82,6 +85,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   try {
     // NFT minting
+
+    console.log("env", config?.environment);
+
     const result = await writeContract(wagmiConfig, {
       abi: config?.environment === "development" ? TestAbi : BaseAbi,
       address:
