@@ -33,7 +33,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isFollow,
   });
 
-  console.log("req url-> ", req.url);
+  console.log("req url->  ", req.url);
 
   console.log("req.body-> ", req.body);
 
