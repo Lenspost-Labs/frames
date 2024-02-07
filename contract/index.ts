@@ -1,2 +1,2 @@
 export * from "./BaseContract";
-export * from "./Testcontract";
+export * from "./TestContract";
