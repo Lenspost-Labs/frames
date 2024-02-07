@@ -20,7 +20,15 @@ export async function generateMetadata(
     `https://lenspost-development.up.railway.app/util/get-frame-data?frameId=${id}`
   );
 
-  const { imageUrl, tokenUri, isLike, isRecast, isFollow } = res.data;
+  const {
+    imageUrl,
+    tokenUri,
+    minterAddress,
+    txHash,
+    isLike,
+    isRecast,
+    isFollow,
+  } = res.data;
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -29,7 +37,7 @@ export async function generateMetadata(
       },
     ],
     image: imageUrl,
-    post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}`,
+    post_url: `${config?.APP_URL}/api/frame?image=${imageUrl}&minterAddress=${minterAddress}&txHash=${txHash}&isLike=${isLike}&isRecast=${isRecast}&isFollow=${isFollow}&tokenUri=${tokenUri}`,
   });
 
   return {
