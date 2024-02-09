@@ -20,7 +20,7 @@ export async function generateMetadata(
     `https://api.lenspost.xyz/util/get-frame-data?frameId=${id}`
   );
 
-  const { imageUrl } = res?.data?.data;
+  const { imageUrl } = res.data?.data;
 
   const frameMetadata = getFrameMetadata({
     buttons: [
