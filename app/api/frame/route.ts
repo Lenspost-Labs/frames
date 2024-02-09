@@ -12,21 +12,36 @@ import {
   TestAbi,
   TestContractAddress,
 } from "@/contract";
+import axios from "axios";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
-  // let txHash: string | undefined = "";
+  let imageUrl: string | undefined = "";
+  let tokenUri: string | undefined = "";
+  let minterAddress: string | undefined = "";
+  let txHash: string | undefined = "";
+  let isLike: boolean | undefined = false;
+  let isRecast: boolean | undefined = false;
+  let isFollow: boolean | undefined = false;
 
   const searchParams = req.nextUrl.searchParams;
 
-  const imageUrl = searchParams.get("imageUrl") || "";
-  const tokenUri = searchParams.get("tokenUri") || "";
-  const minterAddress = searchParams.get("minterAddress") || "";
-  const txHash = searchParams.get("txHash") || "";
-  const isLike = searchParams.get("isLike") || "";
-  const isRecast = searchParams.get("isRecast") || "";
-  const isFollow = searchParams.get("isFollow") || "";
+  const frameId = searchParams.get("frameId");
+
+  const res = await axios.get(
+    `https://lenspost-development.up.railway.app/util/get-frame-data?frameId=${frameId}`
+  );
+
+  const data = res.data?.data;
+
+  imageUrl = data?.imageUrl;
+  tokenUri = data?.tokenUri;
+  minterAddress = data?.minterAddress;
+  txHash = data?.txHash;
+  isLike = data?.isLike;
+  isRecast = data?.isRecast;
+  isFollow = data?.isFollow;
 
   console.log("quries-> ", {
     imageUrl,
@@ -99,13 +114,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     console.log("NFT minted successfully!", result);
 
-    btnText = "under maintenance";
+    btnText = "View tx";
 
     return new NextResponse(`
           <!DOCTYPE html><html><head>
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="${imageUrl}" />
+          <meta name="fc:frame:image:aspect_ratio" content="1:1" />
           <meta property="fc:frame:button:1" content="${btnText}" />
+          <meta property="fc:frame:button:1:action" content="link" />
+          <meta property="fc:frame:button:1:target" content="https://mumbai.polygonscan.com/tx/${result}" />
           <meta property="fc:frame:button:2" content="Remix on Lenspost" />
           <meta property="fc:frame:button:2:action" content="post_redirect">
         </head>
@@ -118,6 +136,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       <!DOCTYPE html><html><head>
       <meta property="fc:frame" content="vNext" />
       <meta property="fc:frame:image" content="${imageUrl}" />
+      <meta name="fc:frame:image:aspect_ratio" content="1:1" />
       <meta property="fc:frame:button:1" content="${btnText}" />
     </head></html>
       `);

@@ -30,8 +30,6 @@ export async function generateMetadata(
     isFollow,
   } = res.data?.data;
 
-  console.log("data", imageUrl);
-
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
@@ -39,7 +37,7 @@ export async function generateMetadata(
       },
     ],
     image: imageUrl,
-    post_url: `${config?.APP_URL}/api/frame?imageUrl=${imageUrl}`,
+    post_url: `${config?.APP_URL}/api/frame?frameId=${id}`,
   });
 
   return {
