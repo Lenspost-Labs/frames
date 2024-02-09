@@ -36,7 +36,10 @@ export async function generateMetadata(
         label: "Mint",
       },
     ],
-    image: imageUrl,
+    image: {
+      src: imageUrl,
+      aspectRatio: '1:1',
+    },
     post_url: `${config?.APP_URL}/api/frame?frameId=${id}`,
   });
 

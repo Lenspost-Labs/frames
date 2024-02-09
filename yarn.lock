@@ -79,10 +79,10 @@
   dependencies:
     "@chainsafe/is-ip" "^2.0.1"
 
-"@coinbase/onchainkit@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@coinbase/onchainkit/-/onchainkit-0.4.1.tgz#fa8e41f33786a411fd3ed1ebf8c4412b2fe63ab2"
-  integrity sha512-bXaIw8qyk8+9jLizF5clv9pb5u8p5rLAK/z09+Z0ZsHUHr3AS6Akhnp9VF0uQXWRDhFohbA/8ZCOcMKdt/Ad3g==
+"@coinbase/onchainkit@0.5.4":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@coinbase/onchainkit/-/onchainkit-0.5.4.tgz#3cddd01ec69b564e2ffdf4158ff39bb3ae4f38ac"
+  integrity sha512-fF8cwAmamM/az1TBbaZVPcAdrCdZ3db2FPIdRoWPrcLIU2Xmdw7EM2uaiwzzbfoGDkkgEt4nUefAH5P4mFrORw==
 
 "@coinbase/wallet-sdk@3.9.1":
   version "3.9.1"

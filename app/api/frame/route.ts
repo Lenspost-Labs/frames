@@ -100,9 +100,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   try {
     // NFT minting
-
-    console.log("env", config?.environment);
-
     const result = await writeContract(wagmiConfig, {
       abi: TestAbi,
       address: TestContractAddress,
