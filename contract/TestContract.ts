@@ -1,6 +1,6 @@
-// polygon mumbai
+// Base Goerli
 
-export const TestContractAddress = "0xe4C9139bA8B6D314200Ea3Fb20d645e20eB8D11d";
+export const TestContractAddress = "0x2799E7FBFAceb48E1b7C1522DdFad09166398f07";
 
 export const TestAbi = [
   {

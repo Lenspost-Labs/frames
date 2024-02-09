@@ -3,9 +3,8 @@ import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
 import { writeContract } from "@wagmi/core";
 import { wagmiConfig } from "@/config/wagmi";
-import { base, polygonMumbai } from "@wagmi/core/chains";
+import { base, baseGoerli } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
-import { uploadMetadataToIpfs } from "@/utils/uploadMetadata";
 import {
   BaseAbi,
   BaseContractAddress,
@@ -30,7 +29,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const frameId = searchParams.get("frameId");
 
   const res = await axios.get(
-    `https://lenspost-development.up.railway.app/util/get-frame-data?frameId=${frameId}`
+    `https://api.lenspost.xyz/util/get-frame-data?frameId=${frameId}`
   );
 
   const data = res.data?.data;
@@ -84,7 +83,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       functionName: "mint",
       args: [accountAddress, tokenUri],
       account: privateKeyToAccount(config?.testWallet),
-      chainId: polygonMumbai.id,
+      chainId: baseGoerli.id,
     });
 
     console.log("NFT minted successfully!", result);
@@ -99,7 +98,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
           <meta property="fc:frame:button:1" content="${btnText}" />
           <meta property="fc:frame:button:1:action" content="link" />
-          <meta property="fc:frame:button:1:target" content="https://mumbai.polygonscan.com/tx/${result}" />
+          <meta property="fc:frame:button:1:target" content="https://goerli.basescan.org/tx/${result}" />
 
           <meta property="fc:frame:button:2" content="Remix on Lenspost" />
           <meta property="fc:frame:button:2:action" content="link" />

@@ -17,18 +17,10 @@ export async function generateMetadata(
   console.log("id", id);
 
   const res = await axios.get(
-    `https://lenspost-development.up.railway.app/util/get-frame-data?frameId=${id}`
+    `https://api.lenspost.xyz/util/get-frame-data?frameId=${id}`
   );
 
-  const {
-    imageUrl,
-    tokenUri,
-    minterAddress,
-    txHash,
-    isLike,
-    isRecast,
-    isFollow,
-  } = res.data?.data;
+  const { imageUrl } = res?.data?.data;
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -38,7 +30,7 @@ export async function generateMetadata(
     ],
     image: {
       src: imageUrl,
-      aspectRatio: '1:1',
+      aspectRatio: "1:1",
     },
     post_url: `${config?.APP_URL}/api/frame?frameId=${id}`,
   });

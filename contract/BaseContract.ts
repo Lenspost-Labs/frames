@@ -1,3 +1,5 @@
+// Base Mainnet
+
 export const BaseContractAddress = "0x769C1417485ad9d74FbB27F4be47890Fd00A96ad";
 
 export const BaseAbi = [

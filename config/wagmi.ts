@@ -1,11 +1,11 @@
 import { http, createConfig } from "@wagmi/core";
-import { base, polygonMumbai } from "@wagmi/core/chains";
+import { base, baseGoerli } from "@wagmi/core/chains";
 import { config } from "./config";
 
 export const wagmiConfig = createConfig({
-  chains: [base, polygonMumbai],
+  chains: [base, baseGoerli],
   transports: {
     [base.id]: http(),
-    [polygonMumbai.id]: http(),
+    [baseGoerli.id]: http(),
   },
 });
