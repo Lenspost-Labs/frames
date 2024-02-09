@@ -39,7 +39,7 @@ export async function generateMetadata(
       },
     ],
     image: imageUrl,
-    post_url: `${config?.APP_URL}/api/frame?imageUrl=${imageUrl}&minterAddress=${minterAddress}&txHash=${txHash}&isLike=${isLike}&isRecast=${isRecast}&isFollow=${isFollow}&tokenUri=${tokenUri}`,
+    post_url: `${config?.APP_URL}/api/frame?imageUrl=${imageUrl}`,
   });
 
   return {
