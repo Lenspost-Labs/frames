@@ -69,7 +69,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("frame message-> ", message);
 
-  // check if post is liked | recasted | following
+  // Gate with Like / Recast / Follow logic
   // if (!message?.liked || !message?.recasted || !message?.following) {
   //   console.log("User didn't like or recasted or following");
   //   return new NextResponse(`User didn't like or recast or follow the post`);
