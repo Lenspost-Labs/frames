@@ -135,6 +135,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       <meta property="fc:frame:image" content="${imageUrl}" />
       <meta name="fc:frame:image:aspect_ratio" content="1:1" />
       <meta property="fc:frame:button:1" content="${btnText}" />
+      <meta property="fc:frame:button:2" content="Remix on Lenspost" />
+      <meta property="fc:frame:button:2:action" content="link" />
+      <meta property="fc:frame:button:2:target" content="https://app.lenspost.xyz" />
     </head></html>
       `);
   }
