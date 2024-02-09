@@ -1,11 +1,10 @@
 import { http, createConfig } from "@wagmi/core";
-import { base, baseGoerli } from "@wagmi/core/chains";
-import { config } from "./config";
+import { base, baseSepolia } from "@wagmi/core/chains";
 
 export const wagmiConfig = createConfig({
-  chains: [base, baseGoerli],
+  chains: [base, baseSepolia],
   transports: {
     [base.id]: http(),
-    [baseGoerli.id]: http(),
+    [baseSepolia.id]: http(),
   },
 });

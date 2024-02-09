@@ -1,6 +1,6 @@
-// Base Goerli
+// Base Sepolia
 
-export const TestContractAddress = "0x2799E7FBFAceb48E1b7C1522DdFad09166398f07";
+export const TestContractAddress = "0x14a60C55a51b40B5A080A6E175a8b0FDae3565cF";
 
 export const TestAbi = [
   {

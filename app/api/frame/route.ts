@@ -3,7 +3,7 @@ import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
 import { writeContract } from "@wagmi/core";
 import { wagmiConfig } from "@/config/wagmi";
-import { base, baseGoerli } from "@wagmi/core/chains";
+import { base, baseSepolia } from "@wagmi/core/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import {
   BaseAbi,
@@ -70,7 +70,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("frame message-> ", message);
 
   // Gate with Like / Recast / Follow logic
-  
+
   // if (!message?.liked || !message?.recasted || !message?.following) {
   //   console.log("User didn't like or recasted or following");
   //   return new NextResponse(`User didn't like or recast or follow the post`);
@@ -84,7 +84,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       functionName: "mint",
       args: [accountAddress, tokenUri],
       account: privateKeyToAccount(config?.testWallet),
-      chainId: baseGoerli.id,
+      chainId: baseSepolia.id,
     });
 
     console.log("NFT minted successfully!", result);
@@ -99,7 +99,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
           <meta property="fc:frame:button:1" content="${btnText}" />
           <meta property="fc:frame:button:1:action" content="link" />
-          <meta property="fc:frame:button:1:target" content="https://goerli.basescan.org/tx/${result}" />
+          <meta property="fc:frame:button:1:target" content="${baseSepolia.blockExplorers.default.url}/tx/${result}" />
 
           <meta property="fc:frame:button:2" content="Remix on Lenspost" />
           <meta property="fc:frame:button:2:action" content="link" />
