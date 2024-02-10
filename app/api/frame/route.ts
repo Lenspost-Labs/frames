@@ -16,6 +16,7 @@ import axios from "axios";
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
+  let MintTxHash: string | undefined = "";
   let imageUrl: string | undefined = "";
   let tokenUri: string | undefined = "";
   let minterAddress: string | undefined = "";
@@ -70,17 +71,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("frame message-> ", message);
 
   // Gate with Like / Recast / Follow logic
-
-  // if (!message?.liked || !message?.recasted || !message?.following) {
-  //   console.log("User didn't like or recasted or following");
-  //   return new NextResponse(`User didn't like or recast or follow the post`);
-  // }
-
   if (isLike) {
     if (message?.liked) {
       console.log("User liked the post");
     } else {
       console.log("User didn't like the post");
+      btnText = "Like and Mint";
       return new NextResponse(`User didn't like the post`);
     }
   }
@@ -90,6 +86,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log("User recasted the post");
     } else {
       console.log("User didn't recast the post");
+      btnText = "Recast and Mint";
       return new NextResponse(`User didn't recast the post`);
     }
   }
@@ -99,6 +96,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log("User followed the post");
     } else {
       console.log("User didn't follow the post");
+      btnText = "Follow and Mint";
       return new NextResponse(`User didn't follow the post`);
     }
   }
@@ -114,55 +112,51 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       chainId: baseSepolia.id,
     });
 
-    console.log("NFT minted successfully!", result);
-
-    if (result) {
-      const res = await axios.post(
-        `https://api.lenspost.xyz/util/update-frame-data`,
-        {
-          frameId: frameId,
-          minterAddress: accountAddress,
-          txHash: result,
-        }
-      );
-      console.log("Frame data updated-> ", res.data);
-    }
+    MintTxHash = result;
 
     btnText = "View tx";
 
-    return new NextResponse(`
-          <!DOCTYPE html><html><head>
-          <meta property="fc:frame" content="vNext" />
-          <meta property="fc:frame:image" content="${imageUrl}" />
-          <meta property="fc:frame:image:aspect_ratio" content="1:1" />
-
-          <meta property="fc:frame:button:1" content="${btnText}" />
-          <meta property="fc:frame:button:1:action" content="link" />
-          <meta property="fc:frame:button:1:target" content="${baseSepolia.blockExplorers.default.url}/tx/${result}" />
-
-          <meta property="fc:frame:button:2" content="Remix on Lenspost" />
-          <meta property="fc:frame:button:2:action" content="link" />
-          <meta property="fc:frame:button:2:target" content="https://app.lenspost.xyz" />
-        </head>
-        </html>
-          `);
+    console.log("NFT minted successfully!", result);
   } catch (error) {
     console.log("Error minting NFT-> ", error);
-    btnText = "Try Again";
-    return new NextResponse(`
-      <!DOCTYPE html><html><head>
-      <meta property="fc:frame" content="vNext" />
-      <meta property="fc:frame:image" content="${imageUrl}" />
-      <meta property="fc:frame:image:aspect_ratio" content="1:1" />
-
-      <meta property="fc:frame:button:1" content="${btnText}" />
-
-      <meta property="fc:frame:button:2" content="Remix on Lenspost" />
-      <meta property="fc:frame:button:2:action" content="link" />
-      <meta property="fc:frame:button:2:target" content="https://app.lenspost.xyz" />
-    </head></html>
-      `);
+    btnText = "Error - Try again";
+    return new NextResponse("Error minting NFT");
   }
+
+  // if (MintTxHash) {
+  //   const res = await axios.post(
+  //     `https://api.lenspost.xyz/util/update-frame-data`,
+  //     {
+  //       frameId: frameId,
+  //       minterAddress: accountAddress,
+  //       txHash: MintTxHash,
+  //     }
+  //   );
+  //   console.log("Frame data updated-> ", res.data);
+  // }
+
+  return new NextResponse(`
+        <!DOCTYPE html><html><head>
+        <meta property="fc:frame" content="vNext" />
+        <meta property="fc:frame:image" content="${imageUrl}" />
+        <meta property="fc:frame:image:aspect_ratio" content="1:1" />
+
+        ${
+          MintTxHash
+            ? `<meta property="fc:frame:button:1" content="${btnText}" />
+              <meta property="fc:frame:button:1:action" content="link" />
+              <meta property="fc:frame:button:1:target" content="${baseSepolia.blockExplorers.default.url}/tx/${MintTxHash}" />`
+            : `<meta property="fc:frame:button:1" content="${btnText}" />`
+        }
+
+      
+
+        <meta property="fc:frame:button:2" content="Remix on Lenspost" />
+        <meta property="fc:frame:button:2:action" content="link" />
+        <meta property="fc:frame:button:2:target" content="https://app.lenspost.xyz" />
+      </head>
+      </html>
+        `);
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
