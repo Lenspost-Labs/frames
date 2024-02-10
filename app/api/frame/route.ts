@@ -116,6 +116,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     console.log("NFT minted successfully!", result);
 
+    if (result) {
+      const res = await axios.post(
+        `https://api.lenspost.xyz/util/update-frame-data`,
+        {
+          frameId: frameId,
+          minterAddress: accountAddress,
+          txHash: result,
+        }
+      );
+      console.log("Frame data updated-> ", res.data);
+    }
+
     btnText = "View tx";
 
     return new NextResponse(`
