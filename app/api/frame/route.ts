@@ -71,10 +71,42 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // Gate with Like / Recast / Follow logic
 
-  // if (!message?.liked || !message?.recasted || !message?.following) {
-  //   console.log("User didn't like or recasted or following");
-  //   return new NextResponse(`User didn't like or recast or follow the post`);
-  // }
+  const checkAndLog = (
+    condition: boolean,
+    successMessage: string,
+    failureMessage: string
+  ) => {
+    if (condition) {
+      console.log(successMessage);
+    } else {
+      console.log(failureMessage);
+      return new NextResponse(failureMessage);
+    }
+  };
+
+  if (isLike) {
+    checkAndLog(
+      message?.liked,
+      "User liked the post",
+      "User didn't like the post"
+    );
+  }
+
+  if (isRecast) {
+    checkAndLog(
+      message?.recasted,
+      "User recasted the post",
+      "User didn't recast the post"
+    );
+  }
+
+  if (isFollow) {
+    checkAndLog(
+      message?.following,
+      "User followed the post",
+      "User didn't follow the post"
+    );
+  }
 
   try {
     // NFT minting
