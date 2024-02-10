@@ -77,7 +77,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't like the post");
       btnText = "Like and Mint";
-      return new NextResponse(`User didn't like the post`);
+      return new NextResponse(getFrame(false, imageUrl, btnText));
     }
   }
 
@@ -87,7 +87,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't recast the post");
       btnText = "Recast and Mint";
-      return new NextResponse(`User didn't recast the post`);
+      return new NextResponse(getFrame(false, imageUrl, btnText));
     }
   }
 
@@ -97,7 +97,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't follow the post");
       btnText = "Follow and Mint";
-      return new NextResponse(`User didn't follow the post`);
+      return new NextResponse(getFrame(false, imageUrl, btnText));
     }
   }
 
@@ -112,15 +112,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       chainId: baseSepolia.id,
     });
 
-    MintTxHash = result;
-
     btnText = "View tx";
 
     console.log("NFT minted successfully!", result);
+
+    return new NextResponse(getFrame(result, imageUrl, btnText));
   } catch (error) {
     console.log("Error minting NFT-> ", error);
     btnText = "Error - Try again";
-    return new NextResponse("Error minting NFT");
+    return new NextResponse(getFrame(false, imageUrl, btnText));
   }
 
   // if (MintTxHash) {
@@ -134,29 +134,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   //   );
   //   console.log("Frame data updated-> ", res.data);
   // }
-
-  return new NextResponse(`
-        <!DOCTYPE html><html><head>
-        <meta property="fc:frame" content="vNext" />
-        <meta property="fc:frame:image" content="${imageUrl}" />
-        <meta property="fc:frame:image:aspect_ratio" content="1:1" />
-
-        ${
-          MintTxHash
-            ? `<meta property="fc:frame:button:1" content="${btnText}" />
-              <meta property="fc:frame:button:1:action" content="link" />
-              <meta property="fc:frame:button:1:target" content="${baseSepolia.blockExplorers.default.url}/tx/${MintTxHash}" />`
-            : `<meta property="fc:frame:button:1" content="${btnText}" />`
-        }
-
-      
-
-        <meta property="fc:frame:button:2" content="Remix on Lenspost" />
-        <meta property="fc:frame:button:2:action" content="link" />
-        <meta property="fc:frame:button:2:target" content="https://app.lenspost.xyz" />
-      </head>
-      </html>
-        `);
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
@@ -164,3 +141,32 @@ export async function POST(req: NextRequest): Promise<Response> {
 }
 
 export const dynamic = "force-dynamic";
+
+const getFrame = (
+  txHash: string | boolean | undefined,
+  imageUrl: string | undefined,
+  btnText: string | undefined
+) => {
+  return `
+ <!DOCTYPE html><html><head>
+ <meta property="fc:frame" content="vNext" />
+ <meta property="fc:frame:image" content="${imageUrl}" />
+ <meta property="fc:frame:image:aspect_ratio" content="1:1" />
+
+ ${
+   txHash
+     ? `<meta property="fc:frame:button:1" content="${btnText}" />
+       <meta property="fc:frame:button:1:action" content="link" />
+       <meta property="fc:frame:button:1:target" content="${baseSepolia.blockExplorers.default.url}/tx/${txHash}" />`
+     : `<meta property="fc:frame:button:1" content="${btnText}" />`
+ }
+
+
+
+ <meta property="fc:frame:button:2" content="Remix on Lenspost" />
+ <meta property="fc:frame:button:2:action" content="link" />
+ <meta property="fc:frame:button:2:target" content="https://app.lenspost.xyz" />
+</head>
+</html>
+ `;
+};
