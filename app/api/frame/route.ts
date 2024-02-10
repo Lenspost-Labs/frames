@@ -71,41 +71,36 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // Gate with Like / Recast / Follow logic
 
-  const checkAndLog = (
-    condition: boolean,
-    successMessage: string,
-    failureMessage: string
-  ) => {
-    if (condition) {
-      console.log(successMessage);
-    } else {
-      console.log(failureMessage);
-      return new NextResponse(failureMessage);
-    }
-  };
+  // if (!message?.liked || !message?.recasted || !message?.following) {
+  //   console.log("User didn't like or recasted or following");
+  //   return new NextResponse(`User didn't like or recast or follow the post`);
+  // }
 
   if (isLike) {
-    checkAndLog(
-      message?.liked,
-      "User liked the post",
-      "User didn't like the post"
-    );
+    if (message?.liked) {
+      console.log("User liked the post");
+    } else {
+      console.log("User didn't like the post");
+      return new NextResponse(`User didn't like the post`);
+    }
   }
 
   if (isRecast) {
-    checkAndLog(
-      message?.recasted,
-      "User recasted the post",
-      "User didn't recast the post"
-    );
+    if (message?.recasted) {
+      console.log("User recasted the post");
+    } else {
+      console.log("User didn't recast the post");
+      return new NextResponse(`User didn't recast the post`);
+    }
   }
 
   if (isFollow) {
-    checkAndLog(
-      message?.following,
-      "User followed the post",
-      "User didn't follow the post"
-    );
+    if (message?.following) {
+      console.log("User followed the post");
+    } else {
+      console.log("User didn't follow the post");
+      return new NextResponse(`User didn't follow the post`);
+    }
   }
 
   try {
