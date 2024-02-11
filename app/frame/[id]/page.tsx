@@ -17,7 +17,7 @@ export async function generateMetadata(
   console.log("id", id);
 
   const res = await axios.get(
-    `https://api.lenspost.xyz/util/get-frame-data?frameId=${id}`
+    `${config?.BACKEND_URL}/util/get-frame-data?frameId=${id}`
   );
 
   const { imageUrl } = res.data?.data;

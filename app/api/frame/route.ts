@@ -16,7 +16,7 @@ import axios from "axios";
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
-  let MintTxHash: string | undefined = "";
+
   let imageUrl: string | undefined = "";
   let tokenUri: string | undefined = "";
   let minterAddress: string | undefined = "";
@@ -26,22 +26,26 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   let isFollow: boolean | undefined = false;
 
   const searchParams = req.nextUrl.searchParams;
-
   const frameId = searchParams.get("frameId");
 
-  const res = await axios.get(
-    `https://api.lenspost.xyz/util/get-frame-data?frameId=${frameId}`
-  );
+  try {
+    const res = await axios.get(
+      `${config?.BACKEND_URL}/util/get-frame-data?frameId=${frameId}`
+    );
 
-  const data = res.data?.data;
+    const data = res.data?.data;
 
-  imageUrl = data?.imageUrl;
-  tokenUri = data?.tokenUri;
-  minterAddress = data?.minterAddress;
-  txHash = data?.txHash;
-  isLike = data?.isLike;
-  isRecast = data?.isRecast;
-  isFollow = data?.isFollow;
+    imageUrl = data?.imageUrl;
+    tokenUri = data?.tokenUri;
+    minterAddress = data?.minterAddress;
+    txHash = data?.txHash;
+    isLike = data?.isLike;
+    isRecast = data?.isRecast;
+    isFollow = data?.isFollow;
+  } catch (error) {
+    console.log("Error getting frame data-> ", error);
+    return new NextResponse("Error getting frame data");
+  }
 
   console.log("quries-> ", {
     imageUrl,
@@ -63,7 +67,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
   } else {
-    return new NextResponse("No wallet found");
+    btnText = "No Wallet Found";
+    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
@@ -77,7 +82,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't like the post");
       btnText = "Like and Mint";
-      return new NextResponse(getFrame(false, imageUrl, btnText));
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText)
+      );
     }
   }
 
@@ -87,7 +94,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't recast the post");
       btnText = "Recast and Mint";
-      return new NextResponse(getFrame(false, imageUrl, btnText));
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText)
+      );
     }
   }
 
@@ -97,7 +106,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't follow the post");
       btnText = "Follow and Mint";
-      return new NextResponse(getFrame(false, imageUrl, btnText));
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText)
+      );
     }
   }
 
@@ -116,24 +127,26 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     console.log("NFT minted successfully!", result);
 
-    return new NextResponse(getFrame(result, imageUrl, btnText));
+    if (result) {
+      const res = await axios.post(
+        `${config?.BACKEND_URL}/util/update-frame-data`,
+        {
+          frameId: frameId,
+          minterAddress: accountAddress,
+          txHash: result,
+        }
+      );
+      console.log("Frame data updated-> ", res.data);
+    }
+
+    return new NextResponse(
+      getFrame(accountAddress, result, imageUrl, btnText)
+    );
   } catch (error) {
     console.log("Error minting NFT-> ", error);
     btnText = "Error - Try again";
-    return new NextResponse(getFrame(false, imageUrl, btnText));
+    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
-
-  // if (MintTxHash) {
-  //   const res = await axios.post(
-  //     `https://api.lenspost.xyz/util/update-frame-data`,
-  //     {
-  //       frameId: frameId,
-  //       minterAddress: accountAddress,
-  //       txHash: MintTxHash,
-  //     }
-  //   );
-  //   console.log("Frame data updated-> ", res.data);
-  // }
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
@@ -142,7 +155,10 @@ export async function POST(req: NextRequest): Promise<Response> {
 
 export const dynamic = "force-dynamic";
 
+// ----------------- Helper functions -----------------
+
 const getFrame = (
+  isWallet: string | undefined,
   txHash: string | boolean | undefined,
   imageUrl: string | undefined,
   btnText: string | undefined
@@ -161,6 +177,8 @@ const getFrame = (
      : `<meta property="fc:frame:button:1" content="${btnText}" />`
  }
 
+ ${!isWallet && `<meta property="fc:frame:button:1" content="${btnText}" />`}
+
 
 
  <meta property="fc:frame:button:2" content="Remix on Lenspost" />
@@ -170,3 +188,5 @@ const getFrame = (
 </html>
  `;
 };
+
+// ----------------- Helper functions -----------------
