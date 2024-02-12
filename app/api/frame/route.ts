@@ -127,17 +127,17 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     console.log("NFT minted successfully!", result);
 
-    if (result) {
-      const res = await axios.post(
-        `${config?.BACKEND_URL}/util/update-frame-data`,
-        {
-          frameId: frameId,
-          minterAddress: accountAddress,
-          txHash: result,
-        }
-      );
-      console.log("Frame data updated-> ", res.data);
-    }
+    // if (result) {
+    //   const res = await axios.post(
+    //     `${config?.BACKEND_URL}/util/update-frame-data`,
+    //     {
+    //       frameId: frameId,
+    //       minterAddress: accountAddress,
+    //       txHash: result,
+    //     }
+    //   );
+    //   console.log("Frame data updated-> ", res.data);
+    // }
 
     return new NextResponse(
       getFrame(accountAddress, result, imageUrl, btnText)
