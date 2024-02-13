@@ -206,9 +206,7 @@ const getFrame = (
      ? `<meta property="fc:frame:button:1" content="${btnText}" />
        <meta property="fc:frame:button:1:action" content="link" />
        <meta property="fc:frame:button:1:target" content="${base.blockExplorers.default.url}/tx/${txHash}" />`
-     : `<meta property="fc:frame:button:1" content="${btnText}" />
-        <meta property="fc:frame:post_url" content="None" />
-     `
+     : `<meta property="fc:frame:button:1" content="${btnText}" />`
  }
 
  ${!isWallet && `<meta property="fc:frame:button:1" content="${btnText}" />`}
