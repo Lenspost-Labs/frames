@@ -37,7 +37,7 @@ if (minter) {
 
 console.log(minters.length, allowedMint);
 
-if (minters.length === allowedMint) {
+if (minters.length >= allowedMint) {
   return console.log("Minting limit reached");
 }
 

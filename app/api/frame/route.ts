@@ -146,12 +146,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   try {
     // NFT minting
     const result = await writeContract(wagmiConfig, {
-      abi: TestAbi,
-      address: TestContractAddress,
+      abi: BaseAbi,
+      address: BaseContractAddress,
       functionName: "mint",
       args: [accountAddress, tokenUri],
-      account: privateKeyToAccount(config?.testWallet),
-      chainId: baseSepolia.id,
+      account: privateKeyToAccount(config?.wallet),
+      chainId: base.id,
     });
 
     btnText = "View tx";
@@ -206,7 +206,9 @@ const getFrame = (
      ? `<meta property="fc:frame:button:1" content="${btnText}" />
        <meta property="fc:frame:button:1:action" content="link" />
        <meta property="fc:frame:button:1:target" content="${base.blockExplorers.default.url}/tx/${txHash}" />`
-     : `<meta property="fc:frame:button:1" content="${btnText}" />`
+     : `<meta property="fc:frame:button:1" content="${btnText}" />
+        <meta property="fc:frame:post_url" content="None" />
+     `
  }
 
  ${!isWallet && `<meta property="fc:frame:button:1" content="${btnText}" />`}
