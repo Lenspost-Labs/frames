@@ -26,13 +26,15 @@ export async function generateMetadata(
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
-        label: `${true ? "Like" : ""} ${isRecast ? "Recast" : ""} ${
-          true ? "Follow" : ""
-        } ${
-          true || isLike || isRecast
-            ? `👉`
-            : ""
-        }  Mint ${minters?.length}/${allowedMints}`,
+        label: `${[
+          true ? "Like" : "",
+          isRecast ? "Recast" : "",
+          true ? "Follow" : "",
+        ]
+          .filter(Boolean) // Remove empty strings
+          .join(", ")} ${true || isLike || isRecast ? `👉` : ""} Mint ${
+          minters?.length
+        }/${allowedMints}`,
       },
     ],
     image: {
