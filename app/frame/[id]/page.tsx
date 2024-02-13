@@ -20,12 +20,15 @@ export async function generateMetadata(
     `${config?.BACKEND_URL}/util/get-frame-data?frameId=${id}`
   );
 
-  const { imageUrl, minters, allowedMints } = res.data?.data;
+  const { imageUrl, minters, allowedMints, isLike, isRecast, isFollow } =
+    res.data?.data;
 
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
-        label: `Mint ${minters?.length}/${allowedMints}`,
+        label: `${true && "Like"} ${isRecast && "Recast"} ${true && "Follow"} ${
+          (true || isLike || isRecast) && "👉"
+        }  Mint ${minters?.length}/${allowedMints}`,
       },
     ],
     image: {

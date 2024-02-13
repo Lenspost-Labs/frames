@@ -35,6 +35,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const searchParams = req.nextUrl.searchParams;
   const frameId = searchParams.get("frameId");
 
+  // get frame data
   try {
     const res = await axios.get(
       `${config?.BACKEND_URL}/util/get-frame-data?frameId=${frameId}`
@@ -70,11 +71,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("req.body-> ", req.body);
 
+  // get frame request data from Farcaster client
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: config?.neynar?.apiKey,
   });
 
+  console.log("frame message-> ", message);
+
+  // get user's wallet address from FID
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
   } else {
@@ -83,8 +88,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
-
-  console.log("frame message-> ", message);
 
   // check if user has already minted
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
@@ -101,7 +104,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
 
-  // Gate with Like / Recast / Follow logic
+  // check gate with like
   if (isLike) {
     if (message?.liked) {
       console.log("User liked the post");
@@ -114,6 +117,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
   }
 
+  // check gate with recast
   if (isRecast) {
     if (message?.recasted) {
       console.log("User recasted the post");
@@ -126,6 +130,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
   }
 
+  // check gate with follow
   if (isFollow) {
     if (message?.following) {
       console.log("User followed the post");
@@ -153,6 +158,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     console.log("NFT minted successfully!", result);
 
+    // update frame data with txHash and minterAddress
     if (result) {
       const res = await axios.post(
         `${config?.BACKEND_URL}/util/update-frame-data`,
