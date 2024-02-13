@@ -98,7 +98,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   // check if mint has exceeded
-  if (allowedMints && minters?.length === allowedMints) {
+  console.log({
+    allowedMints,
+    minterLength: minters?.length,
+  });
+  if (minters?.length === allowedMints) {
     console.log("Mint has exceeded");
     btnText = "Mint has exceeded";
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
