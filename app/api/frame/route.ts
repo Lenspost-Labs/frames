@@ -19,8 +19,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   let imageUrl: string | undefined = "";
   let tokenUri: string | undefined = "";
-  let minterAddress: string | undefined = "";
-  let txHash: string | undefined = "";
+  let minters:
+    | {
+        minterAddress: string;
+        txHash: string;
+      }[]
+    | undefined = [{ minterAddress: "", txHash: "" }];
+  let owner: string | undefined = "";
+  let isTopUp: boolean | undefined = false;
+  let allowedMints: number | undefined = 0;
   let isLike: boolean | undefined = false;
   let isRecast: boolean | undefined = false;
   let isFollow: boolean | undefined = false;
@@ -37,8 +44,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     imageUrl = data?.imageUrl;
     tokenUri = data?.tokenUri;
-    minterAddress = data?.minterAddress;
-    txHash = data?.txHash;
+    minters = data?.minters;
+    owner = data?.owner;
+    isTopUp = data?.isTopUp;
+    allowedMints = data?.allowedMints;
     isLike = data?.isLike;
     isRecast = data?.isRecast;
     isFollow = data?.isFollow;
@@ -50,8 +59,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("quries-> ", {
     imageUrl,
     tokenUri,
-    minterAddress,
-    txHash,
+    minters,
+    owner,
+    isTopUp,
+    allowedMints,
     isLike,
     isRecast,
     isFollow,
@@ -74,6 +85,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("Extracted address from FID-> ", accountAddress);
 
   console.log("frame message-> ", message);
+
+  // check if user has already minted
+  const minter = minters?.find((m) => m?.minterAddress === accountAddress);
+  if (minter) {
+    console.log("User has already minted-> ", minter);
+    btnText = "Already Minted";
+    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+  }
+
+  // check if mint has exceeded
+  if (allowedMints && minters?.length === allowedMints) {
+    console.log("Mint has exceeded");
+    btnText = "Mint has exceeded";
+    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+  }
 
   // Gate with Like / Recast / Follow logic
   if (isLike) {
@@ -127,17 +153,17 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     console.log("NFT minted successfully!", result);
 
-    // if (result) {
-    //   const res = await axios.post(
-    //     `${config?.BACKEND_URL}/util/update-frame-data`,
-    //     {
-    //       frameId: frameId,
-    //       minterAddress: accountAddress,
-    //       txHash: result,
-    //     }
-    //   );
-    //   console.log("Frame data updated-> ", res.data);
-    // }
+    if (result) {
+      const res = await axios.post(
+        `${config?.BACKEND_URL}/util/update-frame-data`,
+        {
+          frameId: frameId,
+          minterAddress: accountAddress,
+          txHash: result,
+        }
+      );
+      console.log("Frame data updated-> ", res.data);
+    }
 
     return new NextResponse(
       getFrame(accountAddress, result, imageUrl, btnText)

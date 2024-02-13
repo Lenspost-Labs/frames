@@ -20,12 +20,12 @@ export async function generateMetadata(
     `${config?.BACKEND_URL}/util/get-frame-data?frameId=${id}`
   );
 
-  const { imageUrl } = res.data?.data;
+  const { imageUrl, minters, allowedMints } = res.data?.data;
 
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
-        label: "Mint",
+        label: `Mint ${minters?.length}/${allowedMints}`,
       },
     ],
     image: {
