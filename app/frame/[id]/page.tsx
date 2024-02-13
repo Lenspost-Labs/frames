@@ -30,8 +30,7 @@ export async function generateMetadata(
           true ? "Follow" : ""
         } ${
           true || isLike || isRecast
-            ? `&#x1F449;
-          `
+            ? `👉`
             : ""
         }  Mint ${minters?.length}/${allowedMints}`,
       },
