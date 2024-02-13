@@ -27,14 +27,14 @@ export async function generateMetadata(
     buttons: [
       {
         label: `${[
-          true ? "Like" : "",
+          isLike ? "Like" : "",
           isRecast ? "Recast" : "",
           isFollow ? "Follow" : "",
         ]
           .filter(Boolean) // Remove empty strings
-          .join(", ")} ${" "} ${
-          true || isLike || isRecast ? `👉` : ""
-        } ${" "} Mint ${" "} ${minters?.length}/${allowedMints}`,
+          .join(", ")} ${isLike || isRecast || isRecast ? `👉` : ""} Mint ${
+          minters?.length
+        }/${allowedMints}`,
       },
     ],
     image: {
