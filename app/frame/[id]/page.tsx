@@ -29,7 +29,7 @@ export async function generateMetadata(
         label: `${[
           true ? "Like" : "",
           isRecast ? "Recast" : "",
-          true ? "Follow" : "",
+          isFollow ? "Follow" : "",
         ]
           .filter(Boolean) // Remove empty strings
           .join(", ")} ${true || isLike || isRecast ? `👉` : ""} Mint ${
