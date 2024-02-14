@@ -93,13 +93,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("Extracted address from FID-> ", accountAddress);
 
-  // check if this is a old frame frameId < 114
-  if (frameId && parseInt(frameId) < 114) {
-    console.log("Old frame");
-    btnText = "Old Frame is not mintable";
-    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
-  }
-
   // check if user has already minted
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
   if (minter) {
@@ -112,6 +105,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (noOfNftsMinited === allowedMints) {
     console.log("Mint has exceeded");
     btnText = `Mint has exceeded ${minters?.length}/${allowedMints}`;
+    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+  }
+
+  // check if this is a old frame frameId < 114
+  if (frameId && parseInt(frameId) <= 60) {
+    console.log("Old frame");
+    btnText = "Old Frame is not mintable";
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
 
