@@ -109,7 +109,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   // check if this is a old frame frameId < 114
-  if (frameId && parseInt(frameId) <= 60) {
+  if (frameId && parseInt(frameId) < 114) {
     console.log("Old frame");
     btnText = "Old Frame is not mintable";
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
