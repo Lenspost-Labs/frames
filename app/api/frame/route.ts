@@ -16,7 +16,6 @@ import axios from "axios";
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
-
   let imageUrl: string | undefined = "";
   let tokenUri: string | undefined = "";
   let minters:
@@ -31,6 +30,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   let isLike: boolean | undefined = false;
   let isRecast: boolean | undefined = false;
   let isFollow: boolean | undefined = false;
+  let noOfNftsMinited: number = 0;
+
+  const noOfFreeMints = 10;
 
   const searchParams = req.nextUrl.searchParams;
   const frameId = searchParams.get("frameId");
@@ -52,6 +54,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isLike = data?.isLike;
     isRecast = data?.isRecast;
     isFollow = data?.isFollow;
+
+    noOfNftsMinited = minters?.length || 0;
   } catch (error) {
     console.log("Error getting frame data-> ", error);
     return new NextResponse("Error getting frame data");
@@ -98,11 +102,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   // check if mint has exceeded
-  if (minters?.length === allowedMints) {
+  if (noOfNftsMinited === allowedMints) {
     console.log("Mint has exceeded");
     btnText = `Mint has exceeded ${minters?.length}/${allowedMints}`;
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
+
+  // TODO: check if user's spending limit has exceeded
 
   // check gate with like
   if (isLike) {
@@ -143,15 +149,23 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
   }
 
+  // for first 10 mints use Sponsor wallet to mint then use user's Fund wallet
+  const isFreeMint = () => {
+    if (noOfNftsMinited < noOfFreeMints) {
+      return config?.sponsorWallet;
+    }
+    return config?.fundingWallet;
+  };
+
   try {
     // NFT minting
     const result = await writeContract(wagmiConfig, {
-      abi: TestAbi,
-      address: TestContractAddress,
+      abi: BaseAbi,
+      address: BaseContractAddress,
       functionName: "mint",
       args: [accountAddress, tokenUri],
-      account: privateKeyToAccount(config?.testWallet),
-      chainId: baseSepolia.id,
+      account: privateKeyToAccount(isFreeMint()),
+      chainId: base.id,
     });
 
     btnText = "View tx";
