@@ -77,6 +77,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // get frame request data from Farcaster client
   const body: FrameRequest = await req.json();
+
+  console.log("frame request-> ", body);
+
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: config?.neynar?.apiKey,
   });
