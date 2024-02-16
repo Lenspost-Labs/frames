@@ -76,7 +76,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     neynarApiKey: config?.neynar?.apiKey,
   });
 
-  accountAddress = message?.interactor.verified_accounts[0];
+  // get user's wallet address from FID
+  if (isValid) {
+    accountAddress = message.interactor.verified_accounts[0];
+  } else {
+    btnText = "No Wallet Found";
+    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+  }
 
   console.log("frame message-> ", message);
 
