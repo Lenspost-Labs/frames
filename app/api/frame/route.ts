@@ -166,6 +166,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       recipientAddress: accountAddress,
     });
 
+    console.log("res", res);
+
     console.log("Mint response-> ", res.data?.tx);
 
     txHash = res.data?.tx;
