@@ -107,6 +107,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       }
     );
 
+    const data = await res.json();
+    console.log("mint response-> ", data);
+
     return new NextResponse(getFrame("0x", false, imageUrl, btnText));
   } catch (error) {
     console.log("Error minting frame-> ", error);

@@ -8,6 +8,6 @@ export const config = {
   fundingWallet: (`0x${process.env.FUNDING_WALLET_PRIVATE_KEY}` as Hex) || undefined,
   testWallet: (`0x${process.env.TEST_WALLET_PRIVATE_KEY}` as Hex) || undefined,
 
-  APP_URL: "https://test-frame-lenspost.vercel.app",
+  APP_URL: "https://test-frame-lenspost1.vercel.app",
   BACKEND_URL: "https://api.lenspost.xyz",
 };
