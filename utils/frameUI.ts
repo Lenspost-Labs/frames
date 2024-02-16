@@ -16,7 +16,7 @@ export const getFrame = (
      txHash
        ? `<meta property="fc:frame:button:1" content="${btnText}" />
          <meta property="fc:frame:button:1:action" content="link" />
-         <meta property="fc:frame:button:1:target" content="${base.blockExplorers.default.url}/tx/${txHash}" />`
+         <meta property="fc:frame:button:1:target" content="${baseSepolia.blockExplorers.default.url}/tx/${txHash}" />`
        : `<meta property="fc:frame:button:1" content="${btnText}" />`
    }
   

@@ -41,7 +41,7 @@ export async function generateMetadata(
       src: imageUrl,
       aspectRatio: "1:1",
     },
-    post_url: `${config?.APP_URL}/api/test?frameId=${id}`,
+    post_url: `${config?.APP_URL}/api/frame?frameId=${id}`,
   });
 
   return {

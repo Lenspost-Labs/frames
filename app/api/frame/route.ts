@@ -17,6 +17,7 @@ import { getFrame } from "@/utils";
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
+  let txHash: string | undefined = "";
   let imageUrl: string | undefined = "";
   let tokenUri: string | undefined = "";
   let minters:
@@ -59,7 +60,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     noOfNftsMinited = minters?.length || 0;
   } catch (error) {
     console.log("Error getting frame data-> ", error);
-    return new NextResponse("Error getting frame data");
+    btnText = "Error - Try again";
+    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
 
   console.log("quries-> ", {
@@ -119,8 +121,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
 
-  // TODO: check if user's spending limit has exceeded
-
   // check gate with like
   if (isLike) {
     if (message?.liked) {
@@ -160,44 +160,35 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
   }
 
-  // for first 10 mints use Sponsor wallet to mint then use user's Fund wallet
-  const isFreeMint = () => {
-    if (noOfNftsMinited < noOfFreeMints) {
-      return config?.sponsorWallet;
-    }
-    return config?.fundingWallet;
-  };
-
   try {
-    // NFT minting
-    const result = await writeContract(wagmiConfig, {
-      abi: TestAbi,
-      address: TestContractAddress,
-      functionName: "mint",
-      args: [accountAddress, tokenUri],
-      account: privateKeyToAccount(config?.testWallet),
-      chainId: baseSepolia.id,
+    const res = await axios.post(`${config?.TEST_BACKEND_URL}/mint`, {
+      frameId: frameId,
+      recipientAddress: accountAddress,
     });
+
+    console.log("Mint response-> ", res.data?.tx);
+
+    txHash = res.data?.tx;
 
     btnText = "View tx";
 
-    console.log("NFT minted successfully!", result);
+    console.log("NFT minted successfully!", txHash);
 
     // update frame data with txHash and minterAddress
-    if (result) {
+    if (txHash) {
       const res = await axios.post(
         `${config?.BACKEND_URL}/util/update-frame-data`,
         {
           frameId: frameId,
           minterAddress: accountAddress,
-          txHash: result,
+          txHash: txHash,
         }
       );
       console.log("Frame data updated-> ", res.data);
     }
 
     return new NextResponse(
-      getFrame(accountAddress, result, imageUrl, btnText)
+      getFrame(accountAddress, txHash, imageUrl, btnText)
     );
   } catch (error) {
     console.log("Error minting NFT-> ", error);

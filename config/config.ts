@@ -10,4 +10,5 @@ export const config = {
 
   APP_URL: "https://test-frame-lenspost1.vercel.app",
   BACKEND_URL: "https://api.lenspost.xyz",
+  TEST_BACKEND_URL: "https://api.lenspost.xyz",
 };
