@@ -19,6 +19,7 @@ export async function generateMetadata(
   const res = await axios.get(
     `${config?.BACKEND_URL}/util/get-frame-data?frameId=${id}`
   );
+  // console.log("res", res.data?.data);
 
   const { imageUrl, minters, allowedMints, isLike, isRecast, isFollow } =
     res.data?.data;
