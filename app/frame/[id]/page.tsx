@@ -32,7 +32,7 @@ export async function generateMetadata(
           isFollow ? "Follow" : "",
         ]
           .filter(Boolean) // Remove empty strings
-          .join(", ")} ${isLike || isRecast || isRecast ? `👉` : ""} Mint ${
+          .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint ${
           minters?.length
         }/${allowedMints}`,
       },
