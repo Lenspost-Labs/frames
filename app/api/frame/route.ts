@@ -80,14 +80,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   console.log("frame request-> ", body);
 
-  let body2 = {
-    trustedData: {
-      messageBytes:
-        "0a4e080d1097920e18b88ffe2e200182013e0a1e68747470733a2f2f6361737465722e6661726d2f7363656e652f6175746810011a1a0883f91112146b6e92dcce621d28e0b800b1bc6f292c2e4f77a112148d4f858aabb383aec57cbb9f967ef8ec508ef11118012240178b5897defce2bec6c46224993879b3df4d0c3e783b2cc0921669da0766381ed5ec75ea528620e6878aa8fa09d738f6d22ebc59a6992cda49b2b4a463b551062801322007cd5f08e46c00c6b2afe6bf360183093a735c5d0b0f2ad5d88ab32c0be0e18d",
-    },
-  };
-
-  const { isValid, message } = await getFrameMessage(body2 as any, {
+  const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: config?.neynar?.apiKey,
   });
 
