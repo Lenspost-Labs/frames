@@ -87,22 +87,25 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("frame message-> ", message);
 
   try {
-    const res = await fetch("https://frame.syndicate.io/api/mint", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer vIvNjVKG:8VOX3A4tZP-UgAlxvEA--",
-      },
-      body: JSON.stringify({
-        frameTrustedData: body?.trustedData?.messageBytes,
-        contractAddress: BaseContractAddress,
-        functionSignature: "mint(address to, string tokenURI)",
-        args: { accountAddress, tokenUri },
-        shouldLike: false,
-        shouldRecast: false,
-        shouldFollow: false,
-      }),
-    });
+    const res = await fetch(
+      "https://frame.syndicate.io/api/v2/sendTransaction",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer vIvNjVKG:8VOX3A4tZP-UgAlxvEA--",
+        },
+        body: JSON.stringify({
+          frameTrustedData: body?.trustedData?.messageBytes,
+          contractAddress: BaseContractAddress,
+          functionSignature: "mint(address to, string tokenURI)",
+          args: { accountAddress, tokenUri },
+          shouldLike: false,
+          shouldRecast: false,
+          shouldFollow: false,
+        }),
+      }
+    );
 
     const data = await res.json();
     console.log("mint response-> ", data);
