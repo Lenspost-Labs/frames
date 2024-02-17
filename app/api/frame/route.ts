@@ -165,6 +165,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           txHash: txHash,
         }
       );
+      
       console.log("Frame data updated-> ", res.data);
     }
 
