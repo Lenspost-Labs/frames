@@ -100,12 +100,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("Extracted address from FID-> ", accountAddress);
 
   // check if user has already minted
-  const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  if (minter) {
-    console.log("User has already minted-> ", minter);
-    btnText = "Already Minted";
-    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
-  }
+  // const minter = minters?.find((m) => m?.minterAddress === accountAddress);
+  // if (minter) {
+  //   console.log("User has already minted-> ", minter);
+  //   btnText = "Already Minted";
+  //   return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+  // }
 
   // check if mint has exceeded
   if (noOfNftsMinited === allowedMints) {
@@ -165,10 +165,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       frameId: frameId,
       recipientAddress: accountAddress,
     });
-
-    console.log("res", res);
-
-    console.log("Mint response-> ", res.data?.tx);
 
     txHash = res.data?.tx;
 
