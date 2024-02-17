@@ -1,6 +1,7 @@
 import { base, baseSepolia } from "@wagmi/core/chains";
 
 export const getFrame = (
+  wallet: string | undefined,
   txHash: string | boolean | undefined,
   imageUrl: string | undefined,
   btnText: string | undefined
