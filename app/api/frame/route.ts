@@ -82,6 +82,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     accountAddress = message.interactor.verified_accounts[0];
   } else {
     btnText = "No Wallet Found";
+    
     return new NextResponse(getFrame(false, imageUrl, btnText));
   }
 
