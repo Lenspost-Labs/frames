@@ -20,7 +20,7 @@ export async function generateMetadata(
     `${config?.BACKEND_URL}/util/get-frame-data?frameId=${id}`
   );
 
-  const { imageUrl, minters, allowedMints, isLike, isRecast, isFollow } =
+  const { imageUrl, isLike, isRecast, isFollow } =
     res.data?.data;
 
   const frameMetadata = getFrameMetadata({

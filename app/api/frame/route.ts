@@ -1,16 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
-import { writeContract } from "@wagmi/core";
-import { wagmiConfig } from "@/config/wagmi";
-import { base, baseSepolia } from "@wagmi/core/chains";
-import { privateKeyToAccount } from "viem/accounts";
-import {
-  BaseAbi,
-  BaseContractAddress,
-  TestAbi,
-  TestContractAddress,
-} from "@/contract";
 import axios from "axios";
 import { getFrame } from "@/utils";
 
@@ -33,8 +23,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   let isRecast: boolean | undefined = false;
   let isFollow: boolean | undefined = false;
   let noOfNftsMinited: number = 0;
-
-  const noOfFreeMints = 10;
 
   const searchParams = req.nextUrl.searchParams;
   const frameId = searchParams.get("frameId");
@@ -128,9 +116,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't like the post");
       btnText = "Like and Mint";
-      return new NextResponse(
-        getFrame(false, imageUrl, btnText)
-      );
+      return new NextResponse(getFrame(false, imageUrl, btnText));
     }
   }
 
@@ -141,9 +127,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't recast the post");
       btnText = "Recast and Mint";
-      return new NextResponse(
-        getFrame(false, imageUrl, btnText)
-      );
+      return new NextResponse(getFrame(false, imageUrl, btnText));
     }
   }
 
@@ -154,15 +138,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't follow the post");
       btnText = "Follow and Mint";
-      return new NextResponse(
-        getFrame(false, imageUrl, btnText)
-      );
+      return new NextResponse(getFrame(false, imageUrl, btnText));
     }
   }
 
   try {
     // mint NFT
-    const res = await axios.post(`${config?.TEST_BACKEND_URL}/mint`, {
+    const res = await axios.post(`${config?.BACKEND_URL}/mint`, {
       frameId: frameId,
       recipientAddress: accountAddress,
     });
@@ -186,9 +168,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log("Frame data updated-> ", res.data);
     }
 
-    return new NextResponse(
-      getFrame(txHash, imageUrl, btnText)
-    );
+    return new NextResponse(getFrame(txHash, imageUrl, btnText));
   } catch (error) {
     console.log("Error minting NFT-> ", error);
     btnText = "Error - Try again";
