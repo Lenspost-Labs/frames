@@ -1,4 +1,10 @@
+import { config } from "@/config/config";
 import { base, baseSepolia } from "@wagmi/core/chains";
+
+const explorerUrl =
+  config?.ENVIRONMENT === "production"
+    ? base.blockExplorers.default.url
+    : baseSepolia.blockExplorers.default.url;
 
 export const getFrame = (
   wallet: string | undefined,
@@ -16,7 +22,7 @@ export const getFrame = (
      txHash
        ? `<meta property="fc:frame:button:1" content="${btnText}" />
          <meta property="fc:frame:button:1:action" content="link" />
-         <meta property="fc:frame:button:1:target" content="${base.blockExplorers.default.url}/tx/${txHash}" />`
+         <meta property="fc:frame:button:1:target" content="${explorerUrl}/tx/${txHash}" />`
        : `<meta property="fc:frame:button:1" content="${btnText}" />`
    }
   
