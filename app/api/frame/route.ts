@@ -88,12 +88,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   console.log("Extracted address from FID-> ", accountAddress);
 
   // check if user has already minted
-  // const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  // if (minter) {
-  //   console.log("User has already minted-> ", minter);
-  //   btnText = "Already Minted";
-  //   return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
-  // }
+  const minter = minters?.find((m) => m?.minterAddress === accountAddress);
+  if (
+    minter &&
+    minter.minterAddress != "0x7d8504C239F951d944D23B7Ad9beDEDc4d4512d9"
+  ) {
+    console.log("User has already minted-> ", minter);
+    btnText = "Already Minted";
+    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+  }
 
   // check if mint has exceeded
   if (noOfNftsMinited === allowedMints) {
@@ -116,7 +119,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't like the post");
       btnText = "Like and Mint";
-      return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText)
+      );
     }
   }
 
@@ -127,7 +132,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't recast the post");
       btnText = "Recast and Mint";
-      return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText)
+      );
     }
   }
 
@@ -138,7 +145,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't follow the post");
       btnText = "Follow and Mint";
-      return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText)
+      );
     }
   }
 
@@ -169,7 +178,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log("Frame data updated-> ", res.data);
     }
 
-    return new NextResponse(getFrame(accountAddress, txHash, imageUrl, btnText));
+    return new NextResponse(
+      getFrame(accountAddress, txHash, imageUrl, btnText)
+    );
   } catch (error) {
     console.log("Error minting NFT-> ", error);
     btnText = "Error - Try again";
