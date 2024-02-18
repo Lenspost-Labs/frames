@@ -116,9 +116,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't like the post");
       btnText = "Like and Mint";
-      return new NextResponse(
-        getFrame(accountAddress, false, imageUrl, btnText)
-      );
+      return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
     }
   }
 
@@ -129,9 +127,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't recast the post");
       btnText = "Recast and Mint";
-      return new NextResponse(
-        getFrame(accountAddress, false, imageUrl, btnText)
-      );
+      return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
     }
   }
 
@@ -142,9 +138,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     } else {
       console.log("User didn't follow the post");
       btnText = "Follow and Mint";
-      return new NextResponse(
-        getFrame(accountAddress, false, imageUrl, btnText)
-      );
+      return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
     }
   }
 
@@ -175,9 +169,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log("Frame data updated-> ", res.data);
     }
 
-    return new NextResponse(
-      getFrame(accountAddress, txHash, imageUrl, btnText)
-    );
+    return new NextResponse(getFrame(accountAddress, txHash, imageUrl, btnText));
   } catch (error) {
     console.log("Error minting NFT-> ", error);
     btnText = "Error - Try again";

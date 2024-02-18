@@ -3,6 +3,10 @@ import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata, ResolvingMetadata } from "next";
 import { config } from "@/config/config";
 import axios from "axios";
+import ImageSection from "@/components/ImageSection";
+import { FrameData } from "@/types/types";
+import { DetailsSection } from "@/components/DetailsSection";
+import Default from "@/components/Default";
 
 type Props = {
   params: { id: string };
@@ -20,8 +24,7 @@ export async function generateMetadata(
     `${config?.BACKEND_URL}/util/get-frame-data?frameId=${id}`
   );
 
-  const { imageUrl, isLike, isRecast, isFollow } =
-    res.data?.data;
+  const { imageUrl, isLike, isRecast, isFollow } = res.data?.data as FrameData;
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -57,26 +60,41 @@ export async function generateMetadata(
   };
 }
 
-const Home: NextPage = () => {
+const Home = async ({ params }: Props) => {
+  // const res = await axios.get(
+  //   `${config?.BACKEND_URL}/util/get-frame-data?frameId=${params.id}`
+  // );
+
+  // const {
+  //   imageUrl,
+  //   allowedMints,
+  //   isFollow,
+  //   isLike,
+  //   isRecast,
+  //   isTopUp,
+  //   minters,
+  //   owner,
+  //   tokenUri,
+  // } = res.data?.data as FrameData;
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-12 p-24">
-      <h1 className="font-bold text-5xl">Frames Lenspost</h1>
-      <a
-        href="https://app.lenspost.xyz"
-        className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <h2 className={`mb-3 text-2xl font-semibold`}>
-          Lenspost{" "}
-          <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-            -&gt;
-          </span>
-        </h2>
-        <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-          A web3 onchain canvas.
-        </p>
-      </a>
+    <main className="p-5 md:max-w-7xl h-screen mx-auto flex flex-col justify-center items-center md:flex-row md:justify-between md:items-center">
+      <Default />
+      {/* image section */}
+
+      {/* <ImageSection imageUrl={imageUrl} /> */}
+
+      {/* detail section */}
+      {/* <DetailsSection
+        allowedMints={allowedMints}
+        isFollow={isFollow}
+        isLike={isLike}
+        isRecast={isRecast}
+        isTopUp={isTopUp}
+        minters={minters}
+        owner={owner}
+        tokenUri={tokenUri}
+      /> */}
     </main>
   );
 };
