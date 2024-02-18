@@ -82,10 +82,10 @@ const Home = async ({ params }: Props) => {
       <Default />
       {/* image section */}
 
-      <ImageSection imageUrl={imageUrl} />
+      {/* <ImageSection imageUrl={imageUrl} /> */}
 
       {/* detail section */}
-      <DetailsSection
+      {/* <DetailsSection
         allowedMints={allowedMints}
         isFollow={isFollow}
         isLike={isLike}
@@ -94,7 +94,7 @@ const Home = async ({ params }: Props) => {
         minters={minters}
         owner={owner}
         tokenUri={tokenUri}
-      />
+      /> */}
     </main>
   );
 };
