@@ -61,31 +61,31 @@ export async function generateMetadata(
 }
 
 const Home = async ({ params }: Props) => {
-  // const res = await axios.get(
-  //   `${config?.BACKEND_URL}/util/get-frame-data?frameId=${params.id}`
-  // );
+  const res = await axios.get(
+    `${config?.BACKEND_URL}/util/get-frame-data?frameId=${params.id}`
+  );
 
-  // const {
-  //   imageUrl,
-  //   allowedMints,
-  //   isFollow,
-  //   isLike,
-  //   isRecast,
-  //   isTopUp,
-  //   minters,
-  //   owner,
-  //   tokenUri,
-  // } = res.data?.data as FrameData;
+  const {
+    imageUrl,
+    allowedMints,
+    isFollow,
+    isLike,
+    isRecast,
+    isTopUp,
+    minters,
+    owner,
+    tokenUri,
+  } = res.data?.data as FrameData;
 
   return (
     <main className="p-5 md:max-w-7xl h-screen mx-auto flex flex-col justify-center items-center md:flex-row md:justify-between md:items-center">
       <Default />
       {/* image section */}
 
-      {/* <ImageSection imageUrl={imageUrl} /> */}
+      <ImageSection imageUrl={imageUrl} />
 
       {/* detail section */}
-      {/* <DetailsSection
+      <DetailsSection
         allowedMints={allowedMints}
         isFollow={isFollow}
         isLike={isLike}
@@ -94,7 +94,7 @@ const Home = async ({ params }: Props) => {
         minters={minters}
         owner={owner}
         tokenUri={tokenUri}
-      /> */}
+      />
     </main>
   );
 };
