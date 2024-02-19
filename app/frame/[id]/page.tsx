@@ -3,10 +3,11 @@ import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata, ResolvingMetadata } from "next";
 import { config } from "@/config/config";
 import axios from "axios";
-import ImageSection from "@/components/ImageSection";
 import { FrameData } from "@/types/types";
-import { DetailsSection } from "@/components/DetailsSection";
 import Default from "@/components/Default";
+import { getFrameData } from "@/utils";
+import Image from "next/image";
+import Button from "@/components/Button";
 
 type Props = {
   params: { id: string };
@@ -20,11 +21,7 @@ export async function generateMetadata(
   const id = params.id;
   console.log("id", id);
 
-  const res = await axios.get(
-    `${config?.BACKEND_URL}/util/get-frame-data?frameId=${id}`
-  );
-
-  const { imageUrl, isLike, isRecast, isFollow } = res.data?.data as FrameData;
+  const { imageUrl, isLike, isFollow, isRecast } = await getFrameData(id);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -61,40 +58,80 @@ export async function generateMetadata(
 }
 
 const Home = async ({ params }: Props) => {
-  const res = await axios.get(
-    `${config?.BACKEND_URL}/util/get-frame-data?frameId=${params.id}`
-  );
-
   const {
+    frameId,
     imageUrl,
     allowedMints,
     isFollow,
     isLike,
     isRecast,
     isTopUp,
-    minters,
+    noOfNftsMinited,
     owner,
-    tokenUri,
-  } = res.data?.data as FrameData;
+  } = await getFrameData(params.id);
+
+  if (!frameId) {
+    return <Default text="Invalid FrameID" />;
+  }
 
   return (
-    <main className="p-5 md:max-w-7xl h-screen mx-auto flex flex-col justify-center items-center md:flex-row md:justify-between md:items-center">
-      <Default />
-      {/* image section */}
+    <main className="p-3 h-screen w-screen gap-3 flex flex-col justify-start items-center lg:flex-row lg:justify-center lg:items-center lg:p-8">
+      <Image
+        src={imageUrl}
+        alt="Frame Image"
+        width={500}
+        height={500}
+        className="object-contain rounded-lg"
+      />
 
-      {/* <ImageSection imageUrl={imageUrl} /> */}
-
-      {/* detail section */}
-      {/* <DetailsSection
-        allowedMints={allowedMints}
-        isFollow={isFollow}
-        isLike={isLike}
-        isRecast={isRecast}
-        isTopUp={isTopUp}
-        minters={minters}
-        owner={owner}
-        tokenUri={tokenUri}
-      /> */}
+      <div className="flex flex-col gap-3">
+        <div>
+          <div className="flex flex-col lg:flex-row lg:gap-3">
+            <p className="font-semibold">Contract Address:</p>
+            <p className="truncate">
+              0x769C1417485ad9d74FbB27F4be47890Fd00A96ad
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <p className="font-semibold">Network:</p>
+            <p>Base (8453)</p>
+          </div>
+        </div>
+        <div className="flex flex-col lg:flex-row lg:gap-3">
+          <p className="font-semibold">Owner:</p>
+          <p>{owner}</p>
+        </div>
+        {isLike || isFollow || isRecast ? (
+          <div>
+            <p className="font-semibold">Gated with:</p>
+            {isLike && <p>Like</p>}
+            {isRecast && <p>Recast</p>}
+            {isFollow && <p>Follow</p>}
+          </div>
+        ) : null}
+        <div>
+          <div className="flex gap-3">
+            <p className="font-semibold">Allowed Mints:</p>
+            <p>{allowedMints}</p>
+          </div>
+          <div className="flex gap-3">
+            <p className="font-semibold">No of NFTs Minted:</p>
+            <p>{noOfNftsMinited}</p>
+          </div>
+        </div>
+        <div className="flex justify-between gap-1">
+          {/* <Button
+            title="Cast to Mint"
+            target={`https://warpcast.com/~/compose?text=https://frames.lenspost.xyz/frame/${frameId}`}
+            className="w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl"
+          /> */}
+          <Button
+            title="Remix on Lenspost"
+            target="https://app.lenspost.xyz"
+            className="w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl"
+          />
+        </div>
+      </div>
     </main>
   );
 };
