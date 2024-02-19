@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
 import axios from "axios";
-import { getFrame, getFrameData } from "@/utils";
-import { mintFrame } from "@/utils/mintFrame";
-import { updateFrameData } from "@/utils/updateFrameData";
+import { getFrame, getFrameData, mintFrame, updateFrameData } from "@/utils";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -73,7 +71,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // check if user has already minted
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  if (minter) {
+  if (config?.ENVIRONMENT === "production" && minter) {
     console.log("User has already minted-> ", minter);
     btnText = "Already Minted";
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));

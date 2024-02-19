@@ -21,7 +21,12 @@ export async function generateMetadata(
   const id = params.id;
   console.log("id", id);
 
-  const { imageUrl, isLike, isFollow, isRecast } = await getFrameData(id);
+  const {
+    imageUrl,
+    isLike,
+    isFollow,
+    isRecast,
+  } = await getFrameData(id);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -32,7 +37,9 @@ export async function generateMetadata(
           isFollow ? "Follow" : "",
         ]
           .filter(Boolean) // Remove empty strings
-          .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
+          .join(", ")} ${
+          isLike || isRecast || isFollow ? `👉` : ""
+        } Mint`,
       },
     ],
     image: {
