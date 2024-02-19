@@ -17,11 +17,7 @@ export const metadata: Metadata = {
 };
 
 const Home: NextPage = () => {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-12 p-24">
-      <Default />
-    </main>
-  );
+  return <Default text="Frames Lenspost" />;
 };
 
 export default Home;

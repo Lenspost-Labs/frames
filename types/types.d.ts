@@ -1,4 +1,5 @@
 export interface FrameData {
+  frameId: number | undefined;
   imageUrl: string;
   tokenUri: string;
   minters: {
@@ -11,4 +12,15 @@ export interface FrameData {
   isLike: boolean;
   isRecast: boolean;
   isFollow: boolean;
+  noOfNftsMinited: number;
+}
+
+export interface MintFrameData {
+  tx: string;
+  message: string;
+}
+
+export interface UpdateFrameData {
+  status: string;
+  message: string;
 }

@@ -2,53 +2,37 @@ import { NextRequest, NextResponse } from "next/server";
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
 import axios from "axios";
-import { getFrame } from "@/utils";
+import { getFrame, getFrameData } from "@/utils";
+import { mintFrame } from "@/utils/mintFrame";
+import { updateFrameData } from "@/utils/updateFrameData";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
   let txHash: string | undefined = "";
-  let imageUrl: string | undefined = "";
-  let tokenUri: string | undefined = "";
-  let minters:
-    | {
-        minterAddress: string;
-        txHash: string;
-      }[]
-    | undefined = [{ minterAddress: "", txHash: "" }];
-  let owner: string | undefined = "";
-  let isTopUp: boolean | undefined = false;
-  let allowedMints: number | undefined = 0;
-  let isLike: boolean | undefined = false;
-  let isRecast: boolean | undefined = false;
-  let isFollow: boolean | undefined = false;
-  let noOfNftsMinited: number = 0;
 
   const searchParams = req.nextUrl.searchParams;
-  const frameId = searchParams.get("frameId");
+  const frameIdParam = searchParams.get("frameId") || "";
 
   // get frame data
-  try {
-    const res = await axios.get(
-      `${config?.BACKEND_URL}/util/get-frame-data?frameId=${frameId}`
-    );
+  const getFrameDataRes = await getFrameData(frameIdParam);
 
-    const data = res.data?.data;
+  const {
+    frameId,
+    imageUrl,
+    tokenUri,
+    minters,
+    owner,
+    isTopUp,
+    allowedMints,
+    isLike,
+    isRecast,
+    isFollow,
+    noOfNftsMinited,
+  } = getFrameDataRes;
 
-    imageUrl = data?.imageUrl;
-    tokenUri = data?.tokenUri;
-    minters = data?.minters;
-    owner = data?.owner;
-    isTopUp = data?.isTopUp;
-    allowedMints = data?.allowedMints;
-    isLike = data?.isLike;
-    isRecast = data?.isRecast;
-    isFollow = data?.isFollow;
-
-    noOfNftsMinited = minters?.length || 0;
-  } catch (error) {
-    console.log("Error getting frame data-> ", error);
-    btnText = "Error - Try again";
+  if (!frameId) {
+    btnText = "FrameId not found";
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
 
@@ -103,7 +87,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   // check if this is a old frame frameId < 114
-  if (frameId && parseInt(frameId) < 114) {
+  if (frameId && frameId < 114) {
     console.log("Old frame is not mintable");
     btnText = "Old Frame is not mintable";
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
@@ -148,41 +132,31 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
   }
 
-  try {
-    // mint NFT
-    const res = await axios.post(`${config?.BACKEND_URL}/mint`, {
-      frameId: frameId,
-      recipientAddress: accountAddress,
-    });
+  // mint NFT
+  const mintFrameRes = await mintFrame(frameId.toString(), accountAddress);
 
-    txHash = res.data?.tx;
-
-    btnText = "View tx";
-
-    console.log("NFT minted successfully!", txHash);
-
-    // update frame data with txHash and minterAddress
-    if (txHash) {
-      const res = await axios.post(
-        `${config?.BACKEND_URL}/util/update-frame-data`,
-        {
-          frameId: frameId,
-          minterAddress: accountAddress,
-          txHash: txHash,
-        }
-      );
-
-      console.log("Frame data updated-> ", res.data);
-    }
-
-    return new NextResponse(
-      getFrame(accountAddress, txHash, imageUrl, btnText)
-    );
-  } catch (error) {
-    console.log("Error minting NFT-> ", error);
-    btnText = "Error - Try again";
+  if (!mintFrameRes?.tx) {
+    btnText = "Error minting NFT";
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
+
+  txHash = mintFrameRes?.tx;
+
+  btnText = "View tx";
+
+  console.log("NFT minted successfully!", txHash);
+
+  // update frame data with txHash and minterAddress
+  if (txHash) {
+    const updateFrameDataRes = await updateFrameData(
+      frameId.toString(),
+      accountAddress,
+      txHash
+    );
+    console.log("Frame data updated-> ", updateFrameDataRes.status);
+  }
+
+  return new NextResponse(getFrame(accountAddress, txHash, imageUrl, btnText));
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
