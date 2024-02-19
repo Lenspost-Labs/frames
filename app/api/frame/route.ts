@@ -73,7 +73,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // check if user has already minted
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  if (minter) {
+  if (minter && minter?.minterAddress != "0x7d8504C239F951d944D23B7Ad9beDEDc4d4512d9") {
     console.log("User has already minted-> ", minter);
     btnText = "Already Minted";
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
