@@ -14,6 +14,8 @@ export const updateFrameData = async (
       txHash,
     });
 
+    console.log("Frame data updated-> ", res.data);
+
     return {
       status: res.data?.status,
       message: res.data?.message,
