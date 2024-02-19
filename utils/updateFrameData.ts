@@ -8,13 +8,14 @@ export const updateFrameData = async (
   txHash: string
 ): Promise<UpdateFrameData> => {
   try {
-    const res = await axios.post(`${config?.BACKEND_URL}/mint`, {
-      frameId,
-      minterAddress,
-      txHash,
-    });
-
-    console.log("Frame data updated-> ", res.data);
+    const res = await axios.post(
+      `${config?.BACKEND_URL}/util/update-frame-data`,
+      {
+        frameId,
+        minterAddress,
+        txHash,
+      }
+    );
 
     return {
       status: res.data?.status,
