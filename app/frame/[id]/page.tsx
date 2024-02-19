@@ -39,7 +39,7 @@ export async function generateMetadata(
           .filter(Boolean) // Remove empty strings
           .join(", ")} ${
           isLike || isRecast || isFollow ? `👉` : ""
-        } MintF`,
+        } Mint`,
       },
     ],
     image: {
