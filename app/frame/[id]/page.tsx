@@ -26,8 +26,6 @@ export async function generateMetadata(
     isLike,
     isFollow,
     isRecast,
-    allowedMints,
-    noOfNftsMinited,
   } = await getFrameData(id);
 
   const frameMetadata = getFrameMetadata({
@@ -41,7 +39,7 @@ export async function generateMetadata(
           .filter(Boolean) // Remove empty strings
           .join(", ")} ${
           isLike || isRecast || isFollow ? `👉` : ""
-        } Mint ${noOfNftsMinited}/${allowedMints}`,
+        } MintF`,
       },
     ],
     image: {
