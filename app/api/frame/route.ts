@@ -71,14 +71,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // check if user has already minted
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  if (config?.ENVIRONMENT === "production" && minter) {
+  if (minter) {
     console.log("User has already minted-> ", minter);
     btnText = "Already Minted";
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
 
   // check if mint has exceeded
-  if (noOfNftsMinited === allowedMints) {
+  if (noOfNftsMinited >= allowedMints) {
     console.log("Mint has exceeded");
     btnText = `Mint has exceeded ${minters?.length}/${allowedMints}`;
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
