@@ -12,6 +12,8 @@ export const mintFrame = async (
       recipientAddress,
     });
 
+    console.log("Mint NFT response-> ", res.data);
+
     return {
       tx: res.data?.tx,
       message: res.data?.message,
