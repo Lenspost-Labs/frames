@@ -138,23 +138,30 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
 
-  txHash = mintFrameRes?.tx;
+  if (mintFrameRes?.tx?.startsWith("0x")) {
+    txHash = mintFrameRes?.tx;
 
-  btnText = "View tx";
+    btnText = "View tx";
 
-  console.log("NFT minted successfully!", txHash);
+    console.log("NFT minted successfully!", txHash);
 
-  // update frame data with txHash and minterAddress
-  if (txHash) {
-    const updateFrameDataRes = await updateFrameData(
-      frameId.toString(),
-      accountAddress,
-      txHash
+    // update frame data with txHash and minterAddress
+    if (txHash) {
+      const updateFrameDataRes = await updateFrameData(
+        frameId.toString(),
+        accountAddress,
+        txHash
+      );
+      console.log("Frame data updated-> ", updateFrameDataRes.status);
+    }
+
+    return new NextResponse(
+      getFrame(accountAddress, txHash, imageUrl, btnText)
     );
-    console.log("Frame data updated-> ", updateFrameDataRes.status);
+  } else {
+    btnText = "Gas not enough";
+    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
   }
-
-  return new NextResponse(getFrame(accountAddress, txHash, imageUrl, btnText));
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
