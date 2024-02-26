@@ -28,6 +28,8 @@ export async function generateMetadata(
     isRecast,
   } = await getFrameData(id);
 
+  console.log("imageUrl", imageUrl);
+
   const frameMetadata = getFrameMetadata({
     buttons: [
       {

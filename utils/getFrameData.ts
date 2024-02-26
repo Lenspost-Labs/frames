@@ -8,7 +8,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       `${config?.BACKEND_URL}/util/get-frame-data?frameId=${frameId}`
     );
 
-    const data = res.data?.data;
+    const data = res.data?.message;
 
     return {
       frameId: data?.id,
