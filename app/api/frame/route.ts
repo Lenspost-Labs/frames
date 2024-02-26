@@ -26,6 +26,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isLike,
     isRecast,
     isFollow,
+    redirectLink,
     noOfNftsMinited,
   } = getFrameDataRes;
 
@@ -44,6 +45,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isLike,
     isRecast,
     isFollow,
+    redirectLink,
+    noOfNftsMinited,
   });
 
   console.log("req.body-> ", req.body);

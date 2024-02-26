@@ -12,6 +12,7 @@ export interface FrameData {
   isLike: boolean;
   isRecast: boolean;
   isFollow: boolean;
+  redirectLink: string;
   noOfNftsMinited: number;
 }
 

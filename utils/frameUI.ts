@@ -10,7 +10,8 @@ export const getFrame = (
   wallet: string | undefined,
   txHash: string | boolean | undefined,
   imageUrl: string | undefined,
-  btnText: string | undefined
+  btnText: string | undefined,
+  redirectLink?: string | undefined
 ) => {
   return `
    <!DOCTYPE html><html><head>
@@ -25,10 +26,17 @@ export const getFrame = (
          <meta property="fc:frame:button:1:target" content="${explorerUrl}/tx/${txHash}" />`
        : `<meta property="fc:frame:button:1" content="${btnText}" />`
    }
+
+   ${
+     redirectLink &&
+     `<meta property="fc:frame:button:2" content="Know more" />
+      <meta property="fc:frame:button:2:action" content="link" />
+      <meta property="fc:frame:button:2:target" content="${redirectLink}" />`
+   }
   
-   <meta property="fc:frame:button:2" content="Remix on Lenspost" />
-   <meta property="fc:frame:button:2:action" content="link" />
-   <meta property="fc:frame:button:2:target" content="https://app.lenspost.xyz" />
+   <meta property="fc:frame:button:${redirectLink? "3": "2"}" content="Remix on Lenspost" />
+   <meta property="fc:frame:button:${redirectLink? "3": "2"}:action" content="link" />
+   <meta property="fc:frame:button:${redirectLink? "3": "2"}:target" content="https://app.lenspost.xyz" />
   </head>
   </html>
    `;
