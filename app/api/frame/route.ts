@@ -67,31 +67,39 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     accountAddress = message.interactor.verified_accounts[0];
   } else {
     btnText = "No Wallet Found";
-    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+    return new NextResponse(
+      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+    );
   }
 
   console.log("Extracted address from FID-> ", accountAddress);
 
   // check if user has already minted
-  const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  if (minter) {
-    console.log("User has already minted-> ", minter);
-    btnText = "Already Minted";
-    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
-  }
+  // const minter = minters?.find((m) => m?.minterAddress === accountAddress);
+  // if (minter) {
+  //   console.log("User has already minted-> ", minter);
+  //   btnText = "Already Minted";
+  //   return new NextResponse(
+  //     getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+  //   );
+  // }
 
   // check if mint has exceeded
   if (noOfNftsMinited >= allowedMints) {
     console.log("Mint has exceeded");
     btnText = `Mint has exceeded ${minters?.length}/${allowedMints}`;
-    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+    return new NextResponse(
+      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+    );
   }
 
   // check if this is a old frame frameId < 114
   if (frameId && frameId < 114) {
     console.log("Old frame is not mintable");
     btnText = "Old Frame is not mintable";
-    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+    return new NextResponse(
+      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+    );
   }
 
   // check gate with like
@@ -102,7 +110,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log("User didn't like the post");
       btnText = "Like and Mint";
       return new NextResponse(
-        getFrame(accountAddress, false, imageUrl, btnText)
+        getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
       );
     }
   }
@@ -115,7 +123,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log("User didn't recast the post");
       btnText = "Recast and Mint";
       return new NextResponse(
-        getFrame(accountAddress, false, imageUrl, btnText)
+        getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
       );
     }
   }
@@ -128,7 +136,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log("User didn't follow the post");
       btnText = "Follow and Mint";
       return new NextResponse(
-        getFrame(accountAddress, false, imageUrl, btnText)
+        getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
       );
     }
   }
@@ -138,7 +146,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   if (!mintFrameRes?.tx) {
     btnText = "Error minting NFT";
-    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+    return new NextResponse(
+      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+    );
   }
 
   if (mintFrameRes?.tx?.startsWith("0x")) {
@@ -159,11 +169,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
 
     return new NextResponse(
-      getFrame(accountAddress, txHash, imageUrl, btnText)
+      getFrame(accountAddress, txHash, imageUrl, btnText, redirectLink)
     );
   } else {
     btnText = "Gas not enough";
-    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText));
+    return new NextResponse(
+      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+    );
   }
 }
 
