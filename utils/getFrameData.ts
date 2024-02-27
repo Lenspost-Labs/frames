@@ -8,7 +8,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       `${config?.BACKEND_URL}/util/get-frame-data?frameId=${frameId}`
     );
 
-    const data = res.data?.data;
+    const data = res.data?.message;
 
     return {
       frameId: data?.id,
@@ -21,6 +21,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       isLike: data?.isLike,
       isRecast: data?.isRecast,
       isFollow: data?.isFollow,
+      redirectLink: data?.redirectLink,
       noOfNftsMinited: data?.minters?.length || 0,
     };
   } catch (error) {
@@ -36,6 +37,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       isLike: false,
       isRecast: false,
       isFollow: false,
+      redirectLink: "",
       noOfNftsMinited: 0,
     };
   }
