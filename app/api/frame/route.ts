@@ -32,7 +32,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   if (!frameId) {
     btnText = "FrameId not found";
-    return new NextResponse(getFrame(accountAddress, false, imageUrl, btnText, redirectLink));
+    return new NextResponse(
+      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+    );
   }
 
   console.log("quries-> ", {

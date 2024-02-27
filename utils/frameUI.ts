@@ -11,7 +11,7 @@ export const getFrame = (
   txHash: string | boolean | undefined,
   imageUrl: string | undefined,
   btnText: string | undefined,
-  redirectLink: string | undefined
+  redirectLink?: string | undefined
 ) => {
   return `
    <!DOCTYPE html><html><head>
