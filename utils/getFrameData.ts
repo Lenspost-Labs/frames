@@ -25,6 +25,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       noOfNftsMinited: data?.minters?.length || 0,
     };
   } catch (error) {
+    
     console.log("Error getting frame data-> ", error);
     return {
       frameId: undefined,
