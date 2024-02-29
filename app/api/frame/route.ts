@@ -38,6 +38,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   console.log("quries-> ", {
+    frameId,
     imageUrl,
     tokenUri,
     minters,

@@ -17,6 +17,8 @@ export const updateFrameData = async (
       }
     );
 
+    console.log("Update frame data response-> ", res.data);
+
     return {
       status: res.data?.status,
       message: res.data?.message,
