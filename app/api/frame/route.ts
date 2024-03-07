@@ -175,7 +175,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       getFrame(accountAddress, txHash, imageUrl, btnText, redirectLink)
     );
   } else {
-    btnText = "Gas not enough";
+    btnText = "Gas depleted";
     return new NextResponse(
       getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
     );
