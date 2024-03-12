@@ -148,7 +148,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const mintFrameRes = await mintFrame(frameId.toString(), accountAddress);
 
   if (!mintFrameRes?.tx) {
-    btnText = "Error minting NFT";
+    btnText = "Gas depleted";
     return new NextResponse(
       getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
     );
