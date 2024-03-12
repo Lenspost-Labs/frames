@@ -14,6 +14,7 @@ export interface FrameData {
   isFollow: boolean;
   redirectLink: string;
   noOfNftsMinited: number;
+  contract_address: string;
 }
 
 export interface MintFrameData {
