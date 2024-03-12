@@ -21,14 +21,7 @@ export async function generateMetadata(
   const id = params.id;
   console.log("id", id);
 
-  const {
-    imageUrl,
-    isLike,
-    isFollow,
-    isRecast,
-  } = await getFrameData(id);
-
-  console.log("imageUrl", imageUrl);
+  const { imageUrl, isLike, isFollow, isRecast } = await getFrameData(id);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -39,9 +32,7 @@ export async function generateMetadata(
           isFollow ? "Follow" : "",
         ]
           .filter(Boolean) // Remove empty strings
-          .join(", ")} ${
-          isLike || isRecast || isFollow ? `👉` : ""
-        } Mint`,
+          .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
       },
     ],
     image: {
@@ -77,6 +68,7 @@ const Home = async ({ params }: Props) => {
     isTopUp,
     noOfNftsMinited,
     owner,
+    contract_address,
   } = await getFrameData(params.id);
 
   if (!frameId) {
@@ -97,9 +89,7 @@ const Home = async ({ params }: Props) => {
         <div>
           <div className="flex flex-col lg:flex-row lg:gap-3">
             <p className="font-semibold">Contract Address:</p>
-            <p className="truncate">
-              0x769C1417485ad9d74FbB27F4be47890Fd00A96ad
-            </p>
+            <p className="truncate">{contract_address}</p>
           </div>
           <div className="flex gap-3">
             <p className="font-semibold">Network:</p>

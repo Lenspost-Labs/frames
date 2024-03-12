@@ -23,6 +23,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       isFollow: data?.isFollow,
       redirectLink: data?.redirectLink,
       noOfNftsMinited: data?.minters?.length || 0,
+      contract_address: data?.contract_address,
     };
   } catch (error) {
     
@@ -40,6 +41,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       isFollow: false,
       redirectLink: "",
       noOfNftsMinited: 0,
+      contract_address: "",
     };
   }
 };
