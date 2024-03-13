@@ -1,7 +1,7 @@
 import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit/frame";
 import { NextRequest, NextResponse } from "next/server";
 import { encodeFunctionData, parseEther } from "viem";
-import { baseSepolia } from "@wagmi/core/chains";
+import { base } from "@wagmi/core/chains";
 import BuyMeACoffeeABI from "../../_contract/BuyMeACoffeeABI";
 import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { config } from "@/config/config";
@@ -31,7 +31,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   console.log("data-> ", data);
 
   const txData: FrameTransactionResponse = {
-    chainId: `eip155:${baseSepolia.id}`, // Remember Base Sepolia might not work on Warpcast yet
+    chainId: `eip155:${base.id}`, // Remember Base Sepolia might not work on Warpcast yet
     method: "eth_sendTransaction",
     params: {
       abi: [],
