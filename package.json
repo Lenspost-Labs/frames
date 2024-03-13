@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@coinbase/onchainkit": "0.5.4",
+    "@coinbase/onchainkit": "^0.10.2",
     "@wagmi/connectors": "^4.1.12",
     "@wagmi/core": "^2.6.3",
     "axios": "^1.6.7",

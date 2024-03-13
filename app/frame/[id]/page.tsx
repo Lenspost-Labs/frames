@@ -34,6 +34,12 @@ export async function generateMetadata(
           .filter(Boolean) // Remove empty strings
           .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
       },
+
+      {
+        action: "tx",
+        label: "Send Base Sepolia",
+        target: `${config?.APP_URL}/api/tx`,
+      },
     ],
     image: {
       src: imageUrl,
