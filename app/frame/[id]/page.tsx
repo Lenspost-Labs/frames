@@ -36,9 +36,9 @@ export async function generateMetadata(
       },
 
       {
-        action: "tx",
-        label: "Send Base Sepolia",
-        target: `${config?.APP_URL}/api/tx`,
+        action: "mint",
+        label: "Mint onChain",
+        target: `${config?.APP_URL}/api/mint`,
       },
     ],
     image: {

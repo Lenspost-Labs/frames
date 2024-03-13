@@ -2,17 +2,20 @@ import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit/frame";
 import { NextRequest, NextResponse } from "next/server";
 import { encodeFunctionData, parseEther } from "viem";
 import { base } from "@wagmi/core/chains";
-import BuyMeACoffeeABI from "../../_contract/BuyMeACoffeeABI";
 import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { config } from "@/config/config";
+import { BaseAbi, BaseContractAddress } from "@/contract";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
-  console.log("req.body-> ", req.body);
+  let address: string | undefined = "";
 
-  const BUY_MY_COFFEE_CONTRACT_ADDR =
-    "0xcD3D5E4E498BAb2e0832257569c3Fd4AE439dD6f";
+  const tokenURI =
+    "https://lenspost.infura-ipfs.io/ipfs/QmciMWLq8nKgjZtjxsJbnFSGkfcnLLuCotxZvXokaboDWy'";
+
+  console.log("req.body-> ", req.body);
   const body: FrameRequest = await req.json();
-  const { isValid } = await getFrameMessage(body, {
+
+  const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: config.neynar.apiKey,
   });
 
@@ -20,12 +23,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     return new NextResponse("Message not valid", { status: 500 });
   }
 
-  console.log("isValid-> ", isValid);
+  address = message.interactor.verified_accounts[0];
+  console.log("isValid-> ", message);
 
   const data = encodeFunctionData({
-    abi: BuyMeACoffeeABI,
-    functionName: "buyCoffee",
-    args: [parseEther("1"), "Coffee all day!"],
+    abi: BaseAbi,
+    functionName: "mint",
+    args: [address, tokenURI],
   });
 
   console.log("data-> ", data);
@@ -36,8 +40,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     params: {
       abi: [],
       data,
-      to: BUY_MY_COFFEE_CONTRACT_ADDR,
-      value: parseEther("0.00004").toString(), // 0.00004 ETH
+      to: BaseContractAddress,
+      value: parseEther("0.00000").toString(), // 0.00004 ETH
     },
   };
 
