@@ -36,7 +36,7 @@ export async function generateMetadata(
       },
 
       {
-        action: "mint",
+        action: "tx",
         label: "Mint onChain",
         target: `${config?.APP_URL}/api/tx`,
       },
