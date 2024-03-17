@@ -38,7 +38,7 @@ export async function generateMetadata(
       {
         action: "tx",
         label: "Mint onChain",
-        target: `${config?.APP_URL}/api/tx?chainId=${chainId}&contract_address=${contract_address}`,
+        target: `${config?.APP_URL}/api/tx?chainId=${chainId}&contract_address=${contract_address}&imageUrl=${imageUrl}`,
       },
     ],
     image: {
