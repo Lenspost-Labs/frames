@@ -9,6 +9,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
     );
 
     const data = res.data?.message;
+    console.log("data-> ", data);
 
     return {
       frameId: data?.id,
@@ -24,9 +25,11 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       redirectLink: data?.redirectLink,
       noOfNftsMinited: data?.minters?.length || 0,
       contract_address: data?.contract_address,
+      contract_type: data?.contract_type,
+      creatorSponsored: data?.creatorSponsored,
+      chainId: data?.chainId,
     };
   } catch (error) {
-    
     console.log("Error getting frame data-> ", error);
     return {
       frameId: undefined,
@@ -42,6 +45,9 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       redirectLink: "",
       noOfNftsMinited: 0,
       contract_address: "",
+      contract_type: "",
+      creatorSponsored: false,
+      chainId: 0,
     };
   }
 };

@@ -3,6 +3,10 @@ import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
 import axios from "axios";
 import { getFrame, getFrameData, mintFrame, updateFrameData } from "@/utils";
+import { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
+import { encodeFunctionData, parseEther } from "viem";
+import { zoraNftCreatorV1Config } from "@zoralabs/zora-721-contracts";
+import { APP_ETH_ADDRESS } from "@/constants";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
@@ -28,6 +32,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isFollow,
     redirectLink,
     noOfNftsMinited,
+    contract_address,
+    contract_type,
+    creatorSponsored,
+    chainId,
   } = getFrameDataRes;
 
   if (!frameId) {
@@ -50,6 +58,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isFollow,
     redirectLink,
     noOfNftsMinited,
+    contract_address,
+    contract_type,
+    creatorSponsored,
   });
 
   console.log("req.body-> ", req.body);
@@ -145,36 +156,73 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   // mint NFT
-  const mintFrameRes = await mintFrame(frameId.toString(), accountAddress);
 
-  if (!mintFrameRes?.tx) {
-    btnText = "Gas depleted";
-    return new NextResponse(
-      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
-    );
-  }
+  // check if creatorSponsored
+  if (creatorSponsored) {
+    // mint by mint api
+    const mintFrameRes = await mintFrame(frameId.toString(), accountAddress);
 
-  if (mintFrameRes?.tx?.startsWith("0x")) {
-    txHash = mintFrameRes?.tx;
-
-    btnText = "View tx";
-
-    console.log("NFT minted successfully!", txHash);
-
-    // update frame data with txHash and minterAddress
-    if (txHash) {
-      const updateFrameDataRes = await updateFrameData(
-        frameId.toString(),
-        accountAddress,
-        txHash
+    if (!mintFrameRes?.tx) {
+      btnText = "Gas depleted";
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
       );
-      console.log("Frame data updated-> ", updateFrameDataRes.status);
     }
 
-    return new NextResponse(
-      getFrame(accountAddress, txHash, imageUrl, btnText, redirectLink)
-    );
+    if (mintFrameRes?.tx?.startsWith("0x")) {
+      txHash = mintFrameRes?.tx;
+
+      btnText = "View tx";
+
+      console.log("NFT minted successfully!", txHash);
+
+      // update frame data with txHash and minterAddress
+      if (txHash) {
+        const updateFrameDataRes = await updateFrameData(
+          frameId.toString(),
+          accountAddress,
+          txHash
+        );
+        console.log("Frame data updated-> ", updateFrameDataRes.status);
+      }
+
+      return new NextResponse(
+        getFrame(accountAddress, txHash, imageUrl, btnText, redirectLink)
+      );
+    } else {
+      btnText = "Gas depleted";
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+      );
+    }
   } else {
+    // check contract type === "ERC721" or "ERC1155"
+    // if (contract_type === "ERC721") {
+    //   // mint by Frame onchain transaction
+    //   const data = encodeFunctionData({
+    //     abi: zoraNftCreatorV1Config?.abi,
+    //     functionName: "",
+    //     args: [accountAddress, 1, "0x", APP_ETH_ADDRESS],
+    //   });
+
+    //   console.log("data-> ", data);
+
+    //   const txData: FrameTransactionResponse = {
+    //     chainId: chainId, // Remember Base Sepolia might not work on Warpcast yet
+    //     method: "eth_sendTransaction",
+    //     params: {
+    //       abi: [],
+    //       data,
+    //       to: "0x8Ca5e648C5dFEfcdDa06d627F4b490B719ccFD98",
+    //       value: parseEther("0.00000").toString(), // 0.00004 ETH
+    //     },
+    //   };
+
+    //   console.log("txData-> ", txData);
+    // } else {
+    //   //TODO -  contract_type === "ERC1155"
+    // }
+
     btnText = "Gas depleted";
     return new NextResponse(
       getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
