@@ -6,9 +6,10 @@ import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { config } from "@/config/config";
 import { BaseAbi, BaseContractAddress, zoraAbi } from "@/contract";
 import { APP_ETH_ADDRESS } from "@/constants";
+import { erc721DropABI } from "@zoralabs/zora-721-contracts";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
-  let address: string | undefined = "";
+  let address: `0x${string}`;
 
   const chainId = req.nextUrl.searchParams.get("chainId") || base.id;
   const contractAddress =
@@ -33,13 +34,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     return new NextResponse("Message not valid", { status: 500 });
   }
 
-  address = message.interactor.verified_accounts[0];
+  address = message.interactor.verified_accounts[0] as any;
   console.log("isValid-> ", message);
 
   const data = encodeFunctionData({
-    abi: zoraAbi,
+    abi: erc721DropABI,
     functionName: "mintWithRewards",
-    args: [address, 1, "0x", APP_ETH_ADDRESS],
+    args: [address, BigInt(1), "0x", APP_ETH_ADDRESS],
   });
 
   console.log("data-> ", data);
