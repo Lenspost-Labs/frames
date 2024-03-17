@@ -9,6 +9,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const imageUrl = req.nextUrl.searchParams.get("imageUrl") || "";
 
   const body: FrameRequest = await req.json();
+  
+  console.log("req.body-> ", body?.untrustedData?.transactionId);
+
   const { isValid } = await getFrameMessage(body);
 
   if (!isValid) {
