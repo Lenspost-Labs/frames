@@ -5,14 +5,19 @@ import { base } from "@wagmi/core/chains";
 import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { config } from "@/config/config";
 import { BaseAbi, BaseContractAddress, zoraAbi } from "@/contract";
-import { zoraNftCreatorV1Config } from "@zoralabs/zora-721-contracts";
+import { APP_ETH_ADDRESS } from "@/constants";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   let address: string | undefined = "";
 
-  const chainId = req.nextUrl.searchParams.get("chainId") || "";
-  const contract_address =
+  const chainId = req.nextUrl.searchParams.get("chainId") || base.id;
+  const contractAddress =
     req.nextUrl.searchParams.get("contract_address") || "";
+
+  console.log({
+    chainId,
+    contractAddress,
+  });
 
   const tokenURI =
     "https://lenspost.infura-ipfs.io/ipfs/QmciMWLq8nKgjZtjxsJbnFSGkfcnLLuCotxZvXokaboDWy'";
@@ -32,11 +37,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   console.log("isValid-> ", message);
 
   const data = encodeFunctionData({
-    abi: zoraNftCreatorV1Config.abi,
-    // @ts-ignore
+    abi: zoraAbi,
     functionName: "mintWithRewards",
-    // @ts-ignore
-    args: [address, tokenURI],
+    args: [address, 1, "0x", APP_ETH_ADDRESS],
   });
 
   console.log("data-> ", data);
@@ -47,8 +50,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     params: {
       abi: [],
       data,
-      // @ts-ignore
-      to: contract_address,
+      to: contractAddress as any,
       value: parseEther("0.00000").toString(), // 0.00004 ETH
     },
   };
