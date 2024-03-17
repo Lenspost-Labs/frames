@@ -37,11 +37,13 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   accountAddress = message.interactor.verified_accounts[0] as any;
 
   // get quantity
-  if (message?.input > "0" || message?.input != "") {
-    quantity = `${message?.input}n` as any;
-  } else {
+  if (message?.input === undefined || message?.input === "0") {
     quantity = 1n;
+  } else {
+    quantity = `${message?.input}n` as any;
   }
+
+  console.log("quantity-> ", quantity);
 
   if (contractType === "ERC721") {
     const data = encodeFunctionData({
