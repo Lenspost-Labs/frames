@@ -11,23 +11,16 @@ import { getFrame } from "@/utils";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   let address: `0x${string}`;
+  let quantity: bigint;
 
-  const chainId = req.nextUrl.searchParams.get("chainId") || base.id;
-  const contractAddress =
-    req.nextUrl.searchParams.get("contract_address") || "";
-
-  const quantity = 1n;
   const comment = "";
   const mintReferral = APP_ETH_ADDRESS;
   const mintFee = parseEther(ZORA_REWARD_FEE); // 0.000777 ETH
 
-  console.log({
-    chainId,
-    contractAddress,
-  });
-
-  const tokenURI =
-    "https://lenspost.infura-ipfs.io/ipfs/QmciMWLq8nKgjZtjxsJbnFSGkfcnLLuCotxZvXokaboDWy'";
+  const chainId = req.nextUrl.searchParams.get("chainId") || base.id;
+  const contractAddress =
+    req.nextUrl.searchParams.get("contract_address") || "";
+  const contractType = req.nextUrl.searchParams.get("contract_type") || "";
 
   const body: FrameRequest = await req.json();
   console.log("req.body-> ", body);
@@ -40,31 +33,38 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     return new NextResponse("Message not valid", { status: 500 });
   }
 
-  address = message.interactor.verified_accounts[0] as any;
   console.log("isValid-> ", message);
+  address = message.interactor.verified_accounts[0] as any;
 
-  const data = encodeFunctionData({
-    abi: erc721DropABI,
-    functionName: "mintWithRewards",
-    args: [address, quantity, comment, mintReferral],
-  });
+  // get quantity
+  if (message?.input > "0" || message?.input != "") {
+    quantity = `${message?.input}n` as any;
+  } else {
+    quantity = 1n;
+  }
 
-  console.log("data-> ", data);
+  if (contractType === "ERC721") {
+    const data = encodeFunctionData({
+      abi: erc721DropABI,
+      functionName: "mintWithRewards",
+      args: [address, quantity, comment, mintReferral],
+    });
 
-  const txData: FrameTransactionResponse = {
-    chainId: `eip155:${chainId}`,
-    method: "eth_sendTransaction",
-    params: {
-      abi: [],
-      data,
-      to: contractAddress as any,
-      value: (mintFee * quantity).toString(),
-    },
-  };
+    const txData: FrameTransactionResponse = {
+      chainId: `eip155:${chainId}`,
+      method: "eth_sendTransaction",
+      params: {
+        abi: [],
+        data,
+        to: contractAddress as any,
+        value: (mintFee * quantity).toString(),
+      },
+    };
 
-  console.log("txData-> ", txData);
+    return NextResponse.json(txData);
+  }
 
-  return NextResponse.json(txData);
+  return NextResponse.json("Invalid contract type");
 }
 
 export async function POST(req: NextRequest): Promise<Response> {

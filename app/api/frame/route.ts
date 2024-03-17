@@ -159,7 +159,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
   }
 
-  // mint NFT
+  // ------------- mint NFT -------------
 
   // check if creatorSponsored
   if (creatorSponsored) {
@@ -220,6 +220,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       })
     );
   }
+
+  // ------------- mint NFT -------------
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
