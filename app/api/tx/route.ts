@@ -11,7 +11,7 @@ import { getFrame } from "@/utils";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   let accountAddress: `0x${string}`;
-  let quantity: bigint;
+  let quantity: any;
 
   const comment = "";
   const mintReferral = APP_ETH_ADDRESS;
