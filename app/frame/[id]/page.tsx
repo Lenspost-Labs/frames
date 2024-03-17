@@ -35,12 +35,12 @@ export async function generateMetadata(
           .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
       },
 
-      {
-        action: "tx",
-        label: "Mint onChain",
-        target: `${config?.APP_URL}/api/tx?chainId=${chainId}&contract_address=${contract_address}&imageUrl=${imageUrl}`,
-        postUrl: `${config?.APP_URL}/api/tx-success?imageUrl=${imageUrl}`,
-      },
+      // {
+      //   action: "tx",
+      //   label: "Mint onChain",
+      //   target: `${config?.APP_URL}/api/tx?chainId=${chainId}&contract_address=${contract_address}&imageUrl=${imageUrl}`,
+      //   postUrl: `${config?.APP_URL}/api/tx-success?imageUrl=${imageUrl}`,
+      // },
     ],
     image: {
       src: imageUrl,

@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
+import {
+  FrameRequest,
+  getFrameHtmlResponse,
+  getFrameMessage,
+} from "@coinbase/onchainkit";
 import { config } from "@/config/config";
 import axios from "axios";
 import { getFrame, getFrameData, mintFrame, updateFrameData } from "@/utils";
@@ -196,36 +200,24 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       );
     }
   } else {
-    // check contract type === "ERC721" or "ERC1155"
-    // if (contract_type === "ERC721") {
-    //   // mint by Frame onchain transaction
-    //   const data = encodeFunctionData({
-    //     abi: zoraNftCreatorV1Config?.abi,
-    //     functionName: "",
-    //     args: [accountAddress, 1, "0x", APP_ETH_ADDRESS],
-    //   });
-
-    //   console.log("data-> ", data);
-
-    //   const txData: FrameTransactionResponse = {
-    //     chainId: chainId, // Remember Base Sepolia might not work on Warpcast yet
-    //     method: "eth_sendTransaction",
-    //     params: {
-    //       abi: [],
-    //       data,
-    //       to: "0x8Ca5e648C5dFEfcdDa06d627F4b490B719ccFD98",
-    //       value: parseEther("0.00000").toString(), // 0.00004 ETH
-    //     },
-    //   };
-
-    //   console.log("txData-> ", txData);
-    // } else {
-    //   //TODO -  contract_type === "ERC1155"
-    // }
-
-    btnText = "Gas depleted";
     return new NextResponse(
-      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+      getFrameHtmlResponse({
+        buttons: [
+          {
+            action: "tx",
+            label: "Connect wallet & Mint",
+            target: `${config?.APP_URL}/api/tx?chainId=${chainId}&contract_address=${contract_address}&contract_type=${contract_type}`,
+            postUrl: `${config?.APP_URL}/api/tx-success?frameId=${frameId}`,
+          },
+        ],
+        image: {
+          src: imageUrl,
+          aspectRatio: "1:1",
+        },
+        input: {
+          text: "NFT quantity to mint",
+        },
+      })
     );
   }
 }
