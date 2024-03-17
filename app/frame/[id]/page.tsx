@@ -25,15 +25,15 @@ export async function generateMetadata(
 
   const frameMetadata = getFrameMetadata({
     buttons: [
-      // {
-      //   label: `${[
-      //     isLike ? "Like" : "",
-      //     isRecast ? "Recast" : "",
-      //     isFollow ? "Follow" : "",
-      //   ]
-      //     .filter(Boolean) // Remove empty strings
-      //     .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
-      // },
+      {
+        label: `${[
+          isLike ? "Like" : "",
+          isRecast ? "Recast" : "",
+          isFollow ? "Follow" : "",
+        ]
+          .filter(Boolean) // Remove empty strings
+          .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
+      },
 
       {
         action: "tx",
@@ -46,7 +46,7 @@ export async function generateMetadata(
       src: imageUrl,
       aspectRatio: "1:1",
     },
-    // post_url: `${config?.APP_URL}/api/frame?frameId=${id}`,
+    post_url: `${config?.APP_URL}/api/frame?frameId=${id}`,
   });
 
   return {
