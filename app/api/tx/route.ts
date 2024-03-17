@@ -15,7 +15,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const chainId = req.nextUrl.searchParams.get("chainId") || base.id;
   const contractAddress =
     req.nextUrl.searchParams.get("contract_address") || "";
-  const imageUrl = req.nextUrl.searchParams.get("imageUrl") || "";
 
   const quantity = 1n;
   const comment = "";
@@ -43,14 +42,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
 
   address = message.interactor.verified_accounts[0] as any;
   console.log("isValid-> ", message);
-
-  if (message?.recasted) {
-    console.log("User recasted the post");
-  } else {
-    console.log("User didn't recast the post");
-    let btnText = "Recast and Mint";
-    return new NextResponse(getFrame(address, false, imageUrl, btnText, ""));
-  }
 
   const data = encodeFunctionData({
     abi: erc721DropABI,
