@@ -40,7 +40,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   if (message?.input === undefined || message?.input === "0") {
     quantity = 1n;
   } else {
-    quantity = `${message?.input}n` as any;
+    quantity = BigInt(`${message?.input}`);
   }
 
   console.log("quantity-> ", quantity);
