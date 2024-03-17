@@ -5,7 +5,7 @@ import { base } from "@wagmi/core/chains";
 import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { config } from "@/config/config";
 import { BaseAbi, BaseContractAddress, zoraAbi } from "@/contract";
-import { APP_ETH_ADDRESS } from "@/constants";
+import { APP_ETH_ADDRESS, ZORA_REWARD_FEE } from "@/constants";
 import { erc721DropABI } from "@zoralabs/zora-721-contracts";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
@@ -14,6 +14,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const chainId = req.nextUrl.searchParams.get("chainId") || base.id;
   const contractAddress =
     req.nextUrl.searchParams.get("contract_address") || "";
+
+  const quantity = 1n;
+  const comment = "";
+  const mintReferral = APP_ETH_ADDRESS;
+  const mintFee = parseEther(ZORA_REWARD_FEE); // 0.000777 ETH
 
   console.log({
     chainId,
@@ -40,8 +45,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const data = encodeFunctionData({
     abi: erc721DropABI,
     functionName: "mintWithRewards",
-    // @ts-ignore
-    args: [address, 1, "My awsome token", APP_ETH_ADDRESS],
+    args: [address, quantity, comment, mintReferral],
   });
 
   console.log("data-> ", data);
@@ -53,7 +57,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
       abi: [],
       data,
       to: contractAddress as any,
-      value: parseEther("0.00000").toString(), // 0.00004 ETH
+      value: (mintFee * quantity).toString(),
     },
   };
 
