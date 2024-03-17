@@ -1,35 +1,34 @@
-import {
-  FrameRequest,
-  getFrameMessage,
-  getFrameHtmlResponse,
-} from "@coinbase/onchainkit/frame";
+import { getFrame, getFrameData } from "@/utils";
+import { FrameRequest, getFrameHtmlResponse } from "@coinbase/onchainkit/frame";
 import { NextRequest, NextResponse } from "next/server";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  const imageUrl = req.nextUrl.searchParams.get("imageUrl") || "";
+  let btnText: string | undefined = "";
+  let accountAddress: string | undefined = "";
+  let txHash: string | undefined = "";
 
-  const body: FrameRequest = await req.json();
-  
-  console.log("req.body-> ", body?.untrustedData?.transactionId);
+  const frameIdParam = req.nextUrl.searchParams.get("frameId") || "";
 
-  const { isValid } = await getFrameMessage(body);
+  // get frame data
+  const getFrameDataRes = await getFrameData(frameIdParam);
+  const { frameId, imageUrl, redirectLink } = getFrameDataRes;
 
-  if (!isValid) {
-    return new NextResponse("Message not valid", { status: 500 });
+  if (!frameId) {
+    btnText = "FrameId not found";
+    return new NextResponse(
+      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+    );
   }
 
+  const body: FrameRequest = await req.json();
+  txHash = body?.untrustedData?.transactionId;
+
+  console.log("req.body-> ", body?.untrustedData?.transactionId);
+
+  btnText = "View tx";
+
   return new NextResponse(
-    getFrameHtmlResponse({
-      buttons: [
-        {
-          label: `Tx: ${body?.untrustedData?.transactionId || "--"}`,
-        },
-      ],
-      image: {
-        src: imageUrl,
-        aspectRatio: "1:1",
-      },
-    })
+    getFrame(accountAddress, txHash, imageUrl, btnText, redirectLink)
   );
 }
 

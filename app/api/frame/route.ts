@@ -5,12 +5,7 @@ import {
   getFrameMessage,
 } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
-import axios from "axios";
 import { getFrame, getFrameData, mintFrame, updateFrameData } from "@/utils";
-import { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
-import { encodeFunctionData, parseEther } from "viem";
-import { zoraNftCreatorV1Config } from "@zoralabs/zora-721-contracts";
-import { APP_ETH_ADDRESS } from "@/constants";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";

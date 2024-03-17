@@ -10,7 +10,7 @@ import { erc721DropABI } from "@zoralabs/zora-721-contracts";
 import { getFrame } from "@/utils";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
-  let address: `0x${string}`;
+  let accountAddress: `0x${string}`;
   let quantity: bigint;
 
   const comment = "";
@@ -34,7 +34,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   }
 
   console.log("isValid-> ", message);
-  address = message.interactor.verified_accounts[0] as any;
+  accountAddress = message.interactor.verified_accounts[0] as any;
 
   // get quantity
   if (message?.input > "0" || message?.input != "") {
@@ -47,7 +47,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
     const data = encodeFunctionData({
       abi: erc721DropABI,
       functionName: "mintWithRewards",
-      args: [address, quantity, comment, mintReferral],
+      args: [accountAddress, quantity, comment, mintReferral],
     });
 
     const txData: FrameTransactionResponse = {
