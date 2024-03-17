@@ -18,6 +18,7 @@ export interface FrameData {
   contract_type: string;
   creatorSponsored: boolean;
   chainId: `eip155:${string}` | `solana:${string}`;
+  slug: string;
 }
 
 export interface MintFrameData {

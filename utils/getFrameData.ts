@@ -8,8 +8,8 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       `${config?.BACKEND_URL}/util/get-frame-data?frameId=${frameId}`
     );
 
-    const data = res.data?.message;
-    console.log("data-> ", data);
+    const data = res.data;
+    console.log("data-> ", res?.data);
 
     return {
       frameId: data?.id,
@@ -28,6 +28,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       contract_type: data?.contract_type,
       creatorSponsored: data?.creatorSponsored,
       chainId: data?.chainId,
+      slug: data?.slug,
     };
   } catch (error) {
     console.log("Error getting frame data-> ", error);
@@ -48,6 +49,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       contract_type: "",
       creatorSponsored: false,
       chainId: "eip155:1",
+      slug: "",
     };
   }
 };

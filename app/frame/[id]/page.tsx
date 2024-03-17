@@ -78,6 +78,7 @@ const Home = async ({ params }: Props) => {
     creatorSponsored,
     redirectLink,
     chainId,
+    slug,
   } = await getFrameData(params.id);
 
   if (!frameId) {
@@ -143,12 +144,15 @@ const Home = async ({ params }: Props) => {
             </a>
           </div>
         )}
-        <div className="flex justify-between gap-1">
-          {/* <Button
-            title="Cast to Mint"
-            target={`https://warpcast.com/~/compose?text=https://frames.lenspost.xyz/frame/${frameId}`}
-            className="w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl"
-          /> */}
+        <div className="flex flex-col lg:flex-row gap-1">
+          {slug && (
+            <Button
+              title="Mint"
+              target={`https://mint.lenspost.xyz/${slug}`}
+              className="flex justify-center items-center gap-1 w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl"
+              icon={<ExternalLinkIcon />}
+            />
+          )}
           <Button
             title="Remix on Lenspost"
             target="https://app.lenspost.xyz"
