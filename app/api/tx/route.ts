@@ -40,7 +40,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const data = encodeFunctionData({
     abi: erc721DropABI,
     functionName: "mintWithRewards",
-    args: [address, BigInt(1), "0x", APP_ETH_ADDRESS],
+    // @ts-ignore
+    args: [address, 1, "My awsome token", APP_ETH_ADDRESS],
   });
 
   console.log("data-> ", data);
