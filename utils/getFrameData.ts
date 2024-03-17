@@ -44,10 +44,10 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       isFollow: false,
       redirectLink: "",
       noOfNftsMinited: 0,
-      contract_address: "",
+      contract_address: "0x",
       contract_type: "",
       creatorSponsored: false,
-      chainId: 0,
+      chainId: "eip155:1",
     };
   }
 };
