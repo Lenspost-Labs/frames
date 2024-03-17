@@ -7,6 +7,7 @@ import { config } from "@/config/config";
 import { BaseAbi, BaseContractAddress, zoraAbi } from "@/contract";
 import { APP_ETH_ADDRESS, ZORA_REWARD_FEE } from "@/constants";
 import { erc721DropABI } from "@zoralabs/zora-721-contracts";
+import { getFrame } from "@/utils";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   let address: `0x${string}`;
@@ -14,6 +15,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const chainId = req.nextUrl.searchParams.get("chainId") || base.id;
   const contractAddress =
     req.nextUrl.searchParams.get("contract_address") || "";
+  const imageUrl = req.nextUrl.searchParams.get("imageUrl") || "";
 
   const quantity = 1n;
   const comment = "";
@@ -28,8 +30,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const tokenURI =
     "https://lenspost.infura-ipfs.io/ipfs/QmciMWLq8nKgjZtjxsJbnFSGkfcnLLuCotxZvXokaboDWy'";
 
-  console.log("req.body-> ", req.body);
   const body: FrameRequest = await req.json();
+  console.log("req.body-> ", body);
 
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: config.neynar.apiKey,
@@ -41,6 +43,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
 
   address = message.interactor.verified_accounts[0] as any;
   console.log("isValid-> ", message);
+
+  if (message?.recasted) {
+    console.log("User recasted the post");
+  } else {
+    console.log("User didn't recast the post");
+    let btnText = "Recast and Mint";
+    return new NextResponse(getFrame(address, false, imageUrl, btnText, ""));
+  }
 
   const data = encodeFunctionData({
     abi: erc721DropABI,
