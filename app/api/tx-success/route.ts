@@ -1,13 +1,13 @@
-import { getFrame, getFrameData } from "@/utils";
+import { getFrame, getFrameData, updateFrameData } from "@/utils";
 import { FrameRequest, getFrameHtmlResponse } from "@coinbase/onchainkit/frame";
 import { NextRequest, NextResponse } from "next/server";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
-  let accountAddress: string | undefined = "";
   let txHash: string | undefined = "";
 
   const frameIdParam = req.nextUrl.searchParams.get("frameId") || "";
+  const accountAddress = req.nextUrl.searchParams.get("accountAddress") || "";
 
   // get frame data
   const getFrameDataRes = await getFrameData(frameIdParam);
@@ -24,6 +24,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   txHash = body?.untrustedData?.transactionId;
 
   console.log("req.body-> ", body?.untrustedData?.transactionId);
+
+  // update frame data with txHash and minterAddress
+  if (txHash) {
+    const updateFrameDataRes = await updateFrameData(
+      frameId.toString(),
+      accountAddress,
+      txHash
+    );
+    console.log("Frame data updated-> ", updateFrameDataRes.status);
+  }
 
   btnText = "View tx";
 
