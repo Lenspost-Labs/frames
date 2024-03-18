@@ -4,7 +4,7 @@ import { encodeFunctionData, parseEther } from "viem";
 import { base } from "@wagmi/core/chains";
 import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { config } from "@/config/config";
-import { APP_ETH_ADDRESS, ZORA_REWARD_FEE } from "@/constants";
+import { LENSPOST_ETH_ADDRESS, ZORA_REWARD_FEE } from "@/constants";
 import { erc721DropABI } from "@zoralabs/zora-721-contracts";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
@@ -12,7 +12,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   let quantity: any;
 
   const comment = "";
-  const mintReferral = APP_ETH_ADDRESS;
+  const mintReferral = LENSPOST_ETH_ADDRESS;
   const mintFee = parseEther(ZORA_REWARD_FEE); // 0.000777 ETH
 
   const chainId = req.nextUrl.searchParams.get("chainId") || base.id;
