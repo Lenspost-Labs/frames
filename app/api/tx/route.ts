@@ -4,10 +4,8 @@ import { encodeFunctionData, parseEther } from "viem";
 import { base } from "@wagmi/core/chains";
 import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import { config } from "@/config/config";
-import { BaseAbi, BaseContractAddress, zoraAbi } from "@/contract";
 import { APP_ETH_ADDRESS, ZORA_REWARD_FEE } from "@/constants";
 import { erc721DropABI } from "@zoralabs/zora-721-contracts";
-import { getFrame } from "@/utils";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   let accountAddress: `0x${string}`;
