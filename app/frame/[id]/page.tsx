@@ -139,18 +139,18 @@ const Home = async ({ params }: Props) => {
           </div>
         )}
         <div className="flex flex-col lg:flex-row gap-1">
-          {slug && (
+          {/* {slug && (
             <Button
               title="Mint"
               target={`https://mint.lenspost.xyz/${slug}`}
-              className="flex justify-center items-center gap-1 w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl"
+              className="flex justify-center items-center gap-1 w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl cursor-pointer"
               icon={<ExternalLinkIcon />}
             />
-          )}
+          )} */}
           <Button
             title="Remix on Lenspost"
             target="https://app.lenspost.xyz"
-            className="w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl"
+            className="w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl cursor-pointer"
           />
         </div>
       </div>
