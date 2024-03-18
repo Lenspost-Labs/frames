@@ -202,7 +202,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             action: "tx",
             label: "Connect wallet & Mint",
             target: `${config?.APP_URL}/api/tx?chainId=${chainId}&contract_address=${contract_address}&contract_type=${contract_type}`,
-            postUrl: `${config?.APP_URL}/api/tx-success?frameId=${frameId}`,
+            postUrl: `${config?.APP_URL}/api/tx-success?frameId=${frameId}&accountAddress=${accountAddress}`,
           },
         ],
         image: {
