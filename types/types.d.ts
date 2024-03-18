@@ -14,7 +14,11 @@ export interface FrameData {
   isFollow: boolean;
   redirectLink: string;
   noOfNftsMinited: number;
-  contract_address: string;
+  contract_address: `0x${string}`;
+  contract_type: string;
+  creatorSponsored: boolean;
+  chainId: `eip155:${string}` | `solana:${string}`;
+  slug: string;
 }
 
 export interface MintFrameData {

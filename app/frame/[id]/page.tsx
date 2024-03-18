@@ -1,13 +1,12 @@
-import { NextPage } from "next";
 import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata, ResolvingMetadata } from "next";
 import { config } from "@/config/config";
-import axios from "axios";
-import { FrameData } from "@/types/types";
 import Default from "@/components/Default";
 import { getFrameData } from "@/utils";
 import Image from "next/image";
 import Button from "@/components/Button";
+import { chainName } from "@/utils";
+import { ExternalLinkIcon } from "@/assets";
 
 type Props = {
   params: { id: string };
@@ -21,7 +20,8 @@ export async function generateMetadata(
   const id = params.id;
   console.log("id", id);
 
-  const { imageUrl, isLike, isFollow, isRecast } = await getFrameData(id);
+  const { imageUrl, isLike, isFollow, isRecast, chainId, contract_address } =
+    await getFrameData(id);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -65,10 +65,14 @@ const Home = async ({ params }: Props) => {
     isFollow,
     isLike,
     isRecast,
-    isTopUp,
     noOfNftsMinited,
     owner,
     contract_address,
+    contract_type,
+    creatorSponsored,
+    redirectLink,
+    chainId,
+    slug,
   } = await getFrameData(params.id);
 
   if (!frameId) {
@@ -91,9 +95,13 @@ const Home = async ({ params }: Props) => {
             <p className="font-semibold">Contract Address:</p>
             <p className="truncate">{contract_address}</p>
           </div>
+          <div className="flex flex-col lg:flex-row lg:gap-3">
+            <p className="font-semibold">Contract Typr:</p>
+            <p className="truncate">{contract_type}</p>
+          </div>
           <div className="flex gap-3">
             <p className="font-semibold">Network:</p>
-            <p>Base (8453)</p>
+            <p>{chainName(chainId as any)}</p>
           </div>
         </div>
         <div className="flex flex-col lg:flex-row lg:gap-3">
@@ -117,13 +125,28 @@ const Home = async ({ params }: Props) => {
             <p className="font-semibold">No of NFTs Minted:</p>
             <p>{noOfNftsMinited}</p>
           </div>
+          <div className="flex gap-3">
+            <p className="font-semibold">Sponsored Mint:</p>
+            <p>{creatorSponsored ? "Yes" : "No"}</p>
+          </div>
         </div>
-        <div className="flex justify-between gap-1">
-          {/* <Button
-            title="Cast to Mint"
-            target={`https://warpcast.com/~/compose?text=https://frames.lenspost.xyz/frame/${frameId}`}
-            className="w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl"
-          /> */}
+        {redirectLink && (
+          <div className="flex gap-3">
+            <h3 className="font-semibold text-xl">Know more</h3>
+            <a href={redirectLink} target="_blank">
+              <ExternalLinkIcon />
+            </a>
+          </div>
+        )}
+        <div className="flex flex-col lg:flex-row gap-1">
+          {slug && (
+            <Button
+              title="Mint"
+              target={`https://mint.lenspost.xyz/${slug}`}
+              className="flex justify-center items-center gap-1 w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl"
+              icon={<ExternalLinkIcon />}
+            />
+          )}
           <Button
             title="Remix on Lenspost"
             target="https://app.lenspost.xyz"

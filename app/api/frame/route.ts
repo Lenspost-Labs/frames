@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { FrameRequest, getFrameMessage } from "@coinbase/onchainkit";
+import {
+  FrameRequest,
+  getFrameHtmlResponse,
+  getFrameMessage,
+} from "@coinbase/onchainkit";
 import { config } from "@/config/config";
-import axios from "axios";
 import { getFrame, getFrameData, mintFrame, updateFrameData } from "@/utils";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -28,6 +31,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isFollow,
     redirectLink,
     noOfNftsMinited,
+    contract_address,
+    contract_type,
+    creatorSponsored,
+    chainId,
   } = getFrameDataRes;
 
   if (!frameId) {
@@ -50,6 +57,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     isFollow,
     redirectLink,
     noOfNftsMinited,
+    contract_address,
+    contract_type,
+    creatorSponsored,
   });
 
   console.log("req.body-> ", req.body);
@@ -144,42 +154,69 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     }
   }
 
-  // mint NFT
-  const mintFrameRes = await mintFrame(frameId.toString(), accountAddress);
+  // ------------- mint NFT -------------
 
-  if (!mintFrameRes?.tx) {
-    btnText = "Gas depleted";
-    return new NextResponse(
-      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
-    );
-  }
+  // check if creatorSponsored
+  if (creatorSponsored) {
+    // mint by mint api
+    const mintFrameRes = await mintFrame(frameId.toString(), accountAddress);
 
-  if (mintFrameRes?.tx?.startsWith("0x")) {
-    txHash = mintFrameRes?.tx;
-
-    btnText = "View tx";
-
-    console.log("NFT minted successfully!", txHash);
-
-    // update frame data with txHash and minterAddress
-    if (txHash) {
-      const updateFrameDataRes = await updateFrameData(
-        frameId.toString(),
-        accountAddress,
-        txHash
+    if (!mintFrameRes?.tx) {
+      btnText = "Gas depleted";
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
       );
-      console.log("Frame data updated-> ", updateFrameDataRes.status);
     }
 
-    return new NextResponse(
-      getFrame(accountAddress, txHash, imageUrl, btnText, redirectLink)
-    );
+    if (mintFrameRes?.tx?.startsWith("0x")) {
+      txHash = mintFrameRes?.tx;
+
+      btnText = "View tx";
+
+      console.log("NFT minted successfully!", txHash);
+
+      // update frame data with txHash and minterAddress
+      if (txHash) {
+        const updateFrameDataRes = await updateFrameData(
+          frameId.toString(),
+          accountAddress,
+          txHash
+        );
+        console.log("Frame data updated-> ", updateFrameDataRes.status);
+      }
+
+      return new NextResponse(
+        getFrame(accountAddress, txHash, imageUrl, btnText, redirectLink)
+      );
+    } else {
+      btnText = "Gas depleted";
+      return new NextResponse(
+        getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+      );
+    }
   } else {
-    btnText = "Gas depleted";
     return new NextResponse(
-      getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
+      getFrameHtmlResponse({
+        buttons: [
+          {
+            action: "tx",
+            label: "Connect wallet & Mint",
+            target: `${config?.APP_URL}/api/tx?chainId=${chainId}&contract_address=${contract_address}&contract_type=${contract_type}`,
+            postUrl: `${config?.APP_URL}/api/tx-success?frameId=${frameId}`,
+          },
+        ],
+        image: {
+          src: imageUrl,
+          aspectRatio: "1:1",
+        },
+        input: {
+          text: "NFT quantity to mint",
+        },
+      })
     );
   }
+
+  // ------------- mint NFT -------------
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
