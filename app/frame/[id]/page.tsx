@@ -96,7 +96,7 @@ const Home = async ({ params }: Props) => {
             <p className="truncate">{contract_address}</p>
           </div>
           <div className="flex flex-col lg:flex-row lg:gap-3">
-            <p className="font-semibold">Contract Typr:</p>
+            <p className="font-semibold">Contract Type:</p>
             <p className="truncate">{contract_type}</p>
           </div>
           <div className="flex gap-3">
