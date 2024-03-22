@@ -162,7 +162,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const mintFrameRes = await mintFrame(frameId.toString(), accountAddress);
 
     if (!mintFrameRes?.tx) {
-      btnText = "Gas depleted";
+      btnText = mintFrameRes?.message;
       return new NextResponse(
         getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
       );
@@ -189,7 +189,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         getFrame(accountAddress, txHash, imageUrl, btnText, redirectLink)
       );
     } else {
-      btnText = "Gas depleted";
+      btnText = mintFrameRes?.message;
       return new NextResponse(
         getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
       );
