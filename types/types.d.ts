@@ -23,10 +23,23 @@ export interface FrameData {
 
 export interface MintFrameData {
   tx: string;
-  message: string;
+  message: string | any;
 }
 
 export interface UpdateFrameData {
   status: string;
   message: string;
+}
+
+export interface ErrorMsg {
+  response: {
+    data: {
+      message: {
+        name: string;
+      }
+      name: string;
+    };
+    status: number;
+    statusText: string;
+  };
 }

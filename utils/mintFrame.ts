@@ -1,6 +1,7 @@
 import { config } from "@/config/config";
-import { MintFrameData } from "@/types/types";
+import { ErrorMsg, MintFrameData } from "@/types/types";
 import axios from "axios";
+import { errorMessage } from ".";
 
 export const mintFrame = async (
   frameId: string,
@@ -13,16 +14,17 @@ export const mintFrame = async (
     });
 
     console.log("Mint NFT response-> ", res.data);
+    console.log("Mint NFT response status ", res.status);
 
     return {
       tx: res.data?.tx,
       message: res.data?.message,
     };
-  } catch (error) {
+  } catch (error: any) {
     console.log("Error minting NFT-> ", error);
     return {
       tx: "",
-      message: "Error minting NFT",
+      message: errorMessage(error),
     };
   }
 };
