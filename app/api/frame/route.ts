@@ -116,7 +116,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   }
 
   // check gate with like
-  if (isLike) {
+  if (config?.ENVIRONMENT == "production" && isLike) {
     if (message?.liked) {
       console.log("User liked the post");
     } else {
