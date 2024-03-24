@@ -6,6 +6,7 @@ import { chainName } from "@/utils";
 import { ExternalLinkIcon } from "@/assets";
 import { getFrameData } from "@/services";
 import { Button, Default } from "@/components";
+import { APP_TWITTER_ID } from "@/constants";
 
 type Props = {
   params: { id: string };
@@ -19,8 +20,7 @@ export async function generateMetadata(
   const id = params.id;
   console.log("id", id);
 
-  const { imageUrl, isLike, isFollow, isRecast } =
-    await getFrameData(id);
+  const { imageUrl, isLike, isFollow, isRecast } = await getFrameData(id);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -48,6 +48,15 @@ export async function generateMetadata(
       title: "Frames Lenspost",
       description: "Share farcater frames from Lenspost",
       images: [imageUrl],
+      url: `${config?.APP_URL}/frame/${id}`,
+    },
+    twitter: {
+      card: "summary",
+      creator: APP_TWITTER_ID,
+      title: "Frames Lenspost",
+      description: "Share farcater frames from Lenspost",
+      images: ["/favicon.ico"],
+      site: APP_TWITTER_ID,
     },
     other: {
       ...frameMetadata,
