@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { encodeFunctionData, parseEther } from "viem";
 import { base } from "@wagmi/core/chains";
 import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
-import { config } from "@/config/config";
+import { config } from "@/configs/config";
 import { LENSPOST_ETH_ADDRESS, ZORA_REWARD_FEE } from "@/constants";
 import { erc721DropABI } from "@zoralabs/zora-721-contracts";
 

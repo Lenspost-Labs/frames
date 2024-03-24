@@ -1,6 +1,6 @@
 import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata, ResolvingMetadata } from "next";
-import { config } from "@/config/config";
+import { config } from "@/configs/config";
 import Image from "next/image";
 import { chainName } from "@/utils";
 import { ExternalLinkIcon } from "@/assets";
@@ -55,7 +55,7 @@ export async function generateMetadata(
       creator: APP_TWITTER_ID,
       title: "Frames Lenspost",
       description: "Share farcater frames from Lenspost",
-      images: ["/favicon.ico"],
+      images: [imageUrl],
       site: APP_TWITTER_ID,
     },
     other: {

@@ -1,4 +1,4 @@
-import { config } from "@/config/config";
+import { config } from "@/configs/config";
 import { MintFrameData } from "@/types/types";
 import axios from "axios";
 import { errorMessage } from "../utils";

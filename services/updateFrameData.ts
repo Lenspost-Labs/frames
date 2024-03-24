@@ -1,4 +1,4 @@
-import { config } from "@/config/config";
+import { config } from "@/configs/config";
 import { UpdateFrameData } from "@/types/types";
 import axios from "axios";
 

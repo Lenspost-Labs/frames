@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import { Metadata } from "next";
-import { config } from "@/config/config";
+import { config } from "@/configs/config";
 import { APP_TWITTER_ID } from "@/constants";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Frames Lenspost",
     description: "Share farcater frames from Lenspost",
-    images: ["/favicon.ico"],
+    images: ["/logo.png"],
     url: config?.APP_URL,
   },
   twitter: {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     creator: APP_TWITTER_ID,
     title: "Frames Lenspost",
     description: "Share farcater frames from Lenspost",
-    images: ["/favicon.ico"],
+    images: ["/logo.png"],
     site: APP_TWITTER_ID,
   },
 };
