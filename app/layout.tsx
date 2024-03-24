@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Frames Lenspost",
     description: "Share farcater frames from Lenspost",
-    images: ["/logo.png"],
+    images: [`${config?.APP_URL}/logo.png`],
     url: config?.APP_URL,
   },
   twitter: {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     creator: APP_TWITTER_ID,
     title: "Frames Lenspost",
     description: "Share farcater frames from Lenspost",
-    images: ["/logo.png"],
+    images: [`${config?.APP_URL}/logo.png`],
     site: APP_TWITTER_ID,
   },
 };
