@@ -55,7 +55,7 @@ export async function generateMetadata(
       creator: APP_TWITTER_ID,
       title: "Frames Lenspost",
       description: "Share farcater frames from Lenspost",
-      images: ["/favicon.ico"],
+      images: [imageUrl],
       site: APP_TWITTER_ID,
     },
     other: {
