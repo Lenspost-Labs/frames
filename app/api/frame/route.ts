@@ -4,7 +4,7 @@ import {
   getFrameHtmlResponse,
   getFrameMessage,
 } from "@coinbase/onchainkit";
-import { config } from "@/config/config";
+import { config } from "@/configs/config";
 import { getFrame } from "@/utils";
 import { getFrameData, mintFrame, updateFrameData } from "@/services";
 

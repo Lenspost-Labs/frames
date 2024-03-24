@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import { Metadata } from "next";
-import { config } from "@/config/config";
+import { config } from "@/configs/config";
 import { APP_TWITTER_ID } from "@/constants";
 
 const inter = Inter({ subsets: ["latin"] });

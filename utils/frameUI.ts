@@ -1,4 +1,4 @@
-import { config } from "@/config/config";
+import { config } from "@/configs/config";
 import { base, baseSepolia } from "@wagmi/core/chains";
 
 const explorerUrl =
@@ -34,9 +34,15 @@ export const getFrame = (
       <meta property="fc:frame:button:2:target" content="${redirectLink}" />`
    }
   
-   <meta property="fc:frame:button:${redirectLink? "3": "2"}" content="Remix on Lenspost" />
-   <meta property="fc:frame:button:${redirectLink? "3": "2"}:action" content="link" />
-   <meta property="fc:frame:button:${redirectLink? "3": "2"}:target" content="https://app.lenspost.xyz" />
+   <meta property="fc:frame:button:${
+     redirectLink ? "3" : "2"
+   }" content="Remix on Lenspost" />
+   <meta property="fc:frame:button:${
+     redirectLink ? "3" : "2"
+   }:action" content="link" />
+   <meta property="fc:frame:button:${
+     redirectLink ? "3" : "2"
+   }:target" content="https://app.lenspost.xyz" />
   </head>
   </html>
    `;

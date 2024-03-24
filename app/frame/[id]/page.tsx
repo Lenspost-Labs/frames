@@ -1,6 +1,6 @@
 import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata, ResolvingMetadata } from "next";
-import { config } from "@/config/config";
+import { config } from "@/configs/config";
 import Image from "next/image";
 import { chainName } from "@/utils";
 import { ExternalLinkIcon } from "@/assets";
