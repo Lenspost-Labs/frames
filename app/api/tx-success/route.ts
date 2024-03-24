@@ -1,4 +1,5 @@
-import { getFrame, getFrameData, updateFrameData } from "@/utils";
+import { getFrameData, updateFrameData } from "@/services";
+import { getFrame } from "@/utils";
 import { FrameRequest, getFrameHtmlResponse } from "@coinbase/onchainkit/frame";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -27,7 +27,7 @@ export const errorMessage = (error: ErrorMsg) => {
       console.log({
         503: error?.response?.data?.message,
       });
-      return error?.response?.data?.message;
+      return error?.response?.data?.message || "503 Service Unavailable";
     }
   } else {
     return "Something went wrong. Please try again later.";

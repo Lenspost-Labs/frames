@@ -24,7 +24,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   console.log("req.body-> ", body);
 
   const { isValid, message } = await getFrameMessage(body, {
-    neynarApiKey: config.neynar.apiKey,
+    neynarApiKey: config?.neynar?.apiKey,
   });
 
   if (!isValid) {

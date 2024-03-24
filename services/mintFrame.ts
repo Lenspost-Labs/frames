@@ -1,7 +1,7 @@
 import { config } from "@/config/config";
-import { ErrorMsg, MintFrameData } from "@/types/types";
+import { MintFrameData } from "@/types/types";
 import axios from "axios";
-import { errorMessage } from ".";
+import { errorMessage } from "../utils";
 
 export const mintFrame = async (
   frameId: string,

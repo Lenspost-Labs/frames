@@ -5,7 +5,8 @@ import {
   getFrameMessage,
 } from "@coinbase/onchainkit";
 import { config } from "@/config/config";
-import { getFrame, getFrameData, mintFrame, updateFrameData } from "@/utils";
+import { getFrame } from "@/utils";
+import { getFrameData, mintFrame, updateFrameData } from "@/services";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";

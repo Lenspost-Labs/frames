@@ -1,12 +1,11 @@
 import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata, ResolvingMetadata } from "next";
 import { config } from "@/config/config";
-import Default from "@/components/Default";
-import { getFrameData } from "@/utils";
 import Image from "next/image";
-import Button from "@/components/Button";
 import { chainName } from "@/utils";
 import { ExternalLinkIcon } from "@/assets";
+import { getFrameData } from "@/services";
+import { Button, Default } from "@/components";
 
 type Props = {
   params: { id: string };
@@ -14,13 +13,13 @@ type Props = {
 };
 
 export async function generateMetadata(
-  { params, searchParams }: Props,
+  { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const id = params.id;
   console.log("id", id);
 
-  const { imageUrl, isLike, isFollow, isRecast, chainId, contract_address } =
+  const { imageUrl, isLike, isFollow, isRecast } =
     await getFrameData(id);
 
   const frameMetadata = getFrameMetadata({

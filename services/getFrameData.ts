@@ -1,7 +1,7 @@
 import { config } from "@/config/config";
 import { FrameData } from "@/types/types";
 import axios from "axios";
-import { errorMessage } from ".";
+import { errorMessage } from "../utils";
 
 export const getFrameData = async (frameId: string): Promise<FrameData> => {
   try {
