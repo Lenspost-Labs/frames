@@ -73,10 +73,11 @@ const Home = async ({ params }: Props) => {
     redirectLink,
     chainId,
     slug,
+    message,
   } = await getFrameData(params.id);
 
   if (!frameId) {
-    return <Default text="Invalid FrameID" />;
+    return <Default text={message} />;
   }
 
   return (

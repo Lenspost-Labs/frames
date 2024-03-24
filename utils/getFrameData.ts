@@ -1,6 +1,7 @@
 import { config } from "@/config/config";
 import { FrameData } from "@/types/types";
 import axios from "axios";
+import { errorMessage } from ".";
 
 export const getFrameData = async (frameId: string): Promise<FrameData> => {
   try {
@@ -30,8 +31,8 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       chainId: data?.chainId,
       slug: data?.slug,
     };
-  } catch (error) {
-    console.log("Error getting frame data-> ", error);
+  } catch (error: any) {
+    console.log("Error getting frame data-> ", error?.response?.data?.message);
     return {
       frameId: undefined,
       imageUrl: "",
@@ -50,6 +51,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       creatorSponsored: false,
       chainId: "eip155:1",
       slug: "",
+      message: errorMessage(error),
     };
   }
 };

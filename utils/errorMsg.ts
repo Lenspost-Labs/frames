@@ -9,7 +9,7 @@ export const errorMessage = (error: ErrorMsg) => {
           error?.response?.data?.name ||
           error?.response?.data?.message?.name,
       });
-      return "Error minting NFT";
+      return "500 Internal Server Error";
     } else if (error?.response?.status === 401) {
       console.log({ 401: error?.response?.statusText });
       return error?.response?.data?.message;
@@ -17,7 +17,7 @@ export const errorMessage = (error: ErrorMsg) => {
       console.log({
         404: error?.response?.statusText || error?.response?.data?.message,
       });
-      return error?.response?.data?.message || "Error minting NFT";
+      return error?.response?.data?.message || "404 Not found";
     } else if (error?.response?.status === 400) {
       console.log({
         400: error?.response?.data?.message,
@@ -30,6 +30,6 @@ export const errorMessage = (error: ErrorMsg) => {
       return error?.response?.data?.message;
     }
   } else {
-    return "Error minting NFT";
+    return "Something went wrong. Please try again later.";
   }
 };
