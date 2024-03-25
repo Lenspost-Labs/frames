@@ -107,15 +107,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // check if this is a old frame frameId < 114
-  // if (frameId && frameId < 114) {
-  //   console.log("Old frame is not mintable");
-  //   btnText = "Old Frame is not mintable";
-  //   return new NextResponse(
-  //     getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
-  //   );
-  // }
-
   // check gate with like
   if (isLike) {
     if (message?.liked) {
