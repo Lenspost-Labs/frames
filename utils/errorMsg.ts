@@ -12,7 +12,7 @@ export const errorMessage = (error: ErrorMsg) => {
       return "500 Internal Server Error";
     } else if (error?.response?.status === 401) {
       console.log({ 401: error?.response?.statusText });
-      return error?.response?.data?.message;
+      return error?.response?.data?.message || "401 Unauthorized";
     } else if (error?.response?.status === 404) {
       console.log({
         404: error?.response?.statusText || error?.response?.data?.message,
@@ -22,7 +22,7 @@ export const errorMessage = (error: ErrorMsg) => {
       console.log({
         400: error?.response?.data?.message,
       });
-      return error?.response?.data?.message;
+      return error?.response?.data?.message || "400 Bad Request";
     } else if (error?.response?.status === 503) {
       console.log({
         503: error?.response?.data?.message,

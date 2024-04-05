@@ -1,5 +1,6 @@
 import { config } from "@/configs/config";
 import { UpdateFrameData } from "@/types/types";
+import { errorMessage } from "@/utils";
 import axios from "axios";
 
 export const updateFrameData = async (
@@ -17,17 +18,15 @@ export const updateFrameData = async (
       }
     );
 
-    console.log("Update frame data response-> ", res.data);
-
     return {
       status: res.data?.status,
       message: res.data?.message,
     };
-  } catch (error) {
+  } catch (error: any) {
     console.log("Error updating frame data-> ", error);
     return {
       status: "error",
-      message: "Error updating frame data",
+      message: errorMessage(error),
     };
   }
 };
