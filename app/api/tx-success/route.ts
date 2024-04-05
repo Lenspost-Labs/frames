@@ -33,7 +33,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       accountAddress,
       txHash
     );
-    console.log("Frame data updated-> ", updateFrameDataRes.status);
+    console.log("Frame data updated-> ", updateFrameDataRes.message);
   }
 
   btnText = "View tx";

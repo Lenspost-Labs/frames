@@ -29,7 +29,7 @@ export interface MintFrameData {
 
 export interface UpdateFrameData {
   status: string;
-  message: string;
+  message: string | any;
 }
 
 export interface ErrorMsg {
@@ -37,7 +37,7 @@ export interface ErrorMsg {
     data: {
       message: {
         name: string;
-      }
+      };
       name: string;
     };
     status: number;
