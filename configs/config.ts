@@ -1,7 +1,7 @@
-const PROD_BACKEND_URL = "https://api.lenspost.xyz";
-const DEV_BACKEND_URL = "https://lenspost-development.up.railway.app";
+const PROD_BACKEND_URL = "https://api.poster.fun";
+const DEV_BACKEND_URL = "https://dev.poster.fun";
 
-const PROD_APP_URL = "https://frames.lenspost.xyz";
+const PROD_APP_URL = "https://frames.poster.fun";
 const DEV_APP_URL = "https://dev-frames.lenspost.xyz";
 const LOCAL_APP_URL = "http://localhost:3000";
 
