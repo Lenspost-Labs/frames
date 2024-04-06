@@ -31,7 +31,7 @@ export async function generateMetadata(
       src: imageURL,
       aspectRatio: "1:1",
     },
-    post_url: `${config?.APP_URL}/api/user?userId={id}`,
+    post_url: `${config?.APP_URL}/api/user/${userId}`,
   });
 
   return {
