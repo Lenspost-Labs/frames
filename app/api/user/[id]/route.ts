@@ -26,7 +26,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     getFrameHtmlResponse({
       buttons: [
         {
-          label: "Next Canvas",
+          label: "Next Poster",
           postUrl: `${config?.BACKEND_URL}/public/random-user-canvas/${userId}`,
         },
       ],
