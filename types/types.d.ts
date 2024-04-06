@@ -22,6 +22,12 @@ export interface FrameData {
   message?: string | any;
 }
 
+export type UserCanvasData = {
+  userId : string;
+  imageURL : string;
+  slug: string;
+}
+
 export interface MintFrameData {
   tx: string;
   message: string | any;
