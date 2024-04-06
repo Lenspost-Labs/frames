@@ -6,7 +6,7 @@ import { chainName } from "@/utils";
 import { ExternalLinkIcon } from "@/assets";
 import { getFrameData } from "@/services";
 import { Button, Default } from "@/components";
-import { APP_TWITTER_ID } from "@/constants";
+import { APP_TWITTER_ID, MINT_PAGE_URL } from "@/constants";
 
 type Props = {
   params: { id: string };
@@ -20,7 +20,7 @@ export async function generateMetadata(
   const id = params.id;
   console.log("id", id);
 
-  const { imageUrl, isLike, isFollow, isRecast } = await getFrameData(id);
+  const { imageUrl, isLike, isFollow, isRecast, slug } = await getFrameData(id);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -32,6 +32,11 @@ export async function generateMetadata(
         ]
           .filter(Boolean) // Remove empty strings
           .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
+      },
+      {
+        label: "Mint on Poster",
+        action: "link",
+        target: `${MINT_PAGE_URL}/mint/${slug}`,
       },
     ],
     image: {
