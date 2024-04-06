@@ -11,7 +11,6 @@ import { getUserData, mintFrame, updateFrameData } from "@/services";
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: string | undefined = "";
   let accountAddress: string | undefined = "";
-  console.log("req", req);
   const userId = req.nextUrl.pathname.split("/").pop() || "";
 
   const getUserDataRes = await getUserData(userId);
@@ -39,7 +38,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   );
 }
 
-export async function GET(req: NextRequest): Promise<Response> {
+export async function POST(req: NextRequest): Promise<Response> {
   return getResponse(req);
 }
 
