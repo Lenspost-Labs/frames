@@ -6,7 +6,7 @@ import { chainName } from "@/utils";
 import { ExternalLinkIcon } from "@/assets";
 import { getFrameData } from "@/services";
 import { Button, Default } from "@/components";
-import { APP_TWITTER_ID } from "@/constants";
+import { APP_TWITTER_ID, MINT_PAGE_URL } from "@/constants";
 
 type Props = {
   params: { id: string };
@@ -20,7 +20,7 @@ export async function generateMetadata(
   const id = params.id;
   console.log("id", id);
 
-  const { imageUrl, isLike, isFollow, isRecast } = await getFrameData(id);
+  const { imageUrl, isLike, isFollow, isRecast, slug } = await getFrameData(id);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
@@ -32,6 +32,11 @@ export async function generateMetadata(
         ]
           .filter(Boolean) // Remove empty strings
           .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
+      },
+      {
+        label: "Mint on Poster",
+        action: "link",
+        target: `${MINT_PAGE_URL}/mint/${slug}`,
       },
     ],
     image: {
@@ -148,14 +153,14 @@ const Home = async ({ params }: Props) => {
           </div>
         )}
         <div className="flex flex-col lg:flex-row gap-1">
-          {/* {slug && (
+          {slug && (
             <Button
               title="Mint"
-              target={`https://mint.lenspost.xyz/${slug}`}
+              target={`${MINT_PAGE_URL}/mint/${slug}`}
               className="flex justify-center items-center gap-1 w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl cursor-pointer"
               icon={<ExternalLinkIcon />}
             />
-          )} */}
+          )}
           <Button
             title="Remix on Lenspost"
             target="https://app.lenspost.xyz"

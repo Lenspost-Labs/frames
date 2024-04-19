@@ -6,3 +6,5 @@ export const LENSPOST_ETH_ADDRESS: EthAddress =
 export const ZORA_REWARD_FEE = "0.000777";
 
 export const APP_TWITTER_ID = "@Lenspostxyz";
+
+export const MINT_PAGE_URL = "https://mint.poster.fun";
