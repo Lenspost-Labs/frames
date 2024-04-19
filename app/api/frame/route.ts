@@ -45,7 +45,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  console.log("quries-> ", {
+  console.log(frameId, "quries-> ", {
     frameId,
     imageUrl,
     tokenUri,
@@ -63,18 +63,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     creatorSponsored,
   });
 
-  console.log("req.body-> ", req.body);
+  console.log(frameId, "req.body-> ", req.body);
 
   // get frame request data from Farcaster client
   const body: FrameRequest = await req.json();
 
-  console.log("frame request-> ", body);
+  console.log(frameId, "frame request-> ", body);
 
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: config?.neynar?.apiKey,
   });
 
-  console.log("frame message-> ", message);
+  console.log(frameId, "frame message-> ", message);
 
   // get user's wallet address from FID
   if (isValid) {
@@ -86,12 +86,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  console.log("Extracted address from FID-> ", accountAddress);
+  console.log(frameId, "Extracted address from FID-> ", accountAddress);
 
   // check if user has already minted
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
   if (minter) {
-    console.log("User has already minted-> ", minter);
+    console.log(frameId, "User has already minted-> ", minter);
     btnText = "Already Minted";
     return new NextResponse(
       getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
@@ -100,7 +100,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // check if mint has exceeded
   if (noOfNftsMinited >= allowedMints) {
-    console.log("Mint has exceeded");
+    console.log(frameId, "Mint has exceeded");
     btnText = `Mint has exceeded ${minters?.length}/${allowedMints}`;
     return new NextResponse(
       getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
@@ -110,9 +110,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // check gate with like
   if (isLike) {
     if (message?.liked) {
-      console.log("User liked the post");
+      console.log(frameId, "User liked the post");
     } else {
-      console.log("User didn't like the post");
+      console.log(frameId, "User didn't like the post");
       btnText = "Like and Mint";
       return new NextResponse(
         getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
@@ -123,9 +123,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // check gate with recast
   if (isRecast) {
     if (message?.recasted) {
-      console.log("User recasted the post");
+      console.log(frameId, "User recasted the post");
     } else {
-      console.log("User didn't recast the post");
+      console.log(frameId, "User didn't recast the post");
       btnText = "Recast and Mint";
       return new NextResponse(
         getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
@@ -136,9 +136,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // check gate with follow
   if (isFollow) {
     if (message?.following) {
-      console.log("User followed the post");
+      console.log(frameId, "User followed the post");
     } else {
-      console.log("User didn't follow the post");
+      console.log(frameId, "User didn't follow the post");
       btnText = "Follow and Mint";
       return new NextResponse(
         getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
@@ -165,7 +165,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
       btnText = "View tx";
 
-      console.log("NFT minted successfully!", txHash);
+      console.log(frameId, "NFT minted successfully!", txHash);
 
       // update frame data with txHash and minterAddress
       if (txHash) {
@@ -174,7 +174,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           accountAddress,
           txHash
         );
-        console.log("Frame data updated-> ", updateFrameDataRes.message);
+        console.log(
+          frameId,
+          "Frame data updated-> ",
+          updateFrameDataRes.message
+        );
       }
 
       return new NextResponse(

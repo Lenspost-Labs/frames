@@ -24,7 +24,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   txHash = body?.untrustedData?.transactionId;
 
-  console.log("req.body-> ", body?.untrustedData?.transactionId);
+  console.log(frameId, "req.body-> ", body?.untrustedData?.transactionId);
 
   // update frame data with txHash and minterAddress
   if (txHash) {
@@ -33,7 +33,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       accountAddress,
       txHash
     );
-    console.log("Frame data updated-> ", updateFrameDataRes.message);
+    console.log(frameId, "Frame data updated-> ", updateFrameDataRes.message);
   }
 
   btnText = "View tx";
