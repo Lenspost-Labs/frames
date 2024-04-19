@@ -100,8 +100,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // check if mint has exceeded
   if (noOfNftsMinited >= allowedMints) {
-    console.log(frameId, "Mint has exceeded");
-    btnText = `Mint has exceeded ${minters?.length}/${allowedMints}`;
+    console.log(frameId, "Mint sold out");
+    btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
     return new NextResponse(
       getFrame(accountAddress, false, imageUrl, btnText, redirectLink)
     );
