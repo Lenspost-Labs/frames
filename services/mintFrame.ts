@@ -14,7 +14,6 @@ export const mintFrame = async (
     });
 
     console.log("Mint NFT response-> ", res.data);
-    console.log("Mint NFT response status ", res.status);
 
     return {
       tx: res.data?.tx,

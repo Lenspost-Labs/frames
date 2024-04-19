@@ -30,6 +30,6 @@ export const errorMessage = (error: ErrorMsg) => {
       return error?.response?.data?.message || "503 Service Unavailable";
     }
   } else {
-    return "Something went wrong. Please try again later.";
+    return "Something went wrong";
   }
 };
