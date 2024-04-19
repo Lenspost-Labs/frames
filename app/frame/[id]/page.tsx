@@ -33,11 +33,11 @@ export async function generateMetadata(
           .filter(Boolean) // Remove empty strings
           .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
       },
-      {
-        label: "Mint on Poster",
-        action: "link",
-        target: `${MINT_PAGE_URL}/mint/${slug}`,
-      },
+      // {
+      //   label: "Mint on Poster",
+      //   action: "link",
+      //   target: `${MINT_PAGE_URL}/mint/${slug}`,
+      // },
     ],
     image: {
       src: imageUrl,
@@ -153,14 +153,14 @@ const Home = async ({ params }: Props) => {
           </div>
         )}
         <div className="flex flex-col lg:flex-row gap-1">
-          {slug && (
+          {/* {slug && (
             <Button
               title="Mint"
               target={`${MINT_PAGE_URL}/mint/${slug}`}
               className="flex justify-center items-center gap-1 w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl cursor-pointer"
               icon={<ExternalLinkIcon />}
             />
-          )}
+          )} */}
           <Button
             title="Remix on Lenspost"
             target="https://app.lenspost.xyz"
