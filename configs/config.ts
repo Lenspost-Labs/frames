@@ -1,4 +1,4 @@
-const PROD_BACKEND_URL = "https://api.poster.fun";
+const PROD_BACKEND_URL = "https://api-v2.poster.fun";
 const DEV_BACKEND_URL = "https://dev.poster.fun";
 
 const PROD_APP_URL = "https://frames.poster.fun";
