@@ -1,4 +1,4 @@
-import { getFrameMetadata } from "@coinbase/onchainkit";
+import { getFrameMetadata, FrameButtonMetadata } from "@coinbase/onchainkit";
 import type { Metadata, ResolvingMetadata } from "next";
 import { config } from "@/configs/config";
 import Image from "next/image";
@@ -20,25 +20,32 @@ export async function generateMetadata(
   const id = params.id;
   console.log("id", id);
 
-  const { imageUrl, isLike, isFollow, isRecast, slug } = await getFrameData(id);
+  const { imageUrl, isLike, isFollow, isRecast, slug, creatorSponsored } =
+    await getFrameData(id);
+
+  let btns: FrameButtonMetadata[] = [
+    {
+      label: `${[
+        isLike ? "Like" : "",
+        isRecast ? "Recast" : "",
+        isFollow ? "Follow" : "",
+      ]
+        .filter(Boolean) // Remove empty strings
+        .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
+    },
+  ];
+
+  if (!creatorSponsored) {
+    btns.push({
+      label: "Mint on Poster",
+      action: "link",
+      target: `${MINT_PAGE_URL}/mint/${slug}`,
+    });
+  }
 
   const frameMetadata = getFrameMetadata({
-    buttons: [
-      {
-        label: `${[
-          isLike ? "Like" : "",
-          isRecast ? "Recast" : "",
-          isFollow ? "Follow" : "",
-        ]
-          .filter(Boolean) // Remove empty strings
-          .join(", ")} ${isLike || isRecast || isFollow ? `👉` : ""} Mint`,
-      },
-      // {
-      //   label: "Mint on Poster",
-      //   action: "link",
-      //   target: `${MINT_PAGE_URL}/mint/${slug}`,
-      // },
-    ],
+    // @ts-ignore
+    buttons: btns,
     image: {
       src: imageUrl,
       aspectRatio: "1:1",
@@ -153,14 +160,14 @@ const Home = async ({ params }: Props) => {
           </div>
         )}
         <div className="flex flex-col lg:flex-row gap-1">
-          {/* {slug && (
+          {!creatorSponsored && (
             <Button
               title="Mint"
               target={`${MINT_PAGE_URL}/mint/${slug}`}
               className="flex justify-center items-center gap-1 w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl cursor-pointer"
               icon={<ExternalLinkIcon />}
             />
-          )} */}
+          )}
           <Button
             title="Remix on Lenspost"
             target="https://app.lenspost.xyz"
