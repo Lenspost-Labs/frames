@@ -170,7 +170,7 @@ const Home = async ({ params }: Props) => {
           )}
           <Button
             title="Remix on Lenspost"
-            target="https://app.lenspost.xyz"
+            target="https://app.poster.fun"
             className="w-full p-2 text-center bg-purple-500  text-white rounded-tl-2xl rounded-br-2xl cursor-pointer"
           />
         </div>
