@@ -1,0 +1,143 @@
+import {
+  LENSPOST_TWITTER_USERNAME,
+  LENSPOST_APP_URL,
+  CDN_IMAGE_URL,
+  S3_IMAGE_URL,
+  DESCRIPTION,
+  APP_NAME,
+  APP_URL,
+  AUTHOR,
+  MINT_PAGE_URL
+} from '@/data';
+import {
+  FrameButtonMetadata,
+  getFrameMetadata
+} from '@coinbase/onchainkit/frame';
+import { getFrameData } from '@/services';
+import { Default, FrameCard } from '@/components';
+
+import { Metadata } from 'next';
+
+type Props = {
+  params: { id: string };
+};
+
+export const generateMetadata = async ({
+  params
+}: Props): Promise<Metadata> => {
+  const id = params.id;
+
+  const { imageUrl, isLike, isFollow, isRecast, slug, creatorSponsored } =
+    await getFrameData(id);
+  const imageCdnUrl = imageUrl?.replace(S3_IMAGE_URL, CDN_IMAGE_URL);
+
+  let btns: FrameButtonMetadata[] = [
+    {
+      label: `${[
+        isLike ? 'Like' : '',
+        isRecast ? 'Recast' : '',
+        isFollow ? 'Follow' : ''
+      ]
+        .filter(Boolean) // Remove empty strings
+        .join(', ')} ${isLike || isRecast || isFollow ? `👉` : ''} Mint`
+    }
+  ];
+
+  if (!creatorSponsored) {
+    btns.push({
+      label: 'Mint on Poster',
+      action: 'link',
+      target: `${MINT_PAGE_URL}/mint/${slug}`
+    });
+  }
+
+  const frameMetadata = getFrameMetadata({
+    // @ts-ignore
+    buttons: btns,
+    image: {
+      src: imageCdnUrl,
+      aspectRatio: '1:1'
+    },
+    post_url: `${APP_URL}/api/frame?frameId=${id}`
+  });
+
+  return {
+    twitter: {
+      creator: LENSPOST_TWITTER_USERNAME,
+      site: LENSPOST_TWITTER_USERNAME,
+      card: 'summary_large_image',
+      description: DESCRIPTION,
+      images: [imageCdnUrl],
+      title: APP_NAME
+    },
+    keywords: [
+      'Lenspost Mint',
+      'Lenspost NFT',
+      'Lenspost',
+      'Poster',
+      'Mint',
+      'NFT'
+    ],
+    openGraph: {
+      description: DESCRIPTION,
+      images: [imageCdnUrl],
+      title: APP_NAME,
+      url: APP_URL
+    },
+    authors: [{ url: LENSPOST_APP_URL, name: AUTHOR }],
+    metadataBase: new URL(APP_URL),
+    other: { ...frameMetadata },
+    description: DESCRIPTION,
+    icons: ['/favicon.ico'],
+    creator: AUTHOR,
+    title: APP_NAME
+  };
+};
+
+const Home = async ({ params }: Props) => {
+  const {
+    creatorSponsored,
+    contractAddress,
+    contractType,
+    allowedMints,
+    redirectLink,
+    isRecast,
+    isFollow,
+    imageUrl,
+    tokenUri,
+    message,
+    minters,
+    chainId,
+    frameId,
+    isLike,
+    owner,
+    slug
+  } = await getFrameData(params?.id);
+
+  if (message) {
+    return <Default text={message} />;
+  }
+
+  return (
+    <FrameCard
+      creatorSponsored={creatorSponsored}
+      contractAddress={contractAddress}
+      contractType={contractType}
+      allowedMints={allowedMints}
+      redirectLink={redirectLink}
+      isRecast={isRecast}
+      isFollow={isFollow}
+      imageUrl={imageUrl}
+      tokenUri={tokenUri}
+      message={message}
+      minters={minters}
+      chainId={chainId}
+      frameId={frameId}
+      isLike={isLike}
+      owner={owner}
+      slug={slug}
+    />
+  );
+};
+
+export default Home;
