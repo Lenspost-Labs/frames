@@ -9,11 +9,10 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       return {
         isGatedCollections: data?.gatedCollections,
-        contractAddress: data?.contract_address,
         creatorSponsored: data?.creatorSponsored,
+        contractAddress: data?.contract_address,
         isGatedChannels: data?.gatedChannels,
         contractType: data?.contract_type,
         redirectLink: data?.redirectLink,
@@ -24,10 +23,10 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
         tokenUri: data?.tokenUri,
         minters: data?.minters,
         chainId: data?.chainId,
-        frameId: data?.id,
         isTopUp: data?.isTopUp,
         isLike: data?.isLike,
         owner: data?.owner,
+        frameId: data?.id,
         slug: data?.slug
       };
     } else {

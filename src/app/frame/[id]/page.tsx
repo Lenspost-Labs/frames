@@ -2,20 +2,19 @@ import {
   LENSPOST_TWITTER_USERNAME,
   LENSPOST_APP_URL,
   CDN_IMAGE_URL,
+  MINT_PAGE_URL,
   S3_IMAGE_URL,
   DESCRIPTION,
   APP_NAME,
   APP_URL,
-  AUTHOR,
-  MINT_PAGE_URL
+  AUTHOR
 } from '@/data';
 import {
   FrameButtonMetadata,
   getFrameMetadata
 } from '@coinbase/onchainkit/frame';
+import { FrameCard, Default } from '@/components';
 import { getFrameData } from '@/services';
-import { Default, FrameCard } from '@/components';
-
 import { Metadata } from 'next';
 
 type Props = {
@@ -27,38 +26,38 @@ export const generateMetadata = async ({
 }: Props): Promise<Metadata> => {
   const id = params.id;
 
-  const { imageUrl, isLike, isFollow, isRecast, slug, creatorSponsored } =
+  const { creatorSponsored, imageUrl, isFollow, isRecast, isLike, slug } =
     await getFrameData(id);
   const imageCdnUrl = imageUrl?.replace(S3_IMAGE_URL, CDN_IMAGE_URL);
 
   let btns: FrameButtonMetadata[] = [
     {
       label: `${[
-        isLike ? 'Like' : '',
+        isFollow ? 'Follow' : '',
         isRecast ? 'Recast' : '',
-        isFollow ? 'Follow' : ''
+        isLike ? 'Like' : ''
       ]
-        .filter(Boolean) // Remove empty strings
+        .filter(Boolean)
         .join(', ')} ${isLike || isRecast || isFollow ? `👉` : ''} Mint`
     }
   ];
 
   if (!creatorSponsored) {
     btns.push({
+      target: `${MINT_PAGE_URL}/mint/${slug}`,
       label: 'Mint on Poster',
-      action: 'link',
-      target: `${MINT_PAGE_URL}/mint/${slug}`
+      action: 'link'
     });
   }
 
   const frameMetadata = getFrameMetadata({
-    // @ts-ignore
-    buttons: btns,
+    post_url: `https://3f64-49-43-163-11.ngrok-free.app/api/frame?frameId=${id}`,
     image: {
-      src: imageCdnUrl,
-      aspectRatio: '1:1'
+      aspectRatio: '1:1',
+      src: imageCdnUrl
     },
-    post_url: `${APP_URL}/api/frame?frameId=${id}`
+    // @ts-ignore
+    buttons: btns
   });
 
   return {
@@ -96,19 +95,19 @@ export const generateMetadata = async ({
 
 const Home = async ({ params }: Props) => {
   const {
+    isGatedCollections,
     creatorSponsored,
     contractAddress,
+    isGatedChannels,
     contractType,
     allowedMints,
     redirectLink,
     isRecast,
     isFollow,
     imageUrl,
-    tokenUri,
     message,
     minters,
     chainId,
-    frameId,
     isLike,
     owner,
     slug
@@ -120,19 +119,18 @@ const Home = async ({ params }: Props) => {
 
   return (
     <FrameCard
+      isGatedCollections={isGatedCollections}
       creatorSponsored={creatorSponsored}
       contractAddress={contractAddress}
+      isGatedChannels={isGatedChannels}
       contractType={contractType}
       allowedMints={allowedMints}
       redirectLink={redirectLink}
       isRecast={isRecast}
       isFollow={isFollow}
       imageUrl={imageUrl}
-      tokenUri={tokenUri}
-      message={message}
       minters={minters}
       chainId={chainId}
-      frameId={frameId}
       isLike={isLike}
       owner={owner}
       slug={slug}

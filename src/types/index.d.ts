@@ -5,9 +5,9 @@ export interface FrameData {
   }[];
   isGatedCollections?: string | null;
   isGatedChannels?: string | null;
-  chainId?: undefined | number;
   contractAddress?: `0x${string}`;
   frameId?: undefined | number;
+  chainId?: undefined | number;
   creatorSponsored?: boolean;
   imageUrl?: string | any;
   message?: string | any;

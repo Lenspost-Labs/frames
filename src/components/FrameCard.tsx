@@ -1,44 +1,43 @@
 'use client';
 
 import {
-  LENSPOST_ETH_ADDRESS,
-  CREATORS_REWARD_FEE,
+  LENSPOST_APP_URL,
+  MINT_PAGE_URL,
   CDN_IMAGE_URL,
   S3_IMAGE_URL,
   chainName
 } from '@/data';
-import { useEffect, useState, FC } from 'react';
-import { FrameData } from '@/types';
-import { Clipboard, Share } from '@/assets';
-import Image from 'next/image';
+import { ExternalLink, Clipboard } from '@/assets';
 import { formatAddress } from '@/utils';
+import { FrameData } from '@/types';
+import Image from 'next/image';
+import { toast } from 'sonner';
+import { FC } from 'react';
+
+const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text);
+  toast.success('Address copied!');
+};
 
 const FrameCard: FC<FrameData> = ({
   isGatedCollections,
   creatorSponsored,
-  isGatedChannels,
   contractAddress,
+  isGatedChannels,
   contractType,
   allowedMints,
   redirectLink,
   isRecast,
   isFollow,
   imageUrl,
-  tokenUri,
-  message,
   minters,
   chainId,
-  frameId,
   isLike,
   owner,
   slug
 }) => {
   const imageCdnUrl = imageUrl?.replace(S3_IMAGE_URL, CDN_IMAGE_URL);
   const minted = minters?.length;
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-  };
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col justify-between gap-8 rounded-3xl bg-white p-6 shadow-2xl sm:flex-row sm:p-10">
@@ -167,19 +166,40 @@ const FrameCard: FC<FrameData> = ({
           </div>
         </div>
         <hr className="my-4 border border-dashed border-[#9E9EAD] border-opacity-30" />
-        <h3 className="text-sm font-semibold text-[#11111b] sm:text-sm">
-          Know more about this Frame
-        </h3>
-
-        <hr className="my-4 border border-dashed border-[#9E9EAD] border-opacity-30" />
+        {redirectLink && (
+          <>
+            <div className="flex items-center gap-1">
+              <h3 className="text-sm font-semibold text-[#11111b] sm:text-sm">
+                Know more about this Frame
+              </h3>
+              <ExternalLink
+                onClick={() => window.open(redirectLink)}
+                className="cursor-pointer"
+                height={16}
+                width={16}
+              />
+            </div>
+            <hr className="my-4 border border-dashed border-[#9E9EAD] border-opacity-30" />
+          </>
+        )}
 
         <div className="flex flex-wrap gap-2">
-          <div className="mt-2 w-full rounded-lg bg-[#EBE8FD] px-4 py-2 text-center sm:w-fit">
-            Mint on Poster
-          </div>
-          <div className="mt-2 w-full rounded-lg bg-[#EBE8FD] px-4 py-2 text-center sm:w-fit">
+          {!creatorSponsored && (
+            <button
+              className="mt-2 flex w-full items-center gap-1 rounded-lg bg-[#EBE8FD] px-4 py-2 text-center sm:w-fit"
+              onClick={() => window.open(`${MINT_PAGE_URL}/mint/${slug}`)}
+            >
+              Mint on Poster
+              <ExternalLink className="cursor-pointer" height={16} width={16} />
+            </button>
+          )}
+          <button
+            className="mt-2 flex w-full items-center gap-1 rounded-lg bg-[#EBE8FD] px-4 py-2 text-center sm:w-fit"
+            onClick={() => window.open(`${LENSPOST_APP_URL}`)}
+          >
             Remix on Poster
-          </div>
+            <ExternalLink className="cursor-pointer" height={16} width={16} />
+          </button>
         </div>
       </div>
     </div>
