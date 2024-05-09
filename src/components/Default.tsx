@@ -1,4 +1,4 @@
-import { LENSPOST_APP_NAME, LENSPOST_APP_URL, social } from '@/data';
+import { LENSPOST_APP_NAME, LENSPOST_APP_URL, SOCIAL } from '@/data';
 import { ArrorRight } from '@/assets';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -25,7 +25,7 @@ const Default: FC<Props> = ({ color, text }) => {
           <ArrorRight strokeWidth={2} height={16} width={16} />
         </Link>
         <div className="flex items-center justify-between gap-4">
-          {social?.map((social, index) => (
+          {SOCIAL?.map((social, index) => (
             <Link
               className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-[#E7D9E9] p-2 transition-all hover:bg-[#D9C9D9]"
               href={social?.url}

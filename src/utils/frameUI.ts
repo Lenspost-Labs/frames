@@ -6,7 +6,7 @@ const explorerUrl =
     ? base.blockExplorers.default.url
     : baseSepolia.blockExplorers.default.url;
 
-export const getFrame = (
+export const getFrameUI = (
   txHash: undefined | boolean | string,
   redirectLink: undefined | string,
   imageUrl: undefined | string,

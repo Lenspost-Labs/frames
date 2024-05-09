@@ -1,6 +1,6 @@
 import { FarcasterLogo, DiscordLogo, XLogo } from '@/assets';
 
-export const social = [
+export const SOCIAL = [
   {
     url: 'https://twitter.com/Lenspostxyz',
     icon: XLogo,

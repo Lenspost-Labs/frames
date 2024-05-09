@@ -1,23 +1,18 @@
-'use client';
-
 import {
   LENSPOST_APP_URL,
   MINT_PAGE_URL,
   CDN_IMAGE_URL,
   S3_IMAGE_URL,
-  chainName
+  CHAIN_NAME
 } from '@/data';
-import { ExternalLink, Clipboard } from '@/assets';
+import { ExternalLink } from '@/assets';
 import { formatAddress } from '@/utils';
 import { FrameData } from '@/types';
 import Image from 'next/image';
-import { toast } from 'sonner';
+import Link from 'next/link';
 import { FC } from 'react';
 
-const copyToClipboard = (text: string) => {
-  navigator.clipboard.writeText(text);
-  toast.success('Address copied!');
-};
+import { CopyBtn } from '.';
 
 const FrameCard: FC<FrameData> = ({
   isGatedCollections,
@@ -61,12 +56,7 @@ const FrameCard: FC<FrameData> = ({
             <p className="text-sm text-[#11111b] sm:text-sm">
               <span className="flex items-center gap-1">
                 {formatAddress(contractAddress)}
-                <Clipboard
-                  onClick={() => copyToClipboard(contractAddress as string)}
-                  className="cursor-pointer"
-                  height={16}
-                  width={16}
-                />
+                <CopyBtn text={contractAddress as string} />
               </span>
             </p>
           </div>
@@ -75,7 +65,7 @@ const FrameCard: FC<FrameData> = ({
               Network
             </p>
             <p className="text-sm text-[#11111b] sm:text-sm">
-              {chainName[chainId as keyof typeof chainName]}
+              {CHAIN_NAME[chainId as keyof typeof CHAIN_NAME]}
             </p>
           </div>
           <div>
@@ -91,12 +81,7 @@ const FrameCard: FC<FrameData> = ({
             <p className="text-sm text-[#11111b] sm:text-sm">
               <span className="flex items-center gap-1">
                 {formatAddress(owner)}
-                <Clipboard
-                  onClick={() => copyToClipboard(owner as string)}
-                  className="cursor-pointer"
-                  height={16}
-                  width={16}
-                />
+                <CopyBtn text={contractAddress as string} />
               </span>
             </p>
           </div>
@@ -172,12 +157,13 @@ const FrameCard: FC<FrameData> = ({
               <h3 className="text-sm font-semibold text-[#11111b] sm:text-sm">
                 Know more about this Frame
               </h3>
-              <ExternalLink
-                onClick={() => window.open(redirectLink)}
-                className="cursor-pointer"
-                height={16}
-                width={16}
-              />
+              <Link href={redirectLink} target="_blank">
+                <ExternalLink
+                  className="cursor-pointer"
+                  height={16}
+                  width={16}
+                />
+              </Link>
             </div>
             <hr className="my-4 border border-dashed border-[#9E9EAD] border-opacity-30" />
           </>
@@ -185,21 +171,23 @@ const FrameCard: FC<FrameData> = ({
 
         <div className="flex flex-wrap gap-2">
           {!creatorSponsored && (
-            <button
+            <Link
               className="mt-2 flex w-full items-center gap-1 rounded-lg bg-[#EBE8FD] px-4 py-2 text-center sm:w-fit"
-              onClick={() => window.open(`${MINT_PAGE_URL}/mint/${slug}`)}
+              href={`${MINT_PAGE_URL}/mint/${slug}`}
+              target="_blank"
             >
               Mint on Poster
               <ExternalLink className="cursor-pointer" height={16} width={16} />
-            </button>
+            </Link>
           )}
-          <button
+          <Link
             className="mt-2 flex w-full items-center gap-1 rounded-lg bg-[#EBE8FD] px-4 py-2 text-center sm:w-fit"
-            onClick={() => window.open(`${LENSPOST_APP_URL}`)}
+            href={LENSPOST_APP_URL}
+            target="_blank"
           >
             Remix on Poster
             <ExternalLink className="cursor-pointer" height={16} width={16} />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

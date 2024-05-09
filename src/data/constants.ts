@@ -1,4 +1,4 @@
-import { backendApi } from '.';
+import { BACKEND_API } from '.';
 
 // Environments
 export const ENV = process.env.NODE_ENV;
@@ -28,7 +28,7 @@ export const LENSPOST_SOLANA_ADDRESS =
   '2PsV6hNEUc3rSMGqKcHTnRBemaWBQX3dYgUqVtEFxkwa';
 
 // URLs
-export const BACKEND_ENDPOINT = backendApi[ENV as keyof typeof backendApi];
+export const BACKEND_ENDPOINT = BACKEND_API[ENV as keyof typeof BACKEND_API];
 export const S3_IMAGE_URL = 'https://lenspost.s3.ap-south-1.amazonaws.com';
 export const CDN_IMAGE_URL = 'https://lenspost.b-cdn.net';
 export const MINT_PAGE_URL = 'https://mint.poster.fun';

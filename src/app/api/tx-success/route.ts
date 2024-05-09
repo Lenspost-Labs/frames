@@ -1,7 +1,7 @@
 import { updateFrameData, getFrameData } from '@/services';
 import { FrameRequest } from '@coinbase/onchainkit/frame';
 import { NextResponse, NextRequest } from 'next/server';
-import { getFrame } from '@/utils';
+import { getFrameUI } from '@/utils';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let btnText: undefined | string = '';
@@ -15,23 +15,19 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   if (!frameId) {
     btnText = 'FrameId not found';
-    return new NextResponse(getFrame(false, redirectLink, imageUrl, btnText));
+    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
   }
 
   const body: FrameRequest = await req.json();
   txHash = body?.untrustedData?.transactionId;
 
   if (txHash) {
-    const updateFrameDataRes = await updateFrameData(
-      frameId.toString(),
-      accountAddress,
-      txHash
-    );
+    await updateFrameData(frameId.toString(), accountAddress, txHash);
   }
 
   btnText = 'View tx';
 
-  return new NextResponse(getFrame(txHash, redirectLink, imageUrl, btnText));
+  return new NextResponse(getFrameUI(txHash, redirectLink, imageUrl, btnText));
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
