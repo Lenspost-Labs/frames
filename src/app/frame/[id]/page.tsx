@@ -51,7 +51,7 @@ export const generateMetadata = async ({
   }
 
   const frameMetadata = getFrameMetadata({
-    post_url: `https://80ab-49-36-217-113.ngrok-free.app/api/frame?frameId=${id}`,
+    post_url: `https://8e23-49-43-163-59.ngrok-free.app/api/frame?frameId=${id}`,
     image: {
       aspectRatio: '1:1',
       src: imageCdnUrl

@@ -8,11 +8,10 @@ import {
 import { ExternalLink } from '@/assets';
 import { formatAddress } from '@/utils';
 import { FrameData } from '@/types';
+import { CopyButton } from '@/ui';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
-
-import { CopyBtn } from '.';
 
 const FrameCard: FC<FrameData> = ({
   isGatedCollections,
@@ -56,7 +55,10 @@ const FrameCard: FC<FrameData> = ({
             <p className="text-sm text-[#11111b] sm:text-sm">
               <span className="flex items-center gap-1">
                 {formatAddress(contractAddress)}
-                <CopyBtn text={contractAddress as string} />
+                <CopyButton
+                  successMessage="Address copied!"
+                  text={contractAddress as string}
+                />
               </span>
             </p>
           </div>
@@ -81,7 +83,10 @@ const FrameCard: FC<FrameData> = ({
             <p className="text-sm text-[#11111b] sm:text-sm">
               <span className="flex items-center gap-1">
                 {formatAddress(owner)}
-                <CopyBtn text={contractAddress as string} />
+                <CopyButton
+                  text={contractAddress as string}
+                  successMessage="Address copied"
+                />
               </span>
             </p>
           </div>

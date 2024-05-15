@@ -4,10 +4,15 @@ import { Clipboard } from '@/assets';
 import { toast } from 'sonner';
 import { FC } from 'react';
 
-const CopyBtn: FC<{ text: string }> = ({ text }) => {
+interface CopyButtonProps {
+  successMessage?: string;
+  text: string;
+}
+
+const CopyButton: FC<CopyButtonProps> = ({ successMessage, text }) => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
-    toast.success('Address copied!');
+    toast.success(successMessage);
   };
 
   return (
@@ -20,4 +25,4 @@ const CopyBtn: FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export default CopyBtn;
+export default CopyButton;

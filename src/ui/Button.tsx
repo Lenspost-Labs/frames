@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import { ReactNode, FC } from 'react';
 
 interface ButtonProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -13,7 +13,7 @@ interface ButtonProps {
   title?: string;
 }
 
-const Button = ({
+const Button: FC<ButtonProps> = ({
   className = '',
   size = 'md',
   children,
@@ -22,7 +22,7 @@ const Button = ({
   outline,
   title,
   icon
-}: ButtonProps) => {
+}) => {
   return (
     <button
       className="mt-2 flex w-full items-center gap-1 rounded-lg bg-[#EBE8FD] px-4 py-2 text-center sm:w-fit"

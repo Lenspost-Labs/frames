@@ -7,13 +7,13 @@ settings:
 dependencies:
   '@airstack/frames':
     specifier: ^1.1.5
-    version: 1.1.5(graphql@16.8.1)(typescript@5.4.5)
+    version: 1.1.5(graphql@14.7.0)(typescript@5.4.5)
   '@airstack/frog':
     specifier: ^0.0.13
-    version: 0.0.13(@types/node@20.12.7)(graphql@16.8.1)(hono@4.2.9)(typescript@5.4.5)
+    version: 0.0.13(@types/node@20.12.7)(graphql@14.7.0)(hono@4.2.9)(typescript@5.4.5)
   '@coinbase/onchainkit':
-    specifier: ^0.15.0
-    version: 0.15.0(@tanstack/react-query@5.35.1)(@xmtp/frames-validator@0.6.0)(graphql-request@6.1.0)(graphql@16.8.1)(react-dom@18.3.1)(react@18.3.1)(viem@2.9.29)
+    specifier: ^0.10.2
+    version: 0.10.2(@tanstack/react-query@5.36.0)(@xmtp/frames-validator@0.5.2)(graphql-request@6.1.0)(graphql@14.7.0)(react-dom@18.3.1)(react@18.3.1)(viem@2.9.29)
   '@zoralabs/zora-721-contracts':
     specifier: ^1.15.3
     version: 1.15.4
@@ -106,7 +106,7 @@ packages:
       }
     dev: false
 
-  /@airstack/frames@1.1.5(graphql@16.8.1)(typescript@5.4.5):
+  /@airstack/frames@1.1.5(graphql@14.7.0)(typescript@5.4.5):
     resolution:
       {
         integrity: sha512-HzhVuyYsY5OM4EigMF7yfAif1NtAHxGaxBio7/pXeOw7jVaFRqasF+jniV93VACx71xzSpLVVHIA/S846ZmyIA==
@@ -120,7 +120,7 @@ packages:
       '@resvg/resvg-js': 2.6.2
       '@vercel/og': 0.6.2
       buf: 0.1.1
-      graphql-request: 6.1.0(graphql@16.8.1)
+      graphql-request: 6.1.0(graphql@14.7.0)
       hono: 4.2.9
       node-fetch: 2.7.0
       react: 18.3.1
@@ -139,7 +139,7 @@ packages:
       - zod
     dev: false
 
-  /@airstack/frog@0.0.13(@types/node@20.12.7)(graphql@16.8.1)(hono@4.2.9)(typescript@5.4.5):
+  /@airstack/frog@0.0.13(@types/node@20.12.7)(graphql@14.7.0)(hono@4.2.9)(typescript@5.4.5):
     resolution:
       {
         integrity: sha512-9VYDOd/fZVO7Vp8OKHiLe4LFBPaODQTljLMpm/K5S7G7nLLaDveuDsuojqdzcT99FGCMikRziYBxwX3GmXIdYQ==
@@ -152,7 +152,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@airstack/frames': 1.1.5(graphql@16.8.1)(typescript@5.4.5)
+      '@airstack/frames': 1.1.5(graphql@14.7.0)(typescript@5.4.5)
       '@bufbuild/protobuf': 1.9.0
       '@hono/node-server': 1.11.1
       '@hono/valibot-validator': 0.2.4(hono@4.2.9)(valibot@0.30.0)
@@ -378,24 +378,24 @@ packages:
       - supports-color
     dev: false
 
-  /@coinbase/onchainkit@0.15.0(@tanstack/react-query@5.35.1)(@xmtp/frames-validator@0.6.0)(graphql-request@6.1.0)(graphql@16.8.1)(react-dom@18.3.1)(react@18.3.1)(viem@2.9.29):
+  /@coinbase/onchainkit@0.10.2(@tanstack/react-query@5.36.0)(@xmtp/frames-validator@0.5.2)(graphql-request@6.1.0)(graphql@14.7.0)(react-dom@18.3.1)(react@18.3.1)(viem@2.9.29):
     resolution:
       {
-        integrity: sha512-jeTilO+CjsCAe+lyPf/sF+X/AgaNRS4I7vPvQACBDh1e07Lq2O2VoajQS66HfQ3zNlOwgUfw2AAnyA5Ik+nncw==
+        integrity: sha512-7k0hngPb92eCI5hDFajeXp0hr/UVU5JTRPbqg5jAdQws3ew6TB1d59GJSSGJOc7vyDu+H9TEPq53T+Eu0cOk2A==
       }
     peerDependencies:
       '@tanstack/react-query': ^5
-      '@xmtp/frames-validator': ^0.6.0
-      graphql: ^14 || ^15 || ^16
-      graphql-request: ^6.1.0
+      '@xmtp/frames-validator': ^0.5.0
+      graphql: ^14
+      graphql-request: ^6
       react: ^18
       react-dom: ^18
       viem: ^2.7.0
     dependencies:
-      '@tanstack/react-query': 5.35.1(react@18.3.1)
-      '@xmtp/frames-validator': 0.6.0(typescript@5.4.5)
-      graphql: 16.8.1
-      graphql-request: 6.1.0(graphql@16.8.1)
+      '@tanstack/react-query': 5.36.0(react@18.3.1)
+      '@xmtp/frames-validator': 0.5.2(typescript@5.4.5)
+      graphql: 14.7.0
+      graphql-request: 6.1.0(graphql@14.7.0)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       viem: 2.9.29(typescript@5.4.5)
@@ -776,7 +776,7 @@ packages:
     engines: { node: '>=14' }
     dev: false
 
-  /@graphql-typed-document-node/core@3.2.0(graphql@16.8.1):
+  /@graphql-typed-document-node/core@3.2.0(graphql@14.7.0):
     resolution:
       {
         integrity: sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
@@ -784,7 +784,7 @@ packages:
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
-      graphql: 16.8.1
+      graphql: 14.7.0
     dev: false
 
   /@hono/node-server@1.11.1:
@@ -1774,22 +1774,22 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@tanstack/query-core@5.35.1:
+  /@tanstack/query-core@5.36.0:
     resolution:
       {
-        integrity: sha512-0Dnpybqb8+ps6WgqBnqFEC+1F/xLvUosRAq+wiGisTgolOZzqZfkE2995dEXmhuzINiTM7/a6xSGznU0NIvBkw==
+        integrity: sha512-B5BD3pg/mztDR36i77hGcyySKKeYrbM5mnogOROTBi1SUml5ByRK7PGUUl16vvubvQC+mSnqziFG/VIy/DE3FQ==
       }
     dev: false
 
-  /@tanstack/react-query@5.35.1(react@18.3.1):
+  /@tanstack/react-query@5.36.0(react@18.3.1):
     resolution:
       {
-        integrity: sha512-i2T7m2ffQdNqlX3pO+uMsnQ0H4a59Ens2GxtlMsRiOvdSB4SfYmHb27MnvFV8rGmtWRaa4gPli0/rpDoSS5LbQ==
+        integrity: sha512-BATvtM0rohwg7pRHUnxgeDiwLWRGZ8OM/4y8LImHVpecQWoH6Uhytu3Z8YV6V7hQ1sMQBFcUrGE1/e4MxR6YiA==
       }
     peerDependencies:
       react: ^18.0.0
     dependencies:
-      '@tanstack/query-core': 5.35.1
+      '@tanstack/query-core': 5.36.0
       react: 18.3.1
     dev: false
 
@@ -2134,10 +2134,10 @@ packages:
       yoga-wasm-web: 0.3.3
     dev: false
 
-  /@xmtp/frames-validator@0.6.0(typescript@5.4.5):
+  /@xmtp/frames-validator@0.5.2(typescript@5.4.5):
     resolution:
       {
-        integrity: sha512-MOmtrhwcMlLLsoeygvI00kXEN4tRVipxw3culcljpske/tPqxYVxNDCBFLm393SpnoX9xbTLX82yHSEAuEyWPA==
+        integrity: sha512-m62HoAs47Dz3MHpW1Ec9fdmnvK9GJYyPJl6mWifKblWmoA4s67zAuTF3V8qXv8hEUag6t1XBRF6BpfeKDva4HQ==
       }
     engines: { node: '>=18' }
     dependencies:
@@ -2159,7 +2159,7 @@ packages:
       }
     dependencies:
       long: 5.2.3
-      protobufjs: 7.2.6
+      protobufjs: 7.3.0
       rxjs: 7.8.1
       undici: 5.28.4
     dev: false
@@ -4406,7 +4406,7 @@ packages:
       }
     dev: true
 
-  /graphql-request@6.1.0(graphql@16.8.1):
+  /graphql-request@6.1.0(graphql@14.7.0):
     resolution:
       {
         integrity: sha512-p+XPfS4q7aIpKVcgmnZKhMNqhltk20hfXtkaIkTfjjmiKMJ5xrt5c743cL03y/K7y1rg3WrIC49xGiEQ4mxdNw==
@@ -4414,25 +4414,27 @@ packages:
     peerDependencies:
       graphql: 14 - 16
     dependencies:
-      '@graphql-typed-document-node/core': 3.2.0(graphql@16.8.1)
+      '@graphql-typed-document-node/core': 3.2.0(graphql@14.7.0)
       cross-fetch: 3.1.8
-      graphql: 16.8.1
+      graphql: 14.7.0
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /graphql@14.7.0:
+    resolution:
+      {
+        integrity: sha512-l0xWZpoPKpppFzMfvVyFmp9vLN7w/ZZJPefUicMCepfJeQ8sMcztloGYY9DfjVPo6tIUDzU5Hw3MUbIjj9AVVA==
+      }
+    engines: { node: '>= 6.x' }
+    dependencies:
+      iterall: 1.3.0
     dev: false
 
   /graphql@16.7.1:
     resolution:
       {
         integrity: sha512-DRYR9tf+UGU0KOsMcKAlXeFfX89UiiIZ0dRU3mR0yJfu6OjZqUcp68NnFLnqQU5RexygFoDy1EW+ccOYcPfmHg==
-      }
-    engines: { node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0 }
-    dev: false
-
-  /graphql@16.8.1:
-    resolution:
-      {
-        integrity: sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==
       }
     engines: { node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0 }
     dev: false
@@ -4951,6 +4953,13 @@ packages:
       ws: '*'
     dependencies:
       ws: 8.13.0
+    dev: false
+
+  /iterall@1.3.0:
+    resolution:
+      {
+        integrity: sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==
+      }
     dev: false
 
   /iterator.prototype@1.1.2:
@@ -6161,10 +6170,10 @@ packages:
       react-is: 16.13.1
     dev: true
 
-  /protobufjs@7.2.6:
+  /protobufjs@7.3.0:
     resolution:
       {
-        integrity: sha512-dgJaEDDL6x8ASUZ1YqWciTRrdOuYNzoOf27oHNfdyvKqHr5i0FV7FSLU+aIeFjyFgVxrpTOtQUi0BLLBymZaBw==
+        integrity: sha512-YWD03n3shzV9ImZRX3ccbjqLxj7NokGN0V/ESiBV5xWqrommYHYiihuIyavq03pWSGqlyvYUFmfoMKd+1rPA/g==
       }
     engines: { node: '>=12.0.0' }
     requiresBuild: true
