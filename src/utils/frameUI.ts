@@ -1,16 +1,17 @@
-import { baseSepolia, base } from 'viem/chains';
-import { LENSPOST_APP_URL, ENV } from '@/data';
+import { LENSPOST_APP_URL } from '@/data';
+import { degen, base } from 'viem/chains';
 
-const explorerUrl =
-  ENV === 'production'
-    ? base.blockExplorers.default.url
-    : baseSepolia.blockExplorers.default.url;
+const EXPLORER_URL = {
+  666666666: degen?.blockExplorers?.default?.url,
+  8453: base?.blockExplorers?.default?.url
+};
 
 export const getFrameUI = (
   txHash: undefined | boolean | string,
   redirectLink: undefined | string,
   imageUrl: undefined | string,
-  btnText: undefined | string
+  btnText: undefined | string,
+  chainId?: number
 ) => {
   return `
    <!DOCTYPE html><html><head>
@@ -22,7 +23,7 @@ export const getFrameUI = (
      txHash
        ? `<meta property="fc:frame:button:1" content="${btnText}" />
          <meta property="fc:frame:button:1:action" content="link" />
-         <meta property="fc:frame:button:1:target" content="${explorerUrl}/tx/${txHash}" />`
+         <meta property="fc:frame:button:1:target" content="${EXPLORER_URL[chainId as keyof typeof EXPLORER_URL]}/tx/${txHash}" />`
        : `<meta property="fc:frame:button:1" content="${btnText}" />`
    }
 
