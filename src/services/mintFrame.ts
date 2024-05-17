@@ -25,12 +25,14 @@ export const mintFrame = async (
       };
     } else {
       return {
-        message: response?.status + ' - ' + response?.statusText
+        message: response?.status + ' - ' + response?.statusText,
+        isError: true
       };
     }
   } catch (error) {
     return {
-      message: "Couldn't mint frame"
+      message: "Couldn't mint frame",
+      isError: true
     };
   }
 };

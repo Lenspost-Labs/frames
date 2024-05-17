@@ -31,12 +31,14 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
       };
     } else {
       return {
-        message: response?.status + ' - ' + response?.statusText
+        message: response?.status + ' - ' + response?.statusText,
+        isError: true
       };
     }
   } catch (error) {
     return {
-      message: "Couldn't fetch data"
+      message: "Couldn't fetch data",
+      isError: true
     };
   }
 };

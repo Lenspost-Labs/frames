@@ -108,12 +108,13 @@ const Home = async ({ params }: Props) => {
     message,
     minters,
     chainId,
+    isError,
     isLike,
     owner,
     slug
   } = await getFrameData(params?.id);
 
-  if (message) {
+  if (isError) {
     return <Default text={message} />;
   }
 

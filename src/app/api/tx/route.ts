@@ -9,11 +9,11 @@ import { getFrameMessage, FrameRequest } from '@coinbase/onchainkit/frame';
 import { erc721DropABI } from '@zoralabs/zora-721-contracts';
 import { NextResponse, NextRequest } from 'next/server';
 import { encodeFunctionData, parseEther } from 'viem';
+import { readContractData } from '@/services';
 import { DEGEN_CHAIN } from '@/contracts';
-import { base } from 'viem/chains';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  let currenyAddress: `0x${string}`;
+  let currenyAddress: `0x${string}` = '0x0';
   let accountAddress: `0x${string}`;
   let quantity: any;
   let value: any;
@@ -25,8 +25,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const contractAddress =
     req.nextUrl.searchParams.get('contract_address') || '';
-  const contractType = req.nextUrl.searchParams.get('contract_type') || '';
-  const chainId = req.nextUrl.searchParams.get('chainId') || base.id;
+  const chainId = req.nextUrl.searchParams.get('chainId');
 
   const body: FrameRequest = await req.json();
 
@@ -38,7 +37,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return new NextResponse('Message not valid', { status: 500 });
   }
 
-  accountAddress = message.interactor.verified_accounts[0] as any;
+  accountAddress = message.interactor.verified_accounts[0] as `0x${string}`;
 
   if (message?.input === undefined || message?.input === '0') {
     quantity = 1n;
@@ -46,15 +45,25 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     quantity = BigInt(`${message?.input}`);
   }
 
-  // read the contract for degen chain
+  const readContract = await readContractData(
+    contractAddress as any,
+    'claimCondition',
+    DEGEN_CHAIN?.abi
+  );
+
+  if (readContract?.message) {
+    return new NextResponse(readContract.message, { status: 500 });
+  }
+
+  currenyAddress = readContract?.currencyAddress as any;
+  value = readContract?.pricePerToken;
 
   if (chainId === '666666666') {
     data = encodeFunctionData({
       args: [
         accountAddress,
         quantity,
-        // currency contract address
-        '0x0000000000000000000000000000000000000000',
+        currenyAddress,
         value,
         [[], 0, 0, '0x0000000000000000000000000000000000000000'],
         '0x'
