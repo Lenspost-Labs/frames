@@ -4,6 +4,6 @@ namespace NodeJS {
     SENTRY_AUTH_TOKEN: string;
     AIRSTACK_API_KEY: string;
     NEYNAR_API_KEY: string;
-    ENVIRONMENT: string;
+    ENV: string;
   }
 }

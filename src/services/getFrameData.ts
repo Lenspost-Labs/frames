@@ -4,7 +4,12 @@ import { FrameData } from '@/types';
 export const getFrameData = async (frameId: string): Promise<FrameData> => {
   try {
     const response = await fetch(
-      `${BACKEND_ENDPOINT}/util/get-frame-data?frameId=${frameId}`
+      `${BACKEND_ENDPOINT}/util/get-frame-data?frameId=${frameId}`,
+      {
+        next: {
+          revalidate: 60
+        }
+      }
     );
 
     if (response.ok) {

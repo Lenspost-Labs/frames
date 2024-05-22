@@ -37,8 +37,6 @@ const FrameCard: FC<FrameData> = ({
     <div className="mx-auto flex max-w-4xl flex-col justify-between gap-8 rounded-3xl bg-white p-6 shadow-2xl sm:flex-row sm:p-10">
       <Image
         className="w-full rounded-3xl shadow-xl sm:w-1/2"
-        blurDataURL="/blur.png"
-        placeholder="blur"
         src={imageCdnUrl}
         priority={true}
         height={1080}

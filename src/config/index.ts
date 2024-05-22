@@ -6,5 +6,6 @@ export const config = createConfig({
     [degen.id]: http(),
     [base.id]: http()
   },
-  chains: [degen, base]
+  chains: [degen, base],
+  ssr: true
 });

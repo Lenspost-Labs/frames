@@ -1,7 +1,7 @@
 import { BACKEND_API } from '.';
 
 // Environments
-export const ENV = process.env.NODE_ENV;
+export const ENV = process.env.ENV;
 
 // Environment Variables
 export const SENTRY_AUTH_TOKEN = process.env.SENTRY_AUTH_TOKEN;
@@ -12,7 +12,7 @@ export const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY;
 export const APP_NAME = 'Poster frame page';
 export const DESCRIPTION = `${APP_NAME} is a frame for Farcaster.`;
 export const AUTHOR = 'Lenspost labs';
-export const APP_URL = 'https://frames.poster.fun';
+export const APP_URL = 'https://7dca-49-43-163-91.ngrok-free.app';
 
 // Lenspost labs
 export const LENSPOST_APP_NAME = 'Poster';

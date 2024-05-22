@@ -9,11 +9,11 @@ export const readContractData = async (
   try {
     const result = await readContract(config, {
       functionName,
-      args: [],
       address,
       abi
     });
 
+    console.log(result);
     return {
       currencyAddress: '0x',
       pricePerToken: '0.1'
