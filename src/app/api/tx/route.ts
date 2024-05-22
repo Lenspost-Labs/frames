@@ -22,8 +22,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const mintReferral = LENSPOST_ETH_ADDRESS;
   const comment = '';
 
-  const contractAddress =
-    req.nextUrl.searchParams.get('contract_address') || '';
+  const contractAddress = req.nextUrl.searchParams.get('contractAddress') || '';
   const chainId = req.nextUrl.searchParams.get('chainId');
 
   const body: FrameRequest = await req.json();
