@@ -21,6 +21,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   txHash = body?.untrustedData?.transactionId;
 
+  console.log({
+    accountAddress,
+    frameId,
+    txHash
+  });
+
   if (txHash) {
     await updateFrameData(frameId.toString(), accountAddress, txHash);
   }

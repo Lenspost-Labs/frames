@@ -50,11 +50,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
   }
 
-  const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  if (minter) {
-    btnText = 'Already Minted';
-    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
-  }
+  // const minter = minters?.find((m) => m?.minterAddress === accountAddress);
+  // if (minter) {
+  //   btnText = 'Already Minted';
+  //   return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+  // }
 
   if (noOfNftsMinited >= (allowedMints ?? 0)) {
     btnText = `Mint sold out ${minters?.length}/${allowedMints}`;

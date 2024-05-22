@@ -24,6 +24,19 @@ export interface FrameData {
   slug?: string;
 }
 
+export interface ContractData {
+  quantityLimitPerWallet?: any;
+  maxClaimableSupply?: any;
+  currencyAddress?: any;
+  startTimestamp?: any;
+  pricePerToken?: any;
+  supplyClaimed?: any;
+  isError?: boolean;
+  merkleRoot?: any;
+  message?: string;
+  metadata?: any;
+}
+
 export type UserCanvasData = {
   imageURL?: string;
   userId?: string;
