@@ -1,5 +1,11 @@
 import { BACKEND_API } from '.';
 
+const APP_URLS = Object.freeze({
+  local: 'https://7dca-49-43-163-91.ngrok-free.app',
+  development: 'https://dev-frames.vercel.app',
+  production: 'https://frames.poster.fun'
+});
+
 // Environments
 export const ENV = process.env.ENV;
 
@@ -12,7 +18,7 @@ export const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY;
 export const APP_NAME = 'Poster frame page';
 export const DESCRIPTION = `${APP_NAME} is a frame for Farcaster.`;
 export const AUTHOR = 'Lenspost labs';
-export const APP_URL = 'https://7dca-49-43-163-91.ngrok-free.app';
+export const APP_URL = APP_URLS[ENV as keyof typeof APP_URLS];
 
 // Lenspost labs
 export const LENSPOST_APP_NAME = 'Poster';

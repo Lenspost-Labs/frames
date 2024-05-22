@@ -9,6 +9,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   const accountAddress = req.nextUrl.searchParams.get('accountAddress') || '';
   const frameIdParam = req.nextUrl.searchParams.get('frameId') || '';
+  const chainId: any = req.nextUrl.searchParams.get('chainId') || '';
 
   const getFrameDataRes = await getFrameData(frameIdParam);
   const { redirectLink, imageUrl, frameId } = getFrameDataRes;
@@ -21,19 +22,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   txHash = body?.untrustedData?.transactionId;
 
-  // console.log({
-  //   accountAddress,
-  //   frameId,
-  //   txHash
-  // });
-
   if (txHash) {
     await updateFrameData(frameId.toString(), accountAddress, txHash);
   }
 
   btnText = 'View tx';
 
-  return new NextResponse(getFrameUI(txHash, redirectLink, imageUrl, btnText));
+  return new NextResponse(
+    getFrameUI(txHash, redirectLink, imageUrl, btnText, chainId)
+  );
 }
 
 export async function POST(req: NextRequest): Promise<Response> {

@@ -124,7 +124,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       getFrameHtmlResponse({
         buttons: [
           {
-            postUrl: `${APP_URL}/api/tx-success?frameId=${frameId}&accountAddress=${accountAddress}`,
+            postUrl: `${APP_URL}/api/tx-success?frameId=${frameId}&accountAddress=${accountAddress}&chainId=${chainId}`,
             target: `${APP_URL}/api/tx?chainId=${chainId}&contractAddress=${contractAddress}`,
             label: 'Connect wallet & Mint',
             action: 'tx'
