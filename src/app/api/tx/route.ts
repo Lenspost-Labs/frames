@@ -9,15 +9,14 @@ import { getFrameMessage, FrameRequest } from '@coinbase/onchainkit/frame';
 import { erc721DropABI } from '@zoralabs/zora-721-contracts';
 import { NextResponse, NextRequest } from 'next/server';
 import { encodeFunctionData, parseEther } from 'viem';
-import { readContractData } from '@/services';
-import { DEGEN_CHAIN } from '@/contracts';
+// import { DEGEN_CHAIN } from '@/contracts';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let currenyAddress: `0x${string}` = '0x0';
   let accountAddress: `0x${string}`;
   let quantity: any;
-  let value: any;
-  let data: any;
+  // let value: any;
+  // let data: any;
 
   const mintFee = parseEther(CREATORS_REWARD_FEE);
   const mintReferral = LENSPOST_ETH_ADDRESS;
@@ -45,45 +44,35 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     quantity = BigInt(`${message?.input}`);
   }
 
-  const readContract = await readContractData(
-    contractAddress as any,
-    'claimCondition',
-    DEGEN_CHAIN?.abi
-  );
+  // if (chainId === '666666666') {
+  //   data = encodeFunctionData({
+  //     args: [
+  //       accountAddress,
+  //       quantity,
+  //       currenyAddress,
+  //       value,
+  //       [[], 0, 0, '0x0000000000000000000000000000000000000000'],
+  //       '0x'
+  //     ],
+  //     functionName: 'claim',
+  //     abi: DEGEN_CHAIN?.abi
+  //   });
+  // } else {
+  // }
 
-  if (readContract?.message) {
-    return new NextResponse(readContract.message, { status: 500 });
-  }
-
-  currenyAddress = readContract?.currencyAddress as any;
-  value = readContract?.pricePerToken;
-
-  if (chainId === '666666666') {
-    data = encodeFunctionData({
-      args: [
-        accountAddress,
-        quantity,
-        currenyAddress,
-        value,
-        [[], 0, 0, '0x0000000000000000000000000000000000000000'],
-        '0x'
-      ],
-      functionName: 'claim',
-      abi: DEGEN_CHAIN?.abi
-    });
-  } else {
-    data = encodeFunctionData({
-      args: [accountAddress, quantity, comment, mintReferral],
-      functionName: 'mintWithRewards',
-      abi: erc721DropABI
-    });
-    value = (mintFee * quantity).toString();
-  }
+  const data = encodeFunctionData({
+    args: [accountAddress, quantity, comment, mintReferral],
+    functionName: 'mintWithRewards',
+    abi: erc721DropABI
+  });
+  // value = (mintFee * quantity).toString();
+  // console.log('data', data);
+  // console.log('value', value);
 
   const txData: FrameTransactionResponse = {
     params: {
+      value: (mintFee * quantity).toString(),
       to: contractAddress as any,
-      value: value,
       abi: [],
       data
     },
