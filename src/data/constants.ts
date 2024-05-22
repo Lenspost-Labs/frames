@@ -7,7 +7,7 @@ const APP_URLS = Object.freeze({
 });
 
 // Environments
-export const ENV = process.env.ENV;
+export const ENV = process.env.ENVIRONMENT;
 
 // Environment Variables
 export const SENTRY_AUTH_TOKEN = process.env.SENTRY_AUTH_TOKEN;
