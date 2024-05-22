@@ -51,7 +51,7 @@ export const generateMetadata = async ({
   }
 
   const frameMetadata = getFrameMetadata({
-    post_url: `https://8e23-49-43-163-59.ngrok-free.app/api/frame?frameId=${id}`,
+    post_url: `  https://7dca-49-43-163-91.ngrok-free.app/api/frame?frameId=${id}`,
     image: {
       aspectRatio: '1:1',
       src: imageCdnUrl
@@ -108,12 +108,13 @@ const Home = async ({ params }: Props) => {
     message,
     minters,
     chainId,
+    isError,
     isLike,
     owner,
     slug
   } = await getFrameData(params?.id);
 
-  if (message) {
+  if (isError) {
     return <Default text={message} />;
   }
 

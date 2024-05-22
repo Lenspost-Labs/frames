@@ -1,4 +1,5 @@
 export const CHAIN_NAME = Object.freeze({
+  666666666: 'Degen Chain',
   84532: 'Base Sepolia',
   42161: 'Arbitrum',
   7777777: 'Zora',

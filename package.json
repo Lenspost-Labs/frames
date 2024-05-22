@@ -18,6 +18,8 @@
     "@airstack/frames": "^1.1.5",
     "@airstack/frog": "^0.0.13",
     "@coinbase/onchainkit": "^0.10.2",
+    "@wagmi/connectors": "^4.3.10",
+    "@wagmi/core": "^2.9.8",
     "@zoralabs/zora-721-contracts": "^1.15.3",
     "dotenv": "^16.4.5",
     "next": "14.2.3",

@@ -19,6 +19,7 @@ export interface FrameData {
   isFollow?: boolean;
   tokenUri?: string;
   isTopUp?: boolean;
+  isError?: boolean;
   isLike?: boolean;
   slug?: string;
 }
@@ -31,10 +32,12 @@ export type UserCanvasData = {
 
 export interface MintFrameData {
   message?: string | any;
+  isError?: boolean;
   tx?: string;
 }
 
 export interface UpdateFrameData {
   message?: string | any;
+  isError?: boolean;
   status?: string;
 }

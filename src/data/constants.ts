@@ -4,7 +4,9 @@ import { BACKEND_API } from '.';
 export const ENV = process.env.NODE_ENV;
 
 // Environment Variables
-export const WALLETCONNECT_KEY = process.env.NEXT_PUBLIC_WALLETCONNECT_KEY;
+export const SENTRY_AUTH_TOKEN = process.env.SENTRY_AUTH_TOKEN;
+export const AIRSTACK_API_KEY = process.env.AIRSTACK_API_KEY;
+export const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY;
 
 // Application
 export const APP_NAME = 'Poster frame page';

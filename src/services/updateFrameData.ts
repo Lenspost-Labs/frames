@@ -27,12 +27,14 @@ export const updateFrameData = async (
       };
     } else {
       return {
-        message: response?.status + ' - ' + response?.statusText
+        message: response?.status + ' - ' + response?.statusText,
+        isError: true
       };
     }
   } catch (error) {
     return {
-      message: "Couldn't update frame data"
+      message: "Couldn't update frame data",
+      isError: true
     };
   }
 };
