@@ -10,9 +10,9 @@ import { erc721DropABI } from '@zoralabs/zora-721-contracts';
 import { NextResponse, NextRequest } from 'next/server';
 import { encodeFunctionData, parseEther } from 'viem';
 import { readContractData } from '@/services';
-import { DEGEN_CHAIN } from '@/contracts';
+import { LENSPOST_721 } from '@/contracts';
 
-async function getResponse(req: NextRequest): Promise<NextResponse> {
+const handler = async (req: NextRequest): Promise<NextResponse> => {
   let accountAddress: `0x${string}`;
   let quantity: any;
   let value: any;
@@ -22,7 +22,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const mintReferral = LENSPOST_ETH_ADDRESS;
   const comment = '';
 
-  const contractAddress = req.nextUrl.searchParams.get('contractAddress') || '';
+  const contractAddress = req.nextUrl.searchParams.get('contractAddress');
   const chainId = req.nextUrl.searchParams.get('chainId');
 
   const body: FrameRequest = await req.json();
@@ -46,7 +46,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   const { currencyAddress, pricePerToken } = await readContractData(
     contractAddress as `0x${string}`,
     'claimCondition',
-    DEGEN_CHAIN?.abi
+    LENSPOST_721?.abi
   );
 
   if (chainId === '666666666') {
@@ -56,11 +56,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         quantity,
         currencyAddress,
         pricePerToken,
-        [[], 0, 0, '0x0000000000000000000000000000000000000000'],
+        [[], 400, pricePerToken, currencyAddress],
         '0x'
       ],
-      functionName: 'claim',
-      abi: DEGEN_CHAIN?.abi
+      abi: LENSPOST_721?.abi,
+      functionName: 'claim'
     });
   } else {
     data = encodeFunctionData({
@@ -83,10 +83,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   };
 
   return NextResponse.json(txData);
-}
+};
 
-export async function POST(req: NextRequest): Promise<Response> {
-  return getResponse(req);
-}
+export const POST = async (req: NextRequest): Promise<Response> => {
+  return handler(req);
+};
 
 export const dynamic = 'force-dynamic';

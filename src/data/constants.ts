@@ -1,7 +1,7 @@
 import { BACKEND_API } from '.';
 
 const APP_URLS = Object.freeze({
-  local: 'https://7dca-49-43-163-91.ngrok-free.app',
+  local: 'https://241a-49-43-163-91.ngrok-free.app',
   development: 'https://dev-frames.vercel.app',
   production: 'https://frames.poster.fun'
 });
@@ -34,8 +34,6 @@ export const LENSPOST_ETH_ADDRESS =
   '0x77fAD8D0FcfD481dAf98D0D156970A281e66761b';
 export const LENSPOST_SOLANA_ADDRESS =
   '2PsV6hNEUc3rSMGqKcHTnRBemaWBQX3dYgUqVtEFxkwa';
-export const DEGEN_CURRENCY_ADDRESS =
-  '0xeb54dacb4c2ccb64f8074eceea33b5ebb38e5387';
 
 // URLs
 export const BACKEND_ENDPOINT = BACKEND_API[ENV as keyof typeof BACKEND_API];

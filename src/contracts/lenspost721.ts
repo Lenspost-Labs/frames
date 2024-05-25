@@ -1,4 +1,8 @@
-export const DEGEN_CHAIN = {
+export const LENSPOST_721 = {
+  // default contract addresses
+  contractAddress: {
+    666666666: '0xbFE208E14e772BfdeF807172Bc2390c78e91704a'
+  },
   abi: [
     {
       inputs: [

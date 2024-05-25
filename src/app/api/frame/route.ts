@@ -8,7 +8,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { getFrameUI } from '@/utils';
 import { APP_URL } from '@/data';
 
-async function getResponse(req: NextRequest): Promise<NextResponse> {
+const handler = async (req: NextRequest): Promise<NextResponse> => {
   let accountAddress: undefined | string = '';
   let btnText: undefined | string = '';
   let txHash: undefined | string = '';
@@ -119,13 +119,30 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         getFrameUI(false, redirectLink, imageUrl, btnText)
       );
     }
+  } else if (chainId === 666666666) {
+    return new NextResponse(
+      getFrameHtmlResponse({
+        buttons: [
+          {
+            postUrl: `${APP_URL}/api/tx-approval/success?accountAddress=${accountAddress}&contractAddress=${contractAddress}&chainId=${chainId}&frameId=${frameId}`,
+            target: `${APP_URL}/api/tx-approval/approve?contractAddress=${contractAddress}&chainId=${chainId}`,
+            label: 'Connect wallet & approve the transaction',
+            action: 'tx'
+          }
+        ],
+        image: {
+          aspectRatio: '1:1',
+          src: imageUrl
+        }
+      })
+    );
   } else {
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [
           {
-            postUrl: `${APP_URL}/api/tx-success?frameId=${frameId}&accountAddress=${accountAddress}&chainId=${chainId}`,
-            target: `${APP_URL}/api/tx?chainId=${chainId}&contractAddress=${contractAddress}`,
+            postUrl: `${APP_URL}/api/tx/success?accountAddress=${accountAddress}&chainId=${chainId}&frameId=${frameId}`,
+            target: `${APP_URL}/api/tx/mint?contractAddress=${contractAddress}&chainId=${chainId}`,
             label: 'Connect wallet & Mint',
             action: 'tx'
           }
@@ -140,10 +157,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       })
     );
   }
-}
+};
 
-export async function POST(req: NextRequest): Promise<Response> {
-  return getResponse(req);
-}
+export const POST = async (req: NextRequest): Promise<Response> => {
+  return handler(req);
+};
 
 export const dynamic = 'force-dynamic';

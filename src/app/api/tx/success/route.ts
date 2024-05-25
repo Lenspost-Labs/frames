@@ -3,13 +3,13 @@ import { FrameRequest } from '@coinbase/onchainkit/frame';
 import { NextResponse, NextRequest } from 'next/server';
 import { getFrameUI } from '@/utils';
 
-async function getResponse(req: NextRequest): Promise<NextResponse> {
+const handler = async (req: NextRequest): Promise<NextResponse> => {
   let btnText: undefined | string = '';
   let txHash: undefined | string = '';
 
   const accountAddress = req.nextUrl.searchParams.get('accountAddress') || '';
   const frameIdParam = req.nextUrl.searchParams.get('frameId') || '';
-  const chainId: any = req.nextUrl.searchParams.get('chainId') || '';
+  const chainId: any = req.nextUrl.searchParams.get('chainId');
 
   const getFrameDataRes = await getFrameData(frameIdParam);
   const { redirectLink, imageUrl, frameId } = getFrameDataRes;
@@ -31,10 +31,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   return new NextResponse(
     getFrameUI(txHash, redirectLink, imageUrl, btnText, chainId)
   );
-}
+};
 
-export async function POST(req: NextRequest): Promise<Response> {
-  return getResponse(req);
-}
+export const POST = (req: NextRequest): Promise<Response> => {
+  return handler(req);
+};
 
 export const dynamic = 'force-dynamic';

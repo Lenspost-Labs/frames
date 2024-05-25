@@ -6,7 +6,6 @@ export interface FrameData {
   isGatedCollections?: string | null;
   isGatedChannels?: string | null;
   contractAddress?: `0x${string}`;
-  frameId?: undefined | number;
   chainId?: undefined | number;
   creatorSponsored?: boolean;
   imageUrl?: string | any;
@@ -20,6 +19,7 @@ export interface FrameData {
   tokenUri?: string;
   isTopUp?: boolean;
   isError?: boolean;
+  frameId?: number;
   isLike?: boolean;
   slug?: string;
 }
