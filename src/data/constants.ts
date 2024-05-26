@@ -6,6 +6,12 @@ const APP_URLS = Object.freeze({
   production: 'https://frames.poster.fun'
 });
 
+const MINT_URLS = Object.freeze({
+  development: 'https://dev-mint-poster.vercel.app',
+  local: 'https://dev-mint-poster.vercel.app',
+  production: 'https://mint.poster.fun'
+});
+
 // Environments
 export const ENV = process.env.ENVIRONMENT;
 
@@ -37,9 +43,9 @@ export const LENSPOST_SOLANA_ADDRESS =
 
 // URLs
 export const BACKEND_ENDPOINT = BACKEND_API[ENV as keyof typeof BACKEND_API];
+export const MINT_PAGE_URL = MINT_URLS[ENV as keyof typeof MINT_URLS];
 export const S3_IMAGE_URL = 'https://lenspost.s3.ap-south-1.amazonaws.com';
 export const CDN_IMAGE_URL = 'https://lenspost.b-cdn.net';
-export const MINT_PAGE_URL = 'https://mint.poster.fun';
 
 // Zora
 export const CREATORS_REWARD_FEE = '0.000777';
