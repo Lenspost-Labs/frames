@@ -56,10 +56,10 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   //   return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
   // }
 
-  if (noOfNftsMinited >= (allowedMints ?? 0)) {
-    btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
-    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
-  }
+  // if (noOfNftsMinited >= (allowedMints ?? 0)) {
+  //   btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
+  //   return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+  // }
 
   if (isLike) {
     if (message?.liked) {
@@ -119,7 +119,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
         getFrameUI(false, redirectLink, imageUrl, btnText)
       );
     }
-  } else if (chainId === 666666666) {
+  } else if (chainId !== chainId) {
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [
@@ -142,7 +142,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
         buttons: [
           {
             postUrl: `${APP_URL}/api/tx/success?accountAddress=${accountAddress}&chainId=${chainId}&frameId=${frameId}`,
-            target: `${APP_URL}/api/tx/mint?contractAddress=${contractAddress}&chainId=${chainId}`,
+            target: `${APP_URL}/api/tx/mint?contractAddress=0x8e0c03390ec59c8c59761a54c53150d15c314ce4&chainId=8543`,
             label: 'Connect wallet & Mint',
             action: 'tx'
           }

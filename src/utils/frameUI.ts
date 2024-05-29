@@ -1,10 +1,4 @@
-import { LENSPOST_APP_URL } from '@/data';
-import { degen, base } from 'viem/chains';
-
-const EXPLORER_URL = {
-  666666666: degen?.blockExplorers?.default?.url,
-  8453: base?.blockExplorers?.default?.url
-};
+import { LENSPOST_APP_URL, CHAIN_HELPER } from '@/data';
 
 export const getFrameUI = (
   txHash: undefined | boolean | string,
@@ -13,6 +7,10 @@ export const getFrameUI = (
   btnText: undefined | string,
   chainId?: number
 ) => {
+  const EXPLORER_URL =
+    CHAIN_HELPER[chainId as keyof typeof CHAIN_HELPER]?.blockExplorers?.default
+      ?.url;
+
   return `
    <!DOCTYPE html><html><head>
    <meta property="fc:frame" content="vNext" />
@@ -23,7 +21,7 @@ export const getFrameUI = (
      txHash
        ? `<meta property="fc:frame:button:1" content="${btnText}" />
          <meta property="fc:frame:button:1:action" content="link" />
-         <meta property="fc:frame:button:1:target" content="${EXPLORER_URL[chainId as keyof typeof EXPLORER_URL]}/tx/${txHash}" />`
+         <meta property="fc:frame:button:1:target" content="${EXPLORER_URL}/tx/${txHash}" />`
        : `<meta property="fc:frame:button:1" content="${btnText}" />`
    }
 

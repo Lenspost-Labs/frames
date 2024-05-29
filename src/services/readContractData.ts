@@ -5,6 +5,7 @@ import { config } from '@/config';
 export const readContractData = async (
   address: `0x${string}`,
   functionName: string,
+  chainId: any,
   abi: any
 ): Promise<ContractData> => {
   try {
@@ -12,6 +13,7 @@ export const readContractData = async (
       functionName,
       args: [],
       address,
+      chainId,
       abi
     })) as any;
 

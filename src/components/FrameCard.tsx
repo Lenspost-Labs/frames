@@ -3,7 +3,7 @@ import {
   MINT_PAGE_URL,
   CDN_IMAGE_URL,
   S3_IMAGE_URL,
-  CHAIN_NAME
+  CHAIN_HELPER
 } from '@/data';
 import { ExternalLink } from '@/assets';
 import { formatAddress } from '@/utils';
@@ -30,6 +30,7 @@ const FrameCard: FC<FrameData> = ({
   owner,
   slug
 }) => {
+  const CHAIN_NAME = CHAIN_HELPER[chainId as keyof typeof CHAIN_HELPER]?.name;
   const imageCdnUrl = imageUrl?.replace(S3_IMAGE_URL, CDN_IMAGE_URL);
   const minted = minters?.length;
 
@@ -38,7 +39,7 @@ const FrameCard: FC<FrameData> = ({
       <Image
         className="w-full rounded-3xl shadow-xl sm:w-1/2"
         src={imageCdnUrl}
-        priority={true}
+        // priority={true}
         height={1080}
         width={1920}
         alt="image"
@@ -64,9 +65,7 @@ const FrameCard: FC<FrameData> = ({
             <p className="text-sm font-semibold text-[#11111b] sm:text-sm">
               Network
             </p>
-            <p className="text-sm text-[#11111b] sm:text-sm">
-              {CHAIN_NAME[chainId as keyof typeof CHAIN_NAME]}
-            </p>
+            <p className="text-sm text-[#11111b] sm:text-sm">{CHAIN_NAME}</p>
           </div>
           <div>
             <p className="text-sm font-semibold text-[#11111b] sm:text-sm">

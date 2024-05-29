@@ -1,7 +1,7 @@
 import { BACKEND_API } from '.';
 
 const APP_URLS = Object.freeze({
-  local: 'https://241a-49-43-163-91.ngrok-free.app',
+  local: 'https://12cd-49-43-163-230.ngrok-free.app',
   development: 'https://dev-frames.vercel.app',
   production: 'https://frames.poster.fun'
 });

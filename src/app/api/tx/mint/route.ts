@@ -3,7 +3,8 @@ import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
 import {
   LENSPOST_ETH_ADDRESS,
   CREATORS_REWARD_FEE,
-  NEYNAR_API_KEY
+  NEYNAR_API_KEY,
+  CHAIN_HELPER
 } from '@/data';
 import { getFrameMessage, FrameRequest } from '@coinbase/onchainkit/frame';
 import { erc721DropABI } from '@zoralabs/zora-721-contracts';
@@ -43,13 +44,23 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     quantity = BigInt(`${message?.input}`);
   }
 
-  const { currencyAddress, pricePerToken } = await readContractData(
+  const {
+    message: errorMsg,
+    currencyAddress,
+    pricePerToken,
+    isError
+  } = await readContractData(
     contractAddress as `0x${string}`,
     'claimCondition',
+    CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
     LENSPOST_721?.abi
   );
 
-  if (chainId === '666666666') {
+  if (isError) {
+    return new NextResponse(errorMsg, { status: 500 });
+  }
+
+  if (chainId !== chainId) {
     data = encodeFunctionData({
       args: [
         accountAddress,
