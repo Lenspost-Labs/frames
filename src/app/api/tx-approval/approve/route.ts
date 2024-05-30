@@ -1,7 +1,7 @@
 import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
 
 import { NextResponse, NextRequest } from 'next/server';
-import { LENSPOST_721, WDEGEN } from '@/contracts';
+import { LENSPOST_721, DEGEN } from '@/contracts';
 import { readContractData } from '@/services';
 import { encodeFunctionData } from 'viem';
 import { CHAIN_HELPER } from '@/data';
@@ -28,7 +28,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   data = encodeFunctionData({
     args: [contractAddress, pricePerToken],
     functionName: 'approve',
-    abi: WDEGEN?.abi
+    abi: DEGEN?.abi
   });
 
   const txData: FrameTransactionResponse = {

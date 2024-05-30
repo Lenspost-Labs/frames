@@ -1,4 +1,5 @@
 export const WDEGEN = {
+  chainId: 666666666,
   contractAddress: '0xEb54dACB4C2ccb64F8074eceEa33b5eBb38E5387',
   abi: [
     {

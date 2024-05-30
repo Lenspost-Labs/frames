@@ -3,13 +3,20 @@ import {
   getFrameMessage,
   FrameRequest
 } from '@coinbase/onchainkit';
-import { updateFrameData, getFrameData, mintFrame } from '@/services';
+import {
+  readContractData,
+  updateFrameData,
+  getFrameData,
+  mintFrame
+} from '@/services';
+import { ZERO_ADDRESS, CHAIN_HELPER, APP_URL } from '@/data';
 import { NextResponse, NextRequest } from 'next/server';
+import { LENSPOST_721 } from '@/contracts';
 import { getFrameUI } from '@/utils';
-import { APP_URL } from '@/data';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
   let accountAddress: undefined | string = '';
+  let isLespost721Contract: boolean = false;
   let btnText: undefined | string = '';
   let txHash: undefined | string = '';
 
@@ -35,6 +42,23 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   if (!frameId) {
     btnText = 'FrameId not found';
     return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+  }
+
+  const {
+    currencyAddress,
+    message: errMsg,
+    isError
+  } = await readContractData(
+    contractAddress as `0x${string}`,
+    'claimCondition',
+    CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
+    LENSPOST_721?.abi
+  );
+
+  if (isError) {
+    return new NextResponse(errMsg, { status: 500 });
+  } else if (currencyAddress && currencyAddress !== ZERO_ADDRESS) {
+    isLespost721Contract = true;
   }
 
   const body: FrameRequest = await req.json();
@@ -119,7 +143,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
         getFrameUI(false, redirectLink, imageUrl, btnText)
       );
     }
-  } else if (chainId !== chainId) {
+  } else if (isLespost721Contract) {
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [
@@ -142,7 +166,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
         buttons: [
           {
             postUrl: `${APP_URL}/api/tx/success?accountAddress=${accountAddress}&chainId=${chainId}&frameId=${frameId}`,
-            target: `${APP_URL}/api/tx/mint?contractAddress=0x8e0c03390ec59c8c59761a54c53150d15c314ce4&chainId=8543`,
+            target: `${APP_URL}/api/tx/mint?contractAddress=${contractAddress}&chainId=${chainId}`,
             label: 'Connect wallet & Mint',
             action: 'tx'
           }
