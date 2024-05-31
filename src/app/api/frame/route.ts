@@ -55,9 +55,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     LENSPOST_721?.abi
   );
 
-  if (isError) {
-    return new NextResponse(errMsg, { status: 500 });
-  } else if (currencyAddress && currencyAddress !== ZERO_ADDRESS) {
+  if (currencyAddress && currencyAddress !== ZERO_ADDRESS) {
     isLenspost721Contract = true;
   }
 
@@ -150,7 +148,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
           {
             postUrl: `${APP_URL}/api/tx-approval/success?accountAddress=${accountAddress}&contractAddress=${contractAddress}&chainId=${chainId}&frameId=${frameId}`,
             target: `${APP_URL}/api/tx-approval/approve?contractAddress=${contractAddress}&chainId=${chainId}`,
-            label: 'Connect wallet & approve the transaction',
+            label: 'Connect wallet & approve token allowance',
             action: 'tx'
           }
         ],

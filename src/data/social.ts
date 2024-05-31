@@ -12,7 +12,7 @@ export const SOCIAL = [
     name: 'Discord'
   },
   {
-    url: 'https://warpcast.com/lenspost',
+    url: 'https://warpcast.com/poster',
     icon: FarcasterLogo,
     name: 'Farcaster'
   }

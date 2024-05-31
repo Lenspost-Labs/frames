@@ -21,10 +21,6 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
       LENSPOST_721?.abi
     );
 
-  if (isError) {
-    return new NextResponse(message, { status: 500 });
-  }
-
   data = encodeFunctionData({
     args: [contractAddress, pricePerToken],
     functionName: 'approve',

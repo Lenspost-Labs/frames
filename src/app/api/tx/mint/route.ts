@@ -12,7 +12,6 @@ import { NextResponse, NextRequest } from 'next/server';
 import { encodeFunctionData, parseEther } from 'viem';
 import { readContractData } from '@/services';
 import { LENSPOST_721 } from '@/contracts';
-import { base } from 'viem/chains';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
   let accountAddress: `0x${string}`;
@@ -57,11 +56,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     LENSPOST_721?.abi
   );
 
-  if (isError) {
-    return new NextResponse(errMsg, { status: 500 });
-  }
-
-  if (Number(chainId) === base?.id) {
+  if (currencyAddress) {
     data = encodeFunctionData({
       args: [
         accountAddress,

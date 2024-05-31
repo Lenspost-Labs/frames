@@ -1,7 +1,7 @@
 import { BACKEND_API } from '.';
 
 const APP_URLS = Object.freeze({
-  local: 'https://6d69-49-43-163-31.ngrok-free.app',
+  local: 'https://b516-49-43-163-31.ngrok-free.app',
   development: 'https://dev-frames.vercel.app',
   production: 'https://frames.poster.fun'
 });
@@ -33,7 +33,7 @@ export const LENSPOST_HOME_URL = 'https://poster.fun';
 export const LENSPOST_APP_URL = 'https://app.poster.fun';
 
 // Lenspost labs social
-export const LENSPOST_TWITTER_USERNAME = '@Lenspostxyz';
+export const LENSPOST_TWITTER_USERNAME = '@Posterdotfun';
 
 // addresses
 export const LENSPOST_ETH_ADDRESS =
