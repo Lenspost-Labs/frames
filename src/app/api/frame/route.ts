@@ -16,7 +16,7 @@ import { getFrameUI } from '@/utils';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
   let accountAddress: undefined | string = '';
-  let isLespost721Contract: boolean = false;
+  let isLenspost721Contract: boolean = false;
   let btnText: undefined | string = '';
   let txHash: undefined | string = '';
 
@@ -58,7 +58,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   if (isError) {
     return new NextResponse(errMsg, { status: 500 });
   } else if (currencyAddress && currencyAddress !== ZERO_ADDRESS) {
-    isLespost721Contract = true;
+    isLenspost721Contract = true;
   }
 
   const body: FrameRequest = await req.json();
@@ -143,7 +143,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
         getFrameUI(false, redirectLink, imageUrl, btnText)
       );
     }
-  } else if (isLespost721Contract) {
+  } else if (isLenspost721Contract) {
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [

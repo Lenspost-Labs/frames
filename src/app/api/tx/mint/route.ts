@@ -68,7 +68,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
         quantity,
         currencyAddress,
         pricePerToken,
-        [[], 400, pricePerToken, currencyAddress],
+        [[], quantity, pricePerToken, currencyAddress],
         '0x'
       ],
       abi: LENSPOST_721?.abi,

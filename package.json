@@ -11,7 +11,7 @@
     "prettier:check": "prettier --check .",
     "lint:check": "eslint . --ext ts --ext tsx --ext js",
     "prettier:format": "prettier --write .",
-    "test:all": "pnpm run types:check && pnpm run prettier:check && pnpm run lint:check",
+    "test:all": "pnpm run types:check && pnpm run prettier:check && pnpm run lint:check && pnpm run build",
     "prepare": "husky install"
   },
   "dependencies": {
