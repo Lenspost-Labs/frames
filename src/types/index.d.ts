@@ -27,10 +27,10 @@ export interface FrameData {
 export interface ContractData {
   quantityLimitPerWallet?: any;
   maxClaimableSupply?: any;
-  currencyAddress?: any;
   startTimestamp?: any;
   pricePerToken?: any;
   supplyClaimed?: any;
+  tokenAddress?: any;
   isError?: boolean;
   merkleRoot?: any;
   message?: string;

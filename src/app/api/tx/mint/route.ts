@@ -14,6 +14,7 @@ import { readContractData } from '@/services';
 import { LENSPOST_721 } from '@/contracts';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
+  let isLenspost721Contract: boolean = false;
   let accountAddress: `0x${string}`;
   let quantity: any;
   let value: any;
@@ -45,9 +46,9 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   }
 
   const {
-    currencyAddress,
     message: errMsg,
     pricePerToken,
+    tokenAddress,
     isError
   } = await readContractData(
     contractAddress as `0x${string}`,
@@ -56,14 +57,18 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     LENSPOST_721?.abi
   );
 
-  if (currencyAddress) {
+  if (tokenAddress) {
+    isLenspost721Contract = true;
+  }
+
+  if (isLenspost721Contract) {
     data = encodeFunctionData({
       args: [
         accountAddress,
         quantity,
-        currencyAddress,
+        tokenAddress,
         pricePerToken,
-        [[], quantity, pricePerToken, currencyAddress],
+        [[], quantity, pricePerToken, tokenAddress],
         '0x'
       ],
       abi: LENSPOST_721?.abi,

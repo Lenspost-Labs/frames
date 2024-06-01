@@ -9,10 +9,11 @@ import {
   getFrameData,
   mintFrame
 } from '@/services';
-import { ZERO_ADDRESS, CHAIN_HELPER, APP_URL } from '@/data';
 import { NextResponse, NextRequest } from 'next/server';
+import { ZERO_ADDRESS, APP_URL } from '@/data';
 import { LENSPOST_721 } from '@/contracts';
 import { getFrameUI } from '@/utils';
+import { degen } from 'viem/chains';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
   let accountAddress: undefined | string = '';
@@ -45,17 +46,18 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   }
 
   const {
-    currencyAddress,
     message: errMsg,
+    tokenAddress,
     isError
   } = await readContractData(
     contractAddress as `0x${string}`,
     'claimCondition',
-    CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
+    // CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
+    degen?.id,
     LENSPOST_721?.abi
   );
 
-  if (currencyAddress && currencyAddress !== ZERO_ADDRESS) {
+  if (tokenAddress && tokenAddress !== ZERO_ADDRESS) {
     isLenspost721Contract = true;
   }
 
