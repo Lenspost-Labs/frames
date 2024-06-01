@@ -20,10 +20,10 @@ export const readContractData = async (
     return {
       quantityLimitPerWallet: result[3],
       maxClaimableSupply: result[1],
-      currencyAddress: result[6],
       startTimestamp: result[0],
       supplyClaimed: result[2],
       pricePerToken: result[5],
+      tokenAddress: result[6],
       merkleRoot: result[4],
       metadata: result[7]
     };

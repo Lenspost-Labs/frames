@@ -45,17 +45,18 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   }
 
   const {
-    currencyAddress,
     message: errMsg,
+    tokenAddress,
     isError
   } = await readContractData(
     contractAddress as `0x${string}`,
     'claimCondition',
     CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
+    // degen?.id,
     LENSPOST_721?.abi
   );
 
-  if (currencyAddress && currencyAddress !== ZERO_ADDRESS) {
+  if (tokenAddress && tokenAddress !== ZERO_ADDRESS) {
     isLenspost721Contract = true;
   }
 
@@ -72,16 +73,16 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
   }
 
-  // const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  // if (minter) {
-  //   btnText = 'Already Minted';
-  //   return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
-  // }
+  const minter = minters?.find((m) => m?.minterAddress === accountAddress);
+  if (minter) {
+    btnText = 'Already Minted';
+    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+  }
 
-  // if (noOfNftsMinited >= (allowedMints ?? 0)) {
-  //   btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
-  //   return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
-  // }
+  if (noOfNftsMinited >= (allowedMints ?? 0)) {
+    btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
+    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+  }
 
   if (isLike) {
     if (message?.liked) {

@@ -1,10 +1,10 @@
 import type { FrameTransactionResponse } from '@coinbase/onchainkit/frame';
 
 import { NextResponse, NextRequest } from 'next/server';
-import { LENSPOST_721, DEGEN } from '@/contracts';
 import { readContractData } from '@/services';
+import { CHAIN_HELPER, TOKENS } from '@/data';
+import { LENSPOST_721 } from '@/contracts';
 import { encodeFunctionData } from 'viem';
-import { CHAIN_HELPER } from '@/data';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
   let value: any;
@@ -13,7 +13,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   const contractAddress = req.nextUrl.searchParams.get('contractAddress');
   const chainId = req.nextUrl.searchParams.get('chainId');
 
-  const { currencyAddress, pricePerToken, isError, message } =
+  const { pricePerToken, tokenAddress, isError, message } =
     await readContractData(
       contractAddress as `0x${string}`,
       'claimCondition',
@@ -23,13 +23,13 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
 
   data = encodeFunctionData({
     args: [contractAddress, pricePerToken],
-    functionName: 'approve',
-    abi: DEGEN?.abi
+    abi: TOKENS?.[tokenAddress]?.abi,
+    functionName: 'approve'
   });
 
   const txData: FrameTransactionResponse = {
     params: {
-      to: currencyAddress as any,
+      to: tokenAddress as any,
       value: value,
       abi: [],
       data
