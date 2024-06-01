@@ -9,11 +9,10 @@ import {
   getFrameData,
   mintFrame
 } from '@/services';
+import { ZERO_ADDRESS, CHAIN_HELPER, APP_URL } from '@/data';
 import { NextResponse, NextRequest } from 'next/server';
-import { ZERO_ADDRESS, APP_URL } from '@/data';
 import { LENSPOST_721 } from '@/contracts';
 import { getFrameUI } from '@/utils';
-import { degen } from 'viem/chains';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
   let accountAddress: undefined | string = '';
@@ -52,8 +51,8 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   } = await readContractData(
     contractAddress as `0x${string}`,
     'claimCondition',
-    // CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
-    degen?.id,
+    CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
+    // degen?.id,
     LENSPOST_721?.abi
   );
 
@@ -74,16 +73,16 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
   }
 
-  // const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  // if (minter) {
-  //   btnText = 'Already Minted';
-  //   return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
-  // }
+  const minter = minters?.find((m) => m?.minterAddress === accountAddress);
+  if (minter) {
+    btnText = 'Already Minted';
+    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+  }
 
-  // if (noOfNftsMinited >= (allowedMints ?? 0)) {
-  //   btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
-  //   return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
-  // }
+  if (noOfNftsMinited >= (allowedMints ?? 0)) {
+    btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
+    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+  }
 
   if (isLike) {
     if (message?.liked) {
