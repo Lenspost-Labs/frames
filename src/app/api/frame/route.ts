@@ -52,7 +52,6 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     contractAddress as `0x${string}`,
     'claimCondition',
     CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
-    // degen?.id,
     LENSPOST_721?.abi
   );
 
