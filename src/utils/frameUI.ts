@@ -34,7 +34,7 @@ export const getFrameUI = (
   
    <meta property="fc:frame:button:${
      redirectLink ? '3' : '2'
-   }" content="Remix on Lenspost" />
+   }" content="Remix on Poster" />
    <meta property="fc:frame:button:${
      redirectLink ? '3' : '2'
    }:action" content="link" />
