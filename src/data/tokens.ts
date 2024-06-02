@@ -5,7 +5,7 @@ const DEGEN_ABI = DEGEN?.abi;
 const DOG_ABI = DOG?.abi;
 
 export const TOKENS: any = {
-  '0xeb54dacb4c2ccb64f8074eceea33b5ebb38e5387': {
+  '0xEb54dACB4C2ccb64F8074eceEa33b5eBb38E5387': {
     chainId: 666666666,
     abi: WDEGEN_ABI,
     symbol: 'DEGEN',
