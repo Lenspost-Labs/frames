@@ -44,11 +44,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
   }
 
-  const {
-    message: errMsg,
-    tokenAddress,
-    isError
-  } = await readContractData(
+  const { tokenAddress } = await readContractData(
     contractAddress as `0x${string}`,
     'claimCondition',
     CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
@@ -73,10 +69,10 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   }
 
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  if (minter) {
-    btnText = 'Already Minted';
-    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
-  }
+  // if (minter) {
+  //   btnText = 'Already Minted';
+  //   return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+  // }
 
   if (noOfNftsMinited >= (allowedMints ?? 0)) {
     btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
