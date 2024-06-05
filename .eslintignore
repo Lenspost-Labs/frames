@@ -1,9 +1,7 @@
 pnpm-lock.yaml
-lenspost721.ts
-theDogeNFT.ts
 node_modules
-wdegen.ts
-degen.ts
+contracts
 public
+chains
 .next
 out

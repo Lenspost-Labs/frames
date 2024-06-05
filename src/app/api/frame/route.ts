@@ -44,11 +44,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
   }
 
-  const {
-    message: errMsg,
-    tokenAddress,
-    isError
-  } = await readContractData(
+  const { tokenAddress } = await readContractData(
     contractAddress as `0x${string}`,
     'claimCondition',
     CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
