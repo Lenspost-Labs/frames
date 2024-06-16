@@ -1,9 +1,10 @@
-import { WDEGEN, TN100x, DEGEN, DOG } from '@/contracts';
+import { WDEGEN, TN100x, DEGEN, DOG, OG } from '@/contracts';
 
 const WDEGEN_ABI = WDEGEN?.abi;
 const TN100x_ABI = TN100x?.abi;
 const DEGEN_ABI = DEGEN?.abi;
 const DOG_ABI = DOG?.abi;
+const OG_ABI = OG?.abi;
 
 export const TOKENS: any = {
   '0x5B5dee44552546ECEA05EDeA01DCD7Be7aa6144A': {
@@ -33,5 +34,12 @@ export const TOKENS: any = {
     chainId: 8453,
     name: 'Degen',
     decimals: 18
+  },
+  '0xeE597D163C3Fef7B594cC11746BC4099F4323Fd3': {
+    symbol: 'AOGI',
+    chainId: 16600,
+    decimals: 18,
+    name: 'AOGI',
+    abi: OG_ABI
   }
 };
