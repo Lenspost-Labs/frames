@@ -1,8 +1,10 @@
-import { WDEGEN, TN100x, DEGEN, DOG, OG } from '@/contracts';
+import { WDEGEN, TN100x, DEGEN, USDT, USDC, DOG, OG } from '@/contracts';
 
 const WDEGEN_ABI = WDEGEN?.abi;
 const TN100x_ABI = TN100x?.abi;
 const DEGEN_ABI = DEGEN?.abi;
+const USDT_ABI = USDT?.abi;
+const USDC_ABI = USDC?.abi;
 const DOG_ABI = DOG?.abi;
 const OG_ABI = OG?.abi;
 
@@ -21,11 +23,25 @@ export const TOKENS: any = {
     abi: WDEGEN_ABI,
     decimals: 18
   },
+  '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9': {
+    name: 'Tether USD',
+    symbol: 'USDT',
+    chainId: 42161,
+    abi: USDT_ABI,
+    decimals: 18
+  },
   '0xAfb89a09D82FBDE58f18Ac6437B3fC81724e4dF6': {
     name: 'The Doge NFT',
     symbol: 'DOG',
     chainId: 8453,
     abi: DOG_ABI,
+    decimals: 18
+  },
+  '0xaf88d065e77c8cC2239327C5EDb3A432268e5831': {
+    name: 'USD Coin',
+    symbol: 'USDC',
+    chainId: 42161,
+    abi: USDC_ABI,
     decimals: 18
   },
   '0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed': {
