@@ -9,7 +9,7 @@ import {
   getFrameData,
   mintFrame
 } from '@/services';
-import { ZERO_ADDRESS, CHAIN_HELPER, APP_URL } from '@/data';
+import { NULL_ADDRESS, CHAIN_HELPER, APP_URL } from '@/data';
 import { NextResponse, NextRequest } from 'next/server';
 import { LENSPOST_721 } from '@/contracts';
 import { getFrameUI } from '@/utils';
@@ -51,7 +51,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     LENSPOST_721?.abi
   );
 
-  if (tokenAddress && tokenAddress !== ZERO_ADDRESS) {
+  if (tokenAddress && tokenAddress !== NULL_ADDRESS) {
     isLenspost721Contract = true;
   }
 
