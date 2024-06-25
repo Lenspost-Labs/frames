@@ -1,10 +1,10 @@
 import { BACKEND_API } from '.';
 
 const APP_URLS = Object.freeze({
-  local: ' https://48ca-49-43-161-10.ngrok-free.app',
+  local: ' https://bda2-49-43-161-111.ngrok-free.app',
   development: 'https://dev-frames.vercel.app',
   production: 'https://frames.poster.fun'
-  // production: ' https://48ca-49-43-161-10.ngrok-free.app'
+  // production: 'https://bda2-49-43-161-111.ngrok-free.app'
 });
 
 const MINT_URLS = Object.freeze({

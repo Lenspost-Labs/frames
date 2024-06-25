@@ -41,7 +41,9 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
 
   if (!frameId) {
     btnText = 'FrameId not found';
-    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+    return new NextResponse(
+      getFrameUI(false, false, imageUrl, btnText, true, frameId)
+    );
   }
 
   const { tokenAddress } = await readContractData(
@@ -65,57 +67,63 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     accountAddress = message.interactor.verified_accounts[0];
   } else {
     btnText = 'No Wallet Found';
-    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+    return new NextResponse(
+      getFrameUI(false, false, imageUrl, btnText, true, frameId)
+    );
   }
 
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
   if (minter && creatorSponsored) {
     btnText = 'Already Minted';
-    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+    return new NextResponse(
+      getFrameUI(false, false, imageUrl, btnText, true, frameId)
+    );
   }
 
   if (noOfNftsMinited >= (allowedMints ?? 0)) {
     btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
-    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+    return new NextResponse(
+      getFrameUI(false, false, imageUrl, btnText, true, frameId)
+    );
   }
 
-  if (isLike) {
-    if (message?.liked) {
-    } else {
-      btnText = 'Like and Mint';
-      return new NextResponse(
-        getFrameUI(false, redirectLink, imageUrl, btnText)
-      );
-    }
-  }
+  // if (isLike) {
+  //   if (message?.liked) {
+  //   } else {
+  //     btnText = 'Like and Mint';
+  //     return new NextResponse(
+  //       getFrameUI(false, false, imageUrl, btnText, true, frameId)
+  //     );
+  //   }
+  // }
 
-  if (isRecast) {
-    if (message?.recasted) {
-    } else {
-      btnText = 'Recast and Mint';
-      return new NextResponse(
-        getFrameUI(false, redirectLink, imageUrl, btnText)
-      );
-    }
-  }
+  // if (isRecast) {
+  //   if (message?.recasted) {
+  //   } else {
+  //     btnText = 'Recast and Mint';
+  //     return new NextResponse(
+  //       getFrameUI(false, false, imageUrl, btnText, true, frameId)
+  //     );
+  //   }
+  // }
 
-  if (isFollow) {
-    if (message?.following) {
-    } else {
-      btnText = 'Follow and Mint';
-      return new NextResponse(
-        getFrameUI(false, redirectLink, imageUrl, btnText)
-      );
-    }
-  }
+  // if (isFollow) {
+  //   if (message?.following) {
+  //   } else {
+  //     btnText = 'Follow and Mint';
+  //     return new NextResponse(
+  //       getFrameUI(false, false, imageUrl, btnText, true, frameId)
+  //     );
+  //   }
+  // }
 
   if (creatorSponsored) {
     const mintFrameRes = await mintFrame(frameId.toString(), accountAddress);
 
     if (!mintFrameRes?.tx) {
-      btnText = mintFrameRes?.message;
+      btnText = mintFrameRes?.message || 'Error minting';
       return new NextResponse(
-        getFrameUI(false, redirectLink, imageUrl, btnText)
+        getFrameUI(false, false, imageUrl, btnText, true, frameId)
       );
     }
 
@@ -129,12 +137,12 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
       }
 
       return new NextResponse(
-        getFrameUI(txHash, redirectLink, imageUrl, btnText)
+        getFrameUI(txHash, chainId, imageUrl, btnText, false, frameId)
       );
     } else {
       btnText = mintFrameRes?.message;
       return new NextResponse(
-        getFrameUI(false, redirectLink, imageUrl, btnText)
+        getFrameUI(false, false, imageUrl, btnText, true, frameId)
       );
     }
   } else if (isLenspost721Contract) {

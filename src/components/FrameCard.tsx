@@ -1,10 +1,4 @@
-import {
-  LENSPOST_APP_URL,
-  MINT_PAGE_URL,
-  CDN_IMAGE_URL,
-  S3_IMAGE_URL,
-  CHAIN_HELPER
-} from '@/data';
+import { LENSPOST_APP_URL, MINT_PAGE_URL, CHAIN_HELPER } from '@/data';
 import { ExternalLink } from '@/assets';
 import { formatAddress } from '@/utils';
 import { FrameData } from '@/types';
@@ -31,14 +25,13 @@ const FrameCard: FC<FrameData> = ({
   slug
 }) => {
   const CHAIN_NAME = CHAIN_HELPER[chainId as keyof typeof CHAIN_HELPER]?.name;
-  const imageCdnUrl = imageUrl?.replace(S3_IMAGE_URL, CDN_IMAGE_URL);
   const minted = minters?.length;
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col justify-between gap-8 rounded-3xl bg-white p-6 shadow-2xl sm:flex-row sm:p-10">
       <Image
         className="w-full rounded-3xl shadow-xl sm:w-1/2"
-        src={imageCdnUrl}
+        src={imageUrl}
         // priority={true}
         height={1080}
         width={1920}
