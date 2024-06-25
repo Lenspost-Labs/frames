@@ -87,35 +87,35 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     );
   }
 
-  // if (isLike) {
-  //   if (message?.liked) {
-  //   } else {
-  //     btnText = 'Like and Mint';
-  //     return new NextResponse(
-  //       getFrameUI(false, false, imageUrl, btnText, true, frameId)
-  //     );
-  //   }
-  // }
+  if (isLike) {
+    if (message?.liked) {
+    } else {
+      btnText = 'Like and Mint';
+      return new NextResponse(
+        getFrameUI(false, false, imageUrl, btnText, true, frameId)
+      );
+    }
+  }
 
-  // if (isRecast) {
-  //   if (message?.recasted) {
-  //   } else {
-  //     btnText = 'Recast and Mint';
-  //     return new NextResponse(
-  //       getFrameUI(false, false, imageUrl, btnText, true, frameId)
-  //     );
-  //   }
-  // }
+  if (isRecast) {
+    if (message?.recasted) {
+    } else {
+      btnText = 'Recast and Mint';
+      return new NextResponse(
+        getFrameUI(false, false, imageUrl, btnText, true, frameId)
+      );
+    }
+  }
 
-  // if (isFollow) {
-  //   if (message?.following) {
-  //   } else {
-  //     btnText = 'Follow and Mint';
-  //     return new NextResponse(
-  //       getFrameUI(false, false, imageUrl, btnText, true, frameId)
-  //     );
-  //   }
-  // }
+  if (isFollow) {
+    if (message?.following) {
+    } else {
+      btnText = 'Follow and Mint';
+      return new NextResponse(
+        getFrameUI(false, false, imageUrl, btnText, true, frameId)
+      );
+    }
+  }
 
   if (creatorSponsored) {
     const mintFrameRes = await mintFrame(frameId.toString(), accountAddress);
