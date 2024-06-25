@@ -2,7 +2,7 @@ import {
   getFrameHtmlResponse,
   getFrameMessage,
   FrameRequest
-} from '@coinbase/onchainkit';
+} from '@coinbase/onchainkit/frame';
 import {
   readContractData,
   updateFrameData,

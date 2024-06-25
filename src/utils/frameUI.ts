@@ -1,7 +1,7 @@
 import {
   getFrameHtmlResponse,
   FrameButtonMetadata
-} from '@coinbase/onchainkit';
+} from '@coinbase/onchainkit/frame';
 import { LENSPOST_APP_URL, CHAIN_HELPER, APP_URL } from '@/data';
 
 export const getFrameUI = (
