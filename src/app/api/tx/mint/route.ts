@@ -4,7 +4,8 @@ import {
   LENSPOST_ETH_ADDRESS,
   CREATORS_REWARD_FEE,
   NEYNAR_API_KEY,
-  CHAIN_HELPER
+  CHAIN_HELPER,
+  NULL_ADDRESS
 } from '@/data';
 import { getFrameMessage, FrameRequest } from '@coinbase/onchainkit/frame';
 import { erc721DropABI } from '@zoralabs/zora-721-contracts';
@@ -74,6 +75,9 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
       abi: LENSPOST_721?.abi,
       functionName: 'claim'
     });
+    if (tokenAddress === NULL_ADDRESS) {
+      value = pricePerToken.toString();
+    }
   } else {
     data = encodeFunctionData({
       args: [accountAddress, quantity, comment, mintReferral],

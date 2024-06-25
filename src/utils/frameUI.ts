@@ -1,47 +1,52 @@
-import { LENSPOST_APP_URL, CHAIN_HELPER } from '@/data';
+import {
+  getFrameHtmlResponse,
+  FrameButtonMetadata
+} from '@coinbase/onchainkit';
+import { LENSPOST_APP_URL, CHAIN_HELPER, APP_URL } from '@/data';
 
 export const getFrameUI = (
   txHash: undefined | boolean | string,
-  redirectLink: undefined | string,
-  imageUrl: undefined | string,
-  btnText: undefined | string,
-  chainId?: number
+  chainId: number | any,
+  imageUrl: string | any,
+  btnText: string | any,
+  isError: boolean,
+  frameId: undefined | number
 ) => {
-  const EXPLORER_URL =
-    CHAIN_HELPER[chainId as keyof typeof CHAIN_HELPER]?.blockExplorers?.default
-      ?.url;
+  const EXPLORER_URL = chainId
+    ? CHAIN_HELPER[chainId as keyof typeof CHAIN_HELPER]?.blockExplorers
+        ?.default?.url
+    : null;
 
-  return `
-   <!DOCTYPE html><html><head>
-   <meta property="fc:frame" content="vNext" />
-   <meta property="fc:frame:image" content="${imageUrl}" />
-   <meta property="fc:frame:image:aspect_ratio" content="1:1" />
-  
-   ${
-     txHash
-       ? `<meta property="fc:frame:button:1" content="${btnText}" />
-         <meta property="fc:frame:button:1:action" content="link" />
-         <meta property="fc:frame:button:1:target" content="${EXPLORER_URL}/tx/${txHash}" />`
-       : `<meta property="fc:frame:button:1" content="${btnText}" />`
-   }
+  let btns: FrameButtonMetadata[] = [
+    {
+      target: LENSPOST_APP_URL,
+      label: 'Remix on Poster',
+      action: 'link'
+    }
+  ];
 
-   ${
-     redirectLink &&
-     `<meta property="fc:frame:button:2" content="Know more" />
-      <meta property="fc:frame:button:2:action" content="link" />
-      <meta property="fc:frame:button:2:target" content="${redirectLink}" />`
-   }
-  
-   <meta property="fc:frame:button:${
-     redirectLink ? '3' : '2'
-   }" content="Remix on Poster" />
-   <meta property="fc:frame:button:${
-     redirectLink ? '3' : '2'
-   }:action" content="link" />
-   <meta property="fc:frame:button:${
-     redirectLink ? '3' : '2'
-   }:target" content="${LENSPOST_APP_URL}" />
-  </head>
-  </html>
-   `;
+  if (isError) {
+    btns.unshift({
+      target: `${APP_URL}/api/frame?frameId=${frameId}`,
+      label: btnText,
+      action: 'post'
+    });
+  }
+
+  if (txHash) {
+    btns.unshift({
+      target: `${EXPLORER_URL}/tx/${txHash}`,
+      label: 'View tx',
+      action: 'link'
+    });
+  }
+
+  return getFrameHtmlResponse({
+    image: {
+      aspectRatio: '1:1',
+      src: imageUrl
+    },
+    // @ts-ignore
+    buttons: btns
+  });
 };

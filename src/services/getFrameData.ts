@@ -1,4 +1,4 @@
-import { BACKEND_ENDPOINT } from '@/data';
+import { BACKEND_ENDPOINT, CDN_IMAGE_URL, S3_IMAGE_URL } from '@/data';
 import { FrameData } from '@/types';
 
 export const getFrameData = async (frameId: string): Promise<FrameData> => {
@@ -15,6 +15,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
     if (response.ok) {
       const data = await response.json();
       return {
+        imageUrl: data?.imageUrl?.replace(S3_IMAGE_URL, CDN_IMAGE_URL),
         isGatedCollections: data?.gatedCollections,
         creatorSponsored: data?.creatorSponsored,
         contractAddress: data?.contract_address,
@@ -24,7 +25,6 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
         allowedMints: data?.allowedMints,
         isRecast: data?.isRecast,
         isFollow: data?.isFollow,
-        imageUrl: data?.imageUrl,
         tokenUri: data?.tokenUri,
         minters: data?.minters,
         chainId: data?.chainId,

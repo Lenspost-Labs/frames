@@ -1,9 +1,7 @@
 import {
   LENSPOST_TWITTER_USERNAME,
   LENSPOST_APP_URL,
-  CDN_IMAGE_URL,
   MINT_PAGE_URL,
-  S3_IMAGE_URL,
   DESCRIPTION,
   APP_NAME,
   APP_URL,
@@ -28,7 +26,6 @@ export const generateMetadata = async ({
 
   const { creatorSponsored, imageUrl, isFollow, isRecast, isLike, slug } =
     await getFrameData(id);
-  const imageCdnUrl = imageUrl?.replace(S3_IMAGE_URL, CDN_IMAGE_URL);
 
   let btns: FrameButtonMetadata[] = [
     {
@@ -53,9 +50,9 @@ export const generateMetadata = async ({
   const frameMetadata = getFrameMetadata({
     image: {
       aspectRatio: '1:1',
-      src: imageCdnUrl
+      src: imageUrl
     },
-    post_url: `${APP_URL}/api/frame?frameId=${id}`,
+    postUrl: `${APP_URL}/api/frame?frameId=${id}`,
     // @ts-ignore
     buttons: btns
   });
@@ -66,7 +63,7 @@ export const generateMetadata = async ({
       site: LENSPOST_TWITTER_USERNAME,
       card: 'summary_large_image',
       description: DESCRIPTION,
-      images: [imageCdnUrl],
+      images: [imageUrl],
       title: APP_NAME
     },
     keywords: [
@@ -79,7 +76,7 @@ export const generateMetadata = async ({
     ],
     openGraph: {
       description: DESCRIPTION,
-      images: [imageCdnUrl],
+      images: [imageUrl],
       title: APP_NAME,
       url: APP_URL
     },

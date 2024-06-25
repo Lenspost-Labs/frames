@@ -16,7 +16,9 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
 
   if (!frameId) {
     btnText = 'FrameId not found';
-    return new NextResponse(getFrameUI(false, redirectLink, imageUrl, btnText));
+    return new NextResponse(
+      getFrameUI(false, false, imageUrl, btnText, true, frameId)
+    );
   }
 
   const body: FrameRequest = await req.json();
@@ -29,7 +31,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   btnText = 'View tx';
 
   return new NextResponse(
-    getFrameUI(txHash, redirectLink, imageUrl, btnText, chainId)
+    getFrameUI(txHash, chainId, imageUrl, btnText, false, frameId)
   );
 };
 
