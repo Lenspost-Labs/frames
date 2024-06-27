@@ -15,17 +15,19 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
     if (response.ok) {
       const data = await response.json();
       return {
+        description:
+          'Cybersecurity Enthusiast | Support my research with a donation.',
         imageUrl: data?.imageUrl?.replace(S3_IMAGE_URL, CDN_IMAGE_URL),
         isGatedCollections: data?.gatedCollections,
         creatorSponsored: data?.creatorSponsored,
         contractAddress: data?.contract_address,
         isGatedChannels: data?.gatedChannels,
-        description: 'Mint your NFT today',
         contractType: data?.contract_type,
         redirectLink: data?.redirectLink,
         allowedMints: data?.allowedMints,
         isRecast: data?.isRecast,
         isFollow: data?.isFollow,
+        title: 'Donate to Alice',
         tokenUri: data?.tokenUri,
         minters: data?.minters,
         chainId: data?.chainId,
@@ -33,7 +35,6 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
         isLike: data?.isLike,
         owner: data?.owner,
         frameId: data?.id,
-        title: 'Mint NFT',
         slug: data?.slug
       };
     } else {
