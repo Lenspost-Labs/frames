@@ -1,6 +1,34 @@
 import { withSentryConfig } from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        headers: [
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true'
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*'
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET,OPTIONS,POST'
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            // eslint-disable-next-line perfectionist/sort-objects
+            value:
+              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+          }
+        ],
+        // Apply these headers to all routes in your application
+        source: '/(.*)'
+      }
+    ];
+  },
   images: {
     remotePatterns: [
       {
