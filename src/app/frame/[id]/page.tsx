@@ -52,7 +52,7 @@ export const generateMetadata = async ({
       aspectRatio: '1:1',
       src: imageUrl
     },
-    postUrl: `${APP_URL}/api/frame?frameId=${id}`,
+    postUrl: `${APP_URL}/api/frame/${id}`,
     // @ts-ignore
     buttons: btns
   });

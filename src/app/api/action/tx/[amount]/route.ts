@@ -30,7 +30,7 @@ async function prepareDonateTransaction(
   return prepareTransaction(instructions, payer);
 }
 
-export async function POST(req: NextRequest, ctx: any) {
+const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
   const { amount } = ctx.params;
   const owner = req.nextUrl.searchParams.get('owner') as any;
   const { account } = (await req.json()) as ActionsSpecPostRequestBody;
@@ -48,4 +48,10 @@ export async function POST(req: NextRequest, ctx: any) {
   };
 
   return NextResponse.json(response);
-}
+};
+
+export const POST = async (req: NextRequest, ctx: any): Promise<Response> => {
+  return handler(req, ctx);
+};
+
+export const dynamic = 'force-dynamic';

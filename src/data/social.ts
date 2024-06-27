@@ -1,8 +1,9 @@
 import { FarcasterLogo, DiscordLogo, XLogo } from '@/assets';
+import { LENSPOST_TWITTER_USERNAME } from './constants';
 
 export const SOCIAL = [
   {
-    url: 'https://twitter.com/Lenspostxyz',
+    url: `https://twitter.com/${LENSPOST_TWITTER_USERNAME}`,
     icon: XLogo,
     name: 'Twitter'
   },

@@ -32,8 +32,8 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     getFrameHtmlResponse({
       buttons: [
         {
-          postUrl: `${APP_URL}/api/tx/success?accountAddress=${accountAddress}&chainId=${chainId}&frameId=${frameId}`,
-          target: `${APP_URL}/api/tx/mint?contractAddress=${contractAddress}&chainId=${chainId}`,
+          postUrl: `${APP_URL}/api/frame/tx/success?accountAddress=${accountAddress}&chainId=${chainId}&frameId=${frameId}`,
+          target: `${APP_URL}/api/frame/tx/mint?contractAddress=${contractAddress}&chainId=${chainId}`,
           label: 'Mint',
           action: 'tx'
         }
