@@ -4,7 +4,7 @@ import { getFrameData } from '@/services';
 const DONATION_AMOUNT_SOL_OPTIONS = [0.001, 0.01, 0.1];
 const DEFAULT_DONATION_AMOUNT_SOL = 0.001;
 
-export async function GET(req: NextRequest, ctx: any) {
+const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
   const { id } = ctx.params;
   const { imageUrl: icon, description, title, owner } = await getFrameData(id);
   const amountParameterName = 'amount';
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest, ctx: any) {
               name: amountParameterName
             }
           ],
-          href: `/api/action/tx/{${amountParameterName}}`,
+          href: `/api/action/tx/${amountParameterName}`,
           label: 'Submit'
         }
       ]
@@ -35,4 +35,10 @@ export async function GET(req: NextRequest, ctx: any) {
   };
 
   return NextResponse.json(response);
-}
+};
+
+export const GET = async (req: NextRequest, ctx: any): Promise<Response> => {
+  return handler(req, ctx);
+};
+
+export const dynamic = 'force-dynamic';

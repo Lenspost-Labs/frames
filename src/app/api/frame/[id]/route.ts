@@ -14,14 +14,14 @@ import { NextResponse, NextRequest } from 'next/server';
 import { LENSPOST_721 } from '@/contracts';
 import { getFrameUI } from '@/utils';
 
-const handler = async (req: NextRequest): Promise<NextResponse> => {
+const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
+  const { id } = ctx.params;
   let accountAddress: undefined | string = '';
   let isLenspost721Contract: boolean = false;
   let btnText: undefined | string = '';
   let txHash: undefined | string = '';
 
-  const frameIdParam = req.nextUrl.searchParams.get('frameId') || '';
-  const getFrameDataRes = await getFrameData(frameIdParam);
+  const getFrameDataRes = await getFrameData(id);
 
   const {
     creatorSponsored,
@@ -150,8 +150,8 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
       getFrameHtmlResponse({
         buttons: [
           {
-            postUrl: `${APP_URL}/api/tx-approval/success?accountAddress=${accountAddress}&contractAddress=${contractAddress}&chainId=${chainId}&frameId=${frameId}`,
-            target: `${APP_URL}/api/tx-approval/approve?contractAddress=${contractAddress}&chainId=${chainId}`,
+            postUrl: `${APP_URL}/api/frame/tx-approval/success?accountAddress=${accountAddress}&contractAddress=${contractAddress}&chainId=${chainId}&frameId=${frameId}`,
+            target: `${APP_URL}/api/frame/tx-approval/approve?contractAddress=${contractAddress}&chainId=${chainId}`,
             label: 'Connect wallet & approve token allowance',
             action: 'tx'
           }
@@ -167,8 +167,8 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
       getFrameHtmlResponse({
         buttons: [
           {
-            postUrl: `${APP_URL}/api/tx/success?accountAddress=${accountAddress}&chainId=${chainId}&frameId=${frameId}`,
-            target: `${APP_URL}/api/tx/mint?contractAddress=${contractAddress}&chainId=${chainId}`,
+            postUrl: `${APP_URL}/api/frame/tx/success?accountAddress=${accountAddress}&chainId=${chainId}&frameId=${frameId}`,
+            target: `${APP_URL}/api/frame/tx/mint?contractAddress=${contractAddress}&chainId=${chainId}`,
             label: 'Connect wallet & Mint',
             action: 'tx'
           }
@@ -185,8 +185,8 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
   }
 };
 
-export const POST = async (req: NextRequest): Promise<Response> => {
-  return handler(req);
+export const POST = async (req: NextRequest, ctx: any): Promise<Response> => {
+  return handler(req, ctx);
 };
 
 export const dynamic = 'force-dynamic';

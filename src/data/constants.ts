@@ -34,7 +34,7 @@ export const LENSPOST_HOME_URL = 'https://poster.fun';
 export const LENSPOST_APP_URL = 'https://app.poster.fun';
 
 // Lenspost labs social
-export const LENSPOST_TWITTER_USERNAME = '@Posterdotfun';
+export const LENSPOST_TWITTER_USERNAME = 'Posterdotfun';
 
 // addresses
 export const LENSPOST_ETH_ADDRESS =
