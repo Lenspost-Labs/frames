@@ -14,6 +14,7 @@ export interface FrameData {
   allowedMints?: number;
   redirectLink?: string;
   owner?: `0x${string}`;
+  description?: string;
   isRecast?: boolean;
   isFollow?: boolean;
   tokenUri?: string;
@@ -21,6 +22,7 @@ export interface FrameData {
   isError?: boolean;
   frameId?: number;
   isLike?: boolean;
+  title?: string;
   slug?: string;
 }
 

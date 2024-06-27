@@ -20,6 +20,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
         creatorSponsored: data?.creatorSponsored,
         contractAddress: data?.contract_address,
         isGatedChannels: data?.gatedChannels,
+        description: 'Mint your NFT today',
         contractType: data?.contract_type,
         redirectLink: data?.redirectLink,
         allowedMints: data?.allowedMints,
@@ -32,6 +33,7 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
         isLike: data?.isLike,
         owner: data?.owner,
         frameId: data?.id,
+        title: 'Mint NFT',
         slug: data?.slug
       };
     } else {
