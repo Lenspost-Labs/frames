@@ -1,16 +1,24 @@
 import { BACKEND_API } from '.';
 
 const APP_URLS = Object.freeze({
-  local: ' https://bda2-49-43-161-111.ngrok-free.app',
+  local: ' https://79aa-49-43-161-3.ngrok-free.app',
   development: 'https://dev-frames.vercel.app',
   production: 'https://frames.poster.fun'
-  // production: 'https://bda2-49-43-161-111.ngrok-free.app'
 });
 
 const MINT_URLS = Object.freeze({
   development: 'https://dev-mint-poster.vercel.app',
   local: 'https://dev-mint-poster.vercel.app',
   production: 'https://mint.poster.fun'
+});
+
+const CAST_ACTION_URLS = Object.freeze({
+  development:
+    'https://warpcast.com/~/add-cast-action?actionType=post&name=dev-poster-frames&icon=clock&postUrl=https://dev-poster-frame-action.vercel.app/cast-frames/frames/actions/frametest',
+  production:
+    'https://warpcast.com/~/add-cast-action?actionType=post&name=prod-poster-frames&icon=clock&postUrl=https://poster-frame-action.vercel.app/cast-frames/frames/actions/frametest',
+  local:
+    'https://warpcast.com/~/add-cast-action?actionType=post&name=dev-poster-frames&icon=clock&postUrl=https://dev-poster-frame-action.vercel.app/cast-frames/frames/actions/frametest'
 });
 
 // Environments
@@ -44,6 +52,8 @@ export const LENSPOST_SOLANA_ADDRESS =
 export const NULL_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 
 // URLs
+export const CAST_ACTION_URL =
+  CAST_ACTION_URLS[ENV as keyof typeof CAST_ACTION_URLS];
 export const BACKEND_ENDPOINT = BACKEND_API[ENV as keyof typeof BACKEND_API];
 export const MINT_PAGE_URL = MINT_URLS[ENV as keyof typeof MINT_URLS];
 export const S3_IMAGE_URL = 'https://lenspost.s3.ap-south-1.amazonaws.com';

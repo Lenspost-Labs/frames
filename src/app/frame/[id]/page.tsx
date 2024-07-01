@@ -1,6 +1,7 @@
 import {
   LENSPOST_TWITTER_USERNAME,
   LENSPOST_APP_URL,
+  CAST_ACTION_URL,
   MINT_PAGE_URL,
   DESCRIPTION,
   APP_NAME,
@@ -46,6 +47,12 @@ export const generateMetadata = async ({
       action: 'link'
     });
   }
+
+  btns.push({
+    target: CAST_ACTION_URL,
+    label: 'Action',
+    action: 'link'
+  });
 
   const frameMetadata = getFrameMetadata({
     image: {
