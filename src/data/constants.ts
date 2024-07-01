@@ -15,10 +15,10 @@ const MINT_URLS = Object.freeze({
 const CAST_ACTION_URLS = Object.freeze({
   development:
     'https://warpcast.com/~/add-cast-action?actionType=post&name=dev-poster-frames&icon=clock&postUrl=https://dev-poster-frame-action.vercel.app/cast-frames/frames/actions/frametest',
-  production:
-    'https://warpcast.com/~/add-cast-action?actionType=post&name=prod-poster-frames&icon=clock&postUrl=https://poster-frame-action.vercel.app/cast-frames/frames/actions/frametest',
   local:
-    'https://warpcast.com/~/add-cast-action?actionType=post&name=dev-poster-frames&icon=clock&postUrl=https://dev-poster-frame-action.vercel.app/cast-frames/frames/actions/frametest'
+    'https://warpcast.com/~/add-cast-action?actionType=post&name=dev-poster-frames&icon=clock&postUrl=https://dev-poster-frame-action.vercel.app/cast-frames/frames/actions/frametest',
+  production:
+    'https://warpcast.com/~/add-cast-action?actionType=post&name=poster-action&icon=clock&postUrl=https://poster-frame-action.vercel.app/cast-frames/frames/actions/frametest'
 });
 
 // Environments
