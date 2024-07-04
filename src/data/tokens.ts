@@ -1,5 +1,15 @@
-import { WDEGEN, TN100x, DEGEN, USDT, USDC, DOG, OG } from '@/contracts';
+import {
+  MFERCOIN,
+  WDEGEN,
+  TN100x,
+  DEGEN,
+  USDT,
+  USDC,
+  DOG,
+  OG
+} from '@/contracts';
 
+const MFERCOIN_ABI = MFERCOIN?.abi;
 const WDEGEN_ABI = WDEGEN?.abi;
 const TN100x_ABI = TN100x?.abi;
 const DEGEN_ABI = DEGEN?.abi;
@@ -43,6 +53,13 @@ export const TOKENS: any = {
     chainId: 42161,
     abi: USDC_ABI,
     decimals: 18
+  },
+  '0xE3086852A4B125803C815a158249ae468A3254Ca': {
+    name: 'mfercoin',
+    symbol: '$mfer',
+    chainId: 16600,
+    decimals: 18,
+    abi: OG_ABI
   },
   '0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed': {
     symbol: 'DEGEN',
