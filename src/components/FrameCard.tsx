@@ -1,4 +1,12 @@
-import { LENSPOST_APP_URL, MINT_PAGE_URL, CHAIN_HELPER } from '@/data';
+import {
+  LENSPOST_APP_URL,
+  MINT_PAGE_URL,
+  CHAIN_HELPER,
+  NULL_ADDRESS,
+  TOKENS
+} from '@/data';
+import { readContractData } from '@/services';
+import { LENSPOST_721 } from '@/contracts';
 import { ExternalLink } from '@/assets';
 import { formatAddress } from '@/utils';
 import { FrameData } from '@/types';
@@ -7,7 +15,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
-const FrameCard: FC<FrameData> = ({
+const FrameCard: FC<FrameData> = async ({
   isGatedCollections,
   creatorSponsored,
   contractAddress,
@@ -26,6 +34,14 @@ const FrameCard: FC<FrameData> = ({
 }) => {
   const CHAIN_NAME = CHAIN_HELPER[chainId as keyof typeof CHAIN_HELPER]?.name;
   const minted = minters?.length;
+
+  const { pricePerToken, tokenAddress } = await readContractData(
+    contractAddress as `0x${string}`,
+    'claimCondition',
+    CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
+    LENSPOST_721?.abi
+  );
+  const formattedPrice = Number(pricePerToken) / 10 ** 18;
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col justify-between gap-8 rounded-3xl bg-white p-6 shadow-2xl sm:flex-row sm:p-10">
@@ -96,6 +112,16 @@ const FrameCard: FC<FrameData> = ({
               {creatorSponsored ? 'Yes' : 'No'}
             </p>
           </div>
+          {tokenAddress != NULL_ADDRESS && (
+            <div>
+              <p className="text-sm font-semibold text-[#11111b] sm:text-sm">
+                Price
+              </p>
+              <p className="text-sm text-[#11111b] sm:text-sm">
+                {formattedPrice} {TOKENS?.[tokenAddress]?.symbol}
+              </p>
+            </div>
+          )}
         </div>
         <hr className="my-4 border border-dashed border-[#9E9EAD] border-opacity-30" />
         <div>
