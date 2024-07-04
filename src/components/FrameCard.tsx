@@ -32,6 +32,8 @@ const FrameCard: FC<FrameData> = async ({
   owner,
   slug
 }) => {
+  const NATIVE_CURRENCY =
+    CHAIN_HELPER[chainId as keyof typeof CHAIN_HELPER]?.nativeCurrency?.symbol;
   const CHAIN_NAME = CHAIN_HELPER[chainId as keyof typeof CHAIN_HELPER]?.name;
   const minted = minters?.length;
 
@@ -112,16 +114,19 @@ const FrameCard: FC<FrameData> = async ({
               {creatorSponsored ? 'Yes' : 'No'}
             </p>
           </div>
-          {tokenAddress != NULL_ADDRESS && (
+          {tokenAddress ? (
             <div>
               <p className="text-sm font-semibold text-[#11111b] sm:text-sm">
                 Price
               </p>
               <p className="text-sm text-[#11111b] sm:text-sm">
-                {formattedPrice} {TOKENS?.[tokenAddress]?.symbol}
+                {formattedPrice}{' '}
+                {tokenAddress != NULL_ADDRESS
+                  ? TOKENS?.[tokenAddress]?.symbol
+                  : NATIVE_CURRENCY}
               </p>
             </div>
-          )}
+          ) : null}
         </div>
         <hr className="my-4 border border-dashed border-[#9E9EAD] border-opacity-30" />
         <div>
