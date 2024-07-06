@@ -27,7 +27,7 @@ export const getFrameUI = (
 
   if (isError) {
     btns.unshift({
-      target: `${APP_URL}/api/frame?frameId=${frameId}`,
+      target: `${APP_URL}/api/frame/${frameId}`,
       label: btnText,
       action: 'post'
     });

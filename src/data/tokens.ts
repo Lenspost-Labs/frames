@@ -33,6 +33,13 @@ export const TOKENS: any = {
     abi: WDEGEN_ABI,
     decimals: 18
   },
+  '0xE3086852A4B125803C815a158249ae468A3254Ca': {
+    abi: MFERCOIN_ABI,
+    name: 'mfercoin',
+    symbol: '$mfer',
+    chainId: 16600,
+    decimals: 18
+  },
   '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9': {
     name: 'Tether USD',
     symbol: 'USDT',
@@ -53,13 +60,6 @@ export const TOKENS: any = {
     chainId: 42161,
     abi: USDC_ABI,
     decimals: 18
-  },
-  '0xE3086852A4B125803C815a158249ae468A3254Ca': {
-    name: 'mfercoin',
-    symbol: '$mfer',
-    chainId: 16600,
-    decimals: 18,
-    abi: OG_ABI
   },
   '0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed': {
     symbol: 'DEGEN',

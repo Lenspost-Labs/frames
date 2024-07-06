@@ -127,7 +127,7 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
       );
     }
 
-    if (mintFrameRes?.tx?.startsWith('0x')) {
+    if (mintFrameRes?.tx) {
       txHash = mintFrameRes?.tx;
 
       btnText = 'View tx';
