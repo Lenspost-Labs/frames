@@ -26,6 +26,19 @@ export interface FrameData {
   slug?: string;
 }
 
+export interface BlinkData {
+  imageUrl?: string | any;
+  message?: string | any;
+  description?: string;
+  isError?: boolean;
+  royalty?: number;
+  blinkId?: number;
+  symbol?: string;
+  owner?: string;
+  title?: string;
+  creator?: [];
+}
+
 export interface ContractData {
   quantityLimitPerWallet?: any;
   maxClaimableSupply?: any;
@@ -37,6 +50,12 @@ export interface ContractData {
   merkleRoot?: any;
   message?: string;
   metadata?: any;
+}
+
+export interface MintBlinkData {
+  message?: string | any;
+  isError?: boolean;
+  tx?: string;
 }
 
 export type UserCanvasData = {

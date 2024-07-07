@@ -1,7 +1,7 @@
 import { BACKEND_API } from '.';
 
 const APP_URLS = Object.freeze({
-  local: 'https://bd9d-49-43-163-171.ngrok-free.app',
+  local: 'https://3582-49-43-163-174.ngrok-free.app',
   development: 'https://dev-frames.vercel.app',
   production: 'https://frames.poster.fun'
 });
@@ -34,6 +34,13 @@ export const APP_NAME = 'Poster frame page';
 export const DESCRIPTION = `${APP_NAME} is a frame for Farcaster.`;
 export const AUTHOR = 'Lenspost labs';
 export const APP_URL = APP_URLS[ENV as keyof typeof APP_URLS];
+
+// pages
+export const FRAME_PAGE_NAME = 'Poster Frame Page';
+export const FRAME_DESCRIPTION = `${FRAME_PAGE_NAME} is a frame for Farcaster.`;
+
+export const BLINK_PAGE_NAME = 'Poster Blink Page';
+export const BLINK_DESCRIPTION = `${BLINK_PAGE_NAME} is a blink for solana actions.`;
 
 // Lenspost labs
 export const LENSPOST_APP_NAME = 'Poster';
