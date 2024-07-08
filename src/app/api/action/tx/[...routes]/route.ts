@@ -11,9 +11,6 @@ import {
 import { NextResponse, NextRequest } from 'next/server';
 import { prepareTransaction } from '@/utils';
 
-const DONATION_DESTINATION_WALLET =
-  '6fymrSZoPoV5J2XBkUofRDSrzKwpPk8NDPgBvErxSa1t';
-
 async function prepareDonateTransaction(
   sender: PublicKey,
   recipient: PublicKey,

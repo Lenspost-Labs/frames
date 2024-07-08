@@ -14,7 +14,7 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
     owner
   } = await getBlinkData(id);
   const amountParameterName = 'amount';
-  const amount = 0.05;
+  const amount = 0;
 
   const response = {
     links: {

@@ -15,16 +15,14 @@ const nextConfig = {
           },
           {
             key: 'Access-Control-Allow-Methods',
-            value: 'GET,OPTIONS,POST'
+            value: 'GET,OPTIONS,POST,PUT,DELETE,PATCH'
           },
           {
             key: 'Access-Control-Allow-Headers',
-            // eslint-disable-next-line perfectionist/sort-objects
             value:
-              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Accept-Encoding, Authorization'
           }
         ],
-        // Apply these headers to all routes in your application
         source: '/(.*)'
       }
     ];

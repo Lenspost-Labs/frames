@@ -1,3 +1,4 @@
+next.config.mjs
 pnpm-lock.yaml
 node_modules
 contracts
