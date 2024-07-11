@@ -20,7 +20,7 @@ export const mintBLink = async (
     if (response.ok) {
       const data = await response.json();
       return {
-        message: data?.message,
+        status: data?.status,
         tx: data?.tx
       };
     } else {

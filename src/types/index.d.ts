@@ -55,7 +55,8 @@ export interface ContractData {
 export interface MintBlinkData {
   message?: string | any;
   isError?: boolean;
-  tx?: string;
+  tx?: string | any;
+  status?: string;
 }
 
 export type UserCanvasData = {
