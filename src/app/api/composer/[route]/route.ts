@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
-  const appUrl = 'https://41a7-103-76-139-15.ngrok-free.app';
+  const appUrl = 'https://frontend-9kja9akcz-raveshare.vercel.app';
 
   const actionMetadata = {
     url: appUrl + '/?actionType=composer',
