@@ -10,7 +10,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     appUrl + `/?actionType=composer&fc-auth=FC ${messageBytes}`
   );
 
-  console.log({ url });
+  // console.log({ url });
 
   const actionMetadata = {
     title: 'Poster.fun',
