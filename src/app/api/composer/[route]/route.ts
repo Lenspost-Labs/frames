@@ -2,13 +2,15 @@ import { FrameRequest } from '@coinbase/onchainkit/frame';
 import { NextResponse, NextRequest } from 'next/server';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
-  const appUrl = 'https://fe2c-103-76-139-15.ngrok-free.app';
+  const appUrl = 'https://f65c-49-36-185-38.ngrok-free.app';
 
   const body: FrameRequest = await req.json();
   const messageBytes = body?.trustedData?.messageBytes;
   const url = decodeURIComponent(
     appUrl + `/?actionType=composer&fc-auth=FC ${messageBytes}`
   );
+
+  console.log({ url });
 
   const actionMetadata = {
     title: 'Poster.fun',
