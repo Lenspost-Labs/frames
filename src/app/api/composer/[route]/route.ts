@@ -1,12 +1,19 @@
+import { FrameRequest } from '@coinbase/onchainkit/frame';
 import { NextResponse, NextRequest } from 'next/server';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
   const appUrl = 'https://frontend-9kja9akcz-raveshare.vercel.app';
 
+  const body: FrameRequest = await req.json();
+  const messageBytes = body?.trustedData?.messageBytes;
+  const url = decodeURIComponent(
+    appUrl + `/?actionType=composer&auth=FC ${messageBytes}`
+  );
+
   const actionMetadata = {
-    url: appUrl + '/?actionType=composer',
     title: 'Poster.fun',
-    type: 'form'
+    type: 'form',
+    url: url
   };
 
   return NextResponse.json(actionMetadata);
