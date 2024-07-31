@@ -2,7 +2,7 @@ import { FrameRequest } from '@coinbase/onchainkit/frame';
 import { NextResponse, NextRequest } from 'next/server';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
-  const appUrl = 'https://frontend-ca4b98j70-raveshare.vercel.app';
+  const appUrl = 'https://frontend-git-feat-mobile-ui3-raveshare.vercel.app';
 
   const body: FrameRequest = await req.json();
   const messageBytes = body?.trustedData?.messageBytes;
