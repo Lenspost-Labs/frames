@@ -11,9 +11,6 @@ import {
 import { NextResponse, NextRequest } from 'next/server';
 import { prepareTransaction } from '@/utils';
 
-const DONATION_DESTINATION_WALLET =
-  '6fymrSZoPoV5J2XBkUofRDSrzKwpPk8NDPgBvErxSa1t';
-
 async function prepareDonateTransaction(
   sender: PublicKey,
   recipient: PublicKey,
@@ -31,15 +28,16 @@ async function prepareDonateTransaction(
 }
 
 const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
-  const { amount } = ctx.params;
-  const owner = req.nextUrl.searchParams.get('owner') as any;
+  const amount = ctx.params.routes[0];
+  const owner = ctx.params.routes[1];
+
   const { account } = (await req.json()) as ActionsSpecPostRequestBody;
 
   const parsedAmount = parseFloat(amount);
 
   const transaction = await prepareDonateTransaction(
     new PublicKey(account),
-    new PublicKey(DONATION_DESTINATION_WALLET),
+    new PublicKey(owner),
     parsedAmount * LAMPORTS_PER_SOL
   );
 

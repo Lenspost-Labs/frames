@@ -1,29 +1,40 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { getFrameData } from '@/services';
+import { getBlinkData } from '@/services';
 
 const DONATION_AMOUNT_SOL_OPTIONS = [0.001, 0.01, 0.1];
 const DEFAULT_DONATION_AMOUNT_SOL = 0.001;
 
 const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
   const { id } = ctx.params;
-  const { imageUrl: icon, description, title, owner } = await getFrameData(id);
-  const amountParameterName = 'amount';
+  const {
+    imageUrl: icon,
+    description,
+    blinkId,
+    title,
+    owner
+  } = await getBlinkData(id);
+  const prompt = 'prompt';
+  const amount = 0;
 
   const response = {
     links: {
       actions: [
-        ...DONATION_AMOUNT_SOL_OPTIONS.map((amount) => ({
-          href: `/api/action/tx/${amount}?owner=${owner}`,
-          label: `${amount} SOL`
-        })),
+        {
+          href: `/api/action/mint/${blinkId}/${owner}`,
+          label: `Mint`
+        },
+        {
+          href: `/api/action/tx/${amount}/${owner}`,
+          label: `Donate ${amount} SOL`
+        },
         {
           parameters: [
             {
-              label: 'Enter a custom SOL amount',
-              name: amountParameterName
+              label: 'Enter the prompt',
+              name: prompt
             }
           ],
-          href: `/api/action/tx/${amountParameterName}`,
+          href: `/api/action/ai/{${prompt}}`,
           label: 'Submit'
         }
       ]

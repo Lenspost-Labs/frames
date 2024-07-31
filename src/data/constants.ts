@@ -1,7 +1,7 @@
 import { BACKEND_API } from '.';
 
 const APP_URLS = Object.freeze({
-  local: 'https://bd9d-49-43-163-171.ngrok-free.app',
+  local: 'https://ab23-152-58-93-160.ngrok-free.app',
   development: 'https://dev-frames.vercel.app',
   production: 'https://frames.poster.fun'
 });
@@ -21,6 +21,12 @@ const CAST_ACTION_URLS = Object.freeze({
     'https://warpcast.com/~/add-cast-action?url=https://dev-cast-action.vercel.app/cast-frames/frames/actions/frametest'
 });
 
+const LENSPOST_APP_URLS = Object.freeze({
+  local: 'https://8aa2-103-76-139-15.ngrok-free.app',
+  development: 'https://staging.poster.fun',
+  production: 'https://poster.fun'
+});
+
 // Environments
 export const ENV = process.env.ENVIRONMENT;
 
@@ -35,11 +41,19 @@ export const DESCRIPTION = `${APP_NAME} is a frame for Farcaster.`;
 export const AUTHOR = 'Lenspost labs';
 export const APP_URL = APP_URLS[ENV as keyof typeof APP_URLS];
 
+// pages
+export const FRAME_PAGE_NAME = 'Poster Frame Page';
+export const FRAME_DESCRIPTION = `${FRAME_PAGE_NAME} is a frame for Farcaster.`;
+
+export const BLINK_PAGE_NAME = 'Poster Blink Page';
+export const BLINK_DESCRIPTION = `${BLINK_PAGE_NAME} is a blink for solana actions.`;
+
 // Lenspost labs
 export const LENSPOST_APP_NAME = 'Poster';
 export const LENSPOST_DESCRIPTION = `${LENSPOST_APP_NAME} is a fun onchain 'canva' that turns NFT holders into content creators with one click drag-drop-remix! Make NFTs do more for you as you churn out DOPE memes, gifs, social content & more! The most fun way to permissionlessly collaborate, monetize & even split revenues across chains. We're NFT INFRA at the back, RAVE party in the front - powering co-creation, revenue share & social distribution with BIG MEME ENERGY!`;
 export const LENSPOST_HOME_URL = 'https://poster.fun';
-export const LENSPOST_APP_URL = 'https://app.poster.fun';
+export const LENSPOST_APP_URL =
+  LENSPOST_APP_URLS[ENV as keyof typeof LENSPOST_APP_URLS];
 
 // Lenspost labs social
 export const LENSPOST_TWITTER_USERNAME = 'Posterdotfun';
