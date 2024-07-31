@@ -32,6 +32,9 @@ dependencies:
   '@zoralabs/zora-721-contracts':
     specifier: ^1.15.3
     version: 1.15.4
+  axios:
+    specifier: ^1.7.2
+    version: 1.7.2
   dotenv:
     specifier: ^16.4.5
     version: 16.4.5
@@ -7143,6 +7146,13 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /asynckit@0.4.0:
+    resolution:
+      {
+        integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
+      }
+    dev: false
+
   /atomic-sleep@1.0.0:
     resolution:
       {
@@ -7194,6 +7204,19 @@ packages:
       }
     dependencies:
       follow-redirects: 1.15.6
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /axios@1.7.2:
+    resolution:
+      {
+        integrity: sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==
+      }
+    dependencies:
+      follow-redirects: 1.15.6
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -7956,6 +7979,16 @@ packages:
       }
     dev: false
 
+  /combined-stream@1.0.8:
+    resolution:
+      {
+        integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
+      }
+    engines: { node: '>= 0.8' }
+    dependencies:
+      delayed-stream: 1.0.0
+    dev: false
+
   /command-exists@1.2.9:
     resolution:
       {
@@ -8426,6 +8459,14 @@ packages:
         integrity: sha512-ReEBKkIfe4ya47wlPYf/gu5ib6yUG0/Aez0JQZQz94kiWtRQvZIQbTiehsnwHvLSWJnQdhVeqYue7Id1dKr0qw==
       }
     engines: { node: '>=10' }
+    dev: false
+
+  /delayed-stream@1.0.0:
+    resolution:
+      {
+        integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
+      }
+    engines: { node: '>=0.4.0' }
     dev: false
 
   /denodeify@1.2.1:
@@ -9894,6 +9935,18 @@ packages:
       cross-spawn: 7.0.3
       signal-exit: 4.1.0
     dev: true
+
+  /form-data@4.0.0:
+    resolution:
+      {
+        integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
+      }
+    engines: { node: '>= 6' }
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+    dev: false
 
   /fraction.js@4.3.7:
     resolution:
@@ -12126,7 +12179,7 @@ packages:
       }
     engines: { node: '>=18' }
     dependencies:
-      '@babel/runtime': 7.24.6
+      '@babel/runtime': 7.24.7
     dev: false
 
   /metro-source-map@0.80.9:
@@ -13969,7 +14022,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@babel/runtime': 7.24.6
+      '@babel/runtime': 7.24.7
       html-parse-stringify: 3.0.1
       i18next: 22.5.1
       react: 18.3.1
@@ -14265,7 +14318,7 @@ packages:
         integrity: sha512-hfMp2BoF0qOk3uc5V20ALGDS2ddjQaLrdl7xrGXvAIow7qeWRM2VA2HuCHkUKk9slq3VwEwLNK3DFBqDfPGYtg==
       }
     dependencies:
-      '@babel/runtime': 7.24.6
+      '@babel/runtime': 7.24.7
     dev: false
 
   /regexp-tree@0.1.27:
