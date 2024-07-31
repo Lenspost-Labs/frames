@@ -13,7 +13,7 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
     title,
     owner
   } = await getBlinkData(id);
-  const amountParameterName = 'amount';
+  const prompt = 'prompt';
   const amount = 0;
 
   const response = {
@@ -26,6 +26,16 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
         {
           href: `/api/action/tx/${amount}/${owner}`,
           label: `Donate ${amount} SOL`
+        },
+        {
+          parameters: [
+            {
+              label: 'Enter the prompt',
+              name: prompt
+            }
+          ],
+          href: `/api/action/ai/{${prompt}}`,
+          label: 'Submit'
         }
       ]
     },
