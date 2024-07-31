@@ -1,13 +1,12 @@
 import { FrameRequest } from '@coinbase/onchainkit/frame';
 import { NextResponse, NextRequest } from 'next/server';
+import { LENSPOST_APP_URL } from '@/data';
 
 const handler = async (req: NextRequest): Promise<NextResponse> => {
-  const appUrl = 'https://frontend-git-feat-mobile-ui3-raveshare.vercel.app';
-
   const body: FrameRequest = await req.json();
   const messageBytes = body?.trustedData?.messageBytes;
   const url = decodeURIComponent(
-    appUrl + `/?actionType=composer&fc-auth=FC ${messageBytes}`
+    LENSPOST_APP_URL + `/?actionType=composer&fc-auth=FC ${messageBytes}`
   );
 
   const actionMetadata = {
