@@ -11,8 +11,7 @@ module.exports = {
     'unicorn/better-regex': 'error',
     'unicorn/no-lonely-if': 'error',
     'react/jsx-fragments': 'error',
-    'prettier/prettier': 'error',
-    'no-console': 'error'
+    'prettier/prettier': 'error'
   },
   extends: [
     'plugin:perfectionist/recommended-line-length',

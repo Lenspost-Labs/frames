@@ -1,9 +1,9 @@
 import { BACKEND_API } from '.';
 
 const APP_URLS = Object.freeze({
-  local: 'https://ab23-152-58-93-160.ngrok-free.app',
   development: 'https://dev-frames.vercel.app',
-  production: 'https://frames.poster.fun'
+  production: 'https://frames.poster.fun',
+  local: 'http://localhost:3000'
 });
 
 const MINT_URLS = Object.freeze({
@@ -22,9 +22,9 @@ const CAST_ACTION_URLS = Object.freeze({
 });
 
 const LENSPOST_APP_URLS = Object.freeze({
-  local: 'https://8aa2-103-76-139-15.ngrok-free.app',
   development: 'https://staging.poster.fun',
-  production: 'https://app.poster.fun'
+  production: 'https://app.poster.fun',
+  local: 'https://app.poster.fun'
 });
 
 // Environments

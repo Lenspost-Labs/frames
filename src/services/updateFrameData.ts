@@ -32,6 +32,7 @@ export const updateFrameData = async (
       };
     }
   } catch (error) {
+    console.error(error);
     return {
       message: "Couldn't update frame data",
       isError: true
