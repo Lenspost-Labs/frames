@@ -30,6 +30,7 @@ export const mintFrame = async (
       };
     }
   } catch (error) {
+    console.error(error);
     return {
       message: "Couldn't mint frame",
       isError: true

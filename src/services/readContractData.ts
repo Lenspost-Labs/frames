@@ -28,6 +28,7 @@ export const readContractData = async (
       metadata: result[7]
     };
   } catch (error) {
+    console.error(error);
     return {
       message: "Couldn't fetch data",
       isError: true

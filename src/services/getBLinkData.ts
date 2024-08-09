@@ -33,6 +33,7 @@ export const getBlinkData = async (blinkId: string): Promise<BlinkData> => {
       };
     }
   } catch (error) {
+    console.error(error);
     return {
       message: "Couldn't fetch data",
       isError: true
