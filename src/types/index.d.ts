@@ -1,3 +1,5 @@
+export * from './composerTypes';
+
 export interface FrameData {
   minters?: {
     minterAddress: string;
