@@ -25,10 +25,14 @@ const handlePostRequest = async (req: NextRequest): Promise<NextResponse> => {
 
     const accountAddress = message.interactor.verified_accounts[0] || '';
     const messageBytes = body?.trustedData?.messageBytes;
+    const fid = body?.untrustedData?.fid;
     const url = new URL(LENSPOST_APP_URL);
     url.searchParams.append('actionType', 'composer');
+    url.searchParams.append('fid', fid.toString());
     url.searchParams.append('address', accountAddress);
     url.searchParams.append('fc-auth', `FC ${messageBytes}`);
+
+    console.log(url.toString());
 
     const composerActionFormResponse: ComposerActionFormResponse = {
       title: 'Poster.fun',
@@ -50,7 +54,7 @@ const handleGetRequest = async (): Promise<NextResponse> => {
   const composerActionMetadata: ComposerActionMetadata = {
     imageUrl: new URL('/logo-rounded-trans-bg.png', APP_URL).toString(),
     aboutUrl: new URL('/about', APP_URL).toString(),
-    description: 'Web3 onchain canvas',
+    description: 'Make AI poster memes',
     action: { type: 'post' },
     name: 'Poster.fun',
     type: 'composer',
