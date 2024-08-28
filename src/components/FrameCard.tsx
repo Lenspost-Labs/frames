@@ -5,10 +5,10 @@ import {
   NULL_ADDRESS,
   TOKENS
 } from '@/data';
+import { priceFormatter, formatAddress } from '@/utils';
 import { readContractData } from '@/services';
 import { LENSPOST_721 } from '@/contracts';
 import { ExternalLink } from '@/assets';
-import { formatAddress } from '@/utils';
 import { FrameData } from '@/types';
 import { CopyButton } from '@/ui';
 import Image from 'next/image';
@@ -43,7 +43,7 @@ const FrameCard: FC<FrameData> = async ({
     CHAIN_HELPER[Number(chainId) as keyof typeof CHAIN_HELPER]?.id,
     LENSPOST_721?.abi
   );
-  const formattedPrice = Number(pricePerToken) / 10 ** 18;
+  const formattedPrice = priceFormatter(chainId, pricePerToken);
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col justify-between gap-8 rounded-3xl bg-white p-6 shadow-2xl sm:flex-row sm:p-10">
