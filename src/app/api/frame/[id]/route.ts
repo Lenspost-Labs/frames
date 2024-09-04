@@ -1,26 +1,21 @@
 import {
-  getFrameHtmlResponse,
-  getFrameMessage,
-  FrameRequest
-} from '@coinbase/onchainkit/frame';
-import {
+  airstackFrameValidator,
   readContractData,
   updateFrameData,
   getFrameData,
   mintFrame
 } from '@/services';
-// import {
-//   ValidateFramesMessageOutput,
-//   validateFramesMessage
-// } from '@airstack/frames';
+import {
+  getFrameHtmlResponse,
+  getFrameMessage,
+  FrameRequest
+} from '@coinbase/onchainkit/frame';
 import { NULL_ADDRESS, CHAIN_HELPER, APP_URL } from '@/data';
 import { NextResponse, NextRequest } from 'next/server';
 import { LENSPOST_721 } from '@/contracts';
-// import { init } from '@airstack/frames';
 import { getFrameUI } from '@/utils';
 
 const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
-  // init(AIRSTACK_API_KEY ?? '');
   const { id } = ctx.params;
   let accountAddress: undefined | string = '';
   let isLenspost721Contract: boolean = false;
@@ -32,9 +27,7 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
   const {
     creatorSponsored,
     contractAddress,
-    contractType,
     allowedMints,
-    redirectLink,
     isRecast,
     isFollow,
     imageUrl,
@@ -65,21 +58,7 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
 
   const body: FrameRequest = await req.json();
 
-  // try {
-  //   const res: ValidateFramesMessageOutput = await validateFramesMessage(body);
-  //   console.log(
-  //     res,
-  //     res?.isAllowed,
-  //     res?.isValid,
-  //     res?.message?.data?.frameActionBody
-  //   );
-  // } catch (error) {
-  //   console.error(error);
-  //   btnText = 'No data found';
-  //   return new NextResponse(
-  //     getFrameUI(false, false, imageUrl, btnText, true, frameId)
-  //   );
-  // }
+  airstackFrameValidator(body?.trustedData?.messageBytes);
 
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY

@@ -72,6 +72,7 @@ export const BACKEND_ENDPOINT = BACKEND_API[ENV as keyof typeof BACKEND_API];
 export const MINT_PAGE_URL = MINT_URLS[ENV as keyof typeof MINT_URLS];
 export const S3_IMAGE_URL = 'https://lenspost.s3.ap-south-1.amazonaws.com';
 export const CDN_IMAGE_URL = 'https://lenspost.b-cdn.net';
+export const AIRSTACK_API = 'https://api.airstack.xyz/gql';
 
 // Zora
 export const CREATORS_REWARD_FEE = '0.000777';

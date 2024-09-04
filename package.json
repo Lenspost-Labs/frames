@@ -17,6 +17,7 @@
   "dependencies": {
     "@airstack/frames": "^1.1.5",
     "@airstack/frog": "^0.0.13",
+    "@apollo/client": "^3.11.6",
     "@coinbase/onchainkit": "^0.23.1",
     "@sentry/nextjs": "^7.105.0",
     "@solana/web3.js": "^1.93.2",
@@ -26,6 +27,7 @@
     "@zoralabs/zora-721-contracts": "^1.15.3",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
+    "graphql-request": "^7.1.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",

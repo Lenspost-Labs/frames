@@ -1,3 +1,4 @@
+export * from './airstackFrameValidator';
 export * from './readContractData';
 export * from './updateFrameData';
 export * from './getFrameData';
