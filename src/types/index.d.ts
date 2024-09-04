@@ -61,6 +61,35 @@ export interface MintBlinkData {
   status?: string;
 }
 
+export interface AirstackFrameValidatorOutput {
+  FarcasterValidateFrameMessage: {
+    message: {
+      data: {
+        frameActionBody: {
+          castId: {
+            hash: string;
+            fid: number;
+          };
+          buttonIndex: number;
+          inputText: string;
+          address: string;
+          state: string;
+        };
+        fid: number;
+      };
+    };
+    interactedBy: {
+      profileName: string;
+    };
+    castedBy: {
+      profileName: string;
+    };
+    interactedByFid: number;
+    castedByFid: number;
+    isValid: boolean;
+  };
+}
+
 export type UserCanvasData = {
   imageURL?: string;
   userId?: string;
