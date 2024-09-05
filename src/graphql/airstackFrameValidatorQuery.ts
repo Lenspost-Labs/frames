@@ -22,6 +22,7 @@ export const airstackFrameValidatorQuery = gql`
       }
       interactedByFid
       interactedBy {
+        userAssociatedAddresses
         profileName
       }
       castedByFid

@@ -20,13 +20,28 @@ export const airstackFrameValidator = async (messageBytes: string) => {
       } as unknown as HeadersInit
     );
 
-    console.log({
-      profileName:
-        result?.FarcasterValidateFrameMessage?.interactedBy?.profileName,
-      message: result?.FarcasterValidateFrameMessage?.message,
-      result
-    });
+    const isValid = result?.FarcasterValidateFrameMessage?.isValid;
+    const interactorAddress =
+      result?.FarcasterValidateFrameMessage?.interactedBy
+        ?.userAssociatedAddresses?.[0];
+    const interactorFid =
+      result?.FarcasterValidateFrameMessage?.message?.data?.fid;
+
+    // console.log({
+    //   message: result?.FarcasterValidateFrameMessage?.message,
+    //   interactorAddress,
+    //   interactorFid,
+    //   isValid,
+    //   result
+    // });
+
+    return {
+      interactorAddress,
+      interactorFid,
+      isValid
+    };
   } catch (error) {
-    console.log(error);
+    console.log('Error occurred:', error);
+    throw new Error('Something went wrong', { cause: error });
   }
 };

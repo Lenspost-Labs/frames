@@ -79,6 +79,7 @@ export interface AirstackFrameValidatorOutput {
       };
     };
     interactedBy: {
+      userAssociatedAddresses: [string];
       profileName: string;
     };
     castedBy: {

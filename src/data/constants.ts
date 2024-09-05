@@ -28,7 +28,7 @@ const LENSPOST_APP_URLS = Object.freeze({
 });
 
 // Environments
-export const ENV = process.env.ENVIRONMENT;
+export const ENV = process.env.ENVIRONMENT || 'development';
 
 // Environment Variables
 export const SENTRY_AUTH_TOKEN = process.env.SENTRY_AUTH_TOKEN;

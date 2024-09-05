@@ -1,8 +1,15 @@
  #!/bin/sh
  . "$(dirname "$0")/_/husky.sh"
 
- echo '🏗️👷 Styling, testing and building your project before committing'
+ echo '🏗️👷 Checking --> commit message, styling, testing and building your project before committing'
 
+ npx --no -- commitlint --edit ${1} || 
+ {
+     echo '❌🚫 Your commit message does not follow the conventional commit format. 🚫❌
+    Please refer to the conventional commit guidelines and try again.'
+    false; 
+ }
+ 
  # Check Prettier standards
  pnpm run prettier:check ||
  (
@@ -31,12 +38,13 @@ pnpm run types:check ||
 echo '🤔🤔🤔🤔... Alright.... Code looks good to me... Trying to build now. 🤔🤔🤔🤔'
 
 pnpm run build ||
- (
+(
     echo '❌👷🔨❌ Better call Bob... Because your build failed ❌👷🔨❌
             Next build failed: View the errors above to see why. 
     '
     false;
 )
 
- # If everything passes... Now we can commit
+# If everything passes... Now we can commit
 echo '✅✅✅✅ You win this time... I am committing this now. ✅✅✅✅'
+
