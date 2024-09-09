@@ -1,4 +1,4 @@
-import { AIRSTACK_API_KEY, AIRSTACK_API } from '@/data';
+import { AIRSTACK_API_KEY, AIRSTACK_API_URL } from '@/data';
 import { airstackFrameValidatorQuery } from '@/graphql';
 import { AirstackFrameValidatorOutput } from '@/types';
 import request from 'graphql-request';
@@ -10,12 +10,12 @@ export const airstackFrameValidator = async (messageBytes: string) => {
 
   try {
     const result: AirstackFrameValidatorOutput = await request(
-      AIRSTACK_API,
+      AIRSTACK_API_URL,
       airstackFrameValidatorQuery,
       variables,
       {
         headers: {
-          'x-api-key': AIRSTACK_API_KEY
+          Authorization: AIRSTACK_API_KEY
         }
       } as unknown as HeadersInit
     );
