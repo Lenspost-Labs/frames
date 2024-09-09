@@ -58,7 +58,17 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
 
   const body: FrameRequest = await req.json();
 
-  await airstackFrameValidator(body?.trustedData?.messageBytes);
+  const {
+    isValid: isValidAirstackFrame,
+    interactorAddress,
+    interactorFid
+  } = await airstackFrameValidator(body?.trustedData?.messageBytes);
+
+  console.log({
+    isValidAirstackFrame,
+    interactorAddress,
+    interactorFid
+  });
 
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY

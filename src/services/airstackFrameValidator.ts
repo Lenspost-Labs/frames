@@ -27,14 +27,6 @@ export const airstackFrameValidator = async (messageBytes: string) => {
     const interactorFid =
       result?.FarcasterValidateFrameMessage?.message?.data?.fid;
 
-    console.log({
-      message: result?.FarcasterValidateFrameMessage?.message,
-      interactorAddress,
-      interactorFid,
-      isValid,
-      result
-    });
-
     return {
       interactorAddress,
       interactorFid,
