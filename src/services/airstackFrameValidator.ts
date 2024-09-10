@@ -15,6 +15,7 @@ export const airstackFrameValidator = async (messageBytes: string) => {
       variables,
       {
         headers: {
+          'Content-Type': 'application/json',
           Authorization: AIRSTACK_API_KEY
         }
       } as unknown as HeadersInit
