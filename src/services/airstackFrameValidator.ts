@@ -1,26 +1,25 @@
 import { AIRSTACK_API_KEY, AIRSTACK_API_URL } from '@/data';
 import { airstackFrameValidatorQuery } from '@/graphql';
 import { AirstackFrameValidatorOutput } from '@/types';
-import request from 'graphql-request';
+import { request } from 'graphql-request';
 
 export const airstackFrameValidator = async (messageBytes: string) => {
   const variables = {
     messageBytes: messageBytes
   };
 
-  console.log({ AIRSTACK_API_KEY });
+  if (!AIRSTACK_API_KEY) throw new Error('AIRSTACK_API_KEY not set');
+
+  const headers = {
+    Authorization: AIRSTACK_API_KEY
+  };
 
   try {
     const result: AirstackFrameValidatorOutput = await request(
       AIRSTACK_API_URL,
       airstackFrameValidatorQuery,
       variables,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: AIRSTACK_API_KEY
-        }
-      } as unknown as HeadersInit
+      headers
     );
 
     const isValid = result?.FarcasterValidateFrameMessage?.isValid;
@@ -36,7 +35,7 @@ export const airstackFrameValidator = async (messageBytes: string) => {
       isValid
     };
   } catch (error) {
-    console.log('Error occurred:', error);
+    console.error('Error occurred:', error);
     throw new Error('Something went wrong', { cause: error });
   }
 };
