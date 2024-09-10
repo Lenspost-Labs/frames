@@ -8,6 +8,8 @@ export const airstackFrameValidator = async (messageBytes: string) => {
     messageBytes: messageBytes
   };
 
+  console.log({ AIRSTACK_API_KEY });
+
   try {
     const result: AirstackFrameValidatorOutput = await request(
       AIRSTACK_API_URL,
