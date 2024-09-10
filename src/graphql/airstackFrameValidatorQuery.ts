@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from 'graphql-request';
 
 export const airstackFrameValidatorQuery = gql`
   query MyQuery($messageBytes: String!) {
