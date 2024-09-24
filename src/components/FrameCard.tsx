@@ -121,7 +121,7 @@ const FrameCard: FC<FrameData> = async ({
               </p>
               <p className="text-sm text-[#11111b] sm:text-sm">
                 {formattedPrice}{' '}
-                {tokenAddress != NULL_ADDRESS
+                {!NULL_ADDRESS?.includes(tokenAddress)
                   ? TOKENS?.[tokenAddress]?.symbol
                   : NATIVE_CURRENCY}
               </p>

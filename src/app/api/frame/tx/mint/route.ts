@@ -75,7 +75,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
       abi: LENSPOST_721?.abi,
       functionName: 'claim'
     });
-    if (tokenAddress === NULL_ADDRESS) {
+    if (NULL_ADDRESS?.includes(tokenAddress)) {
       value = pricePerToken.toString();
     }
   } else {
