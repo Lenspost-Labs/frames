@@ -16,10 +16,10 @@ import Link from 'next/link';
 import { FC } from 'react';
 
 const FrameCard: FC<FrameData> = async ({
-  isGatedCollections,
+  gatedCollections,
   creatorSponsored,
   contractAddress,
-  isGatedChannels,
+  gatedChannels,
   contractType,
   allowedMints,
   redirectLink,
@@ -164,7 +164,17 @@ const FrameCard: FC<FrameData> = async ({
               Channel
             </p>
             <p className="text-sm text-[#11111b] sm:text-sm">
-              {isGatedChannels ? 'Yes' : 'No'}
+              {gatedChannels ? (
+                <Link
+                  href={`https://warpcast.com/~/channel/${gatedChannels}`}
+                  className="text-blue-500 hover:text-blue-700"
+                  target="_blank"
+                >
+                  {gatedChannels}
+                </Link>
+              ) : (
+                'No'
+              )}
             </p>
           </div>
           <div>
@@ -172,7 +182,7 @@ const FrameCard: FC<FrameData> = async ({
               Collection
             </p>
             <p className="text-sm text-[#11111b] sm:text-sm">
-              {isGatedCollections ? 'Yes' : 'No'}
+              {gatedCollections ? 'Yes' : 'No'}
             </p>
           </div>
         </div>

@@ -1,3 +1,4 @@
+export * from './airstackQueriesTypes';
 export * from './composerTypes';
 
 export interface FrameData {
@@ -5,9 +6,9 @@ export interface FrameData {
     minterAddress: string;
     txHash: string;
   }[];
-  isGatedCollections?: string | null;
-  isGatedChannels?: string | null;
+  gatedCollections?: string | null;
   contractAddress?: `0x${string}`;
+  gatedChannels?: string | null;
   chainId?: undefined | number;
   creatorSponsored?: boolean;
   imageUrl?: string | any;
@@ -59,36 +60,6 @@ export interface MintBlinkData {
   isError?: boolean;
   tx?: string | any;
   status?: string;
-}
-
-export interface AirstackFrameValidatorOutput {
-  FarcasterValidateFrameMessage: {
-    message: {
-      data: {
-        frameActionBody: {
-          castId: {
-            hash: string;
-            fid: number;
-          };
-          buttonIndex: number;
-          inputText: string;
-          address: string;
-          state: string;
-        };
-        fid: number;
-      };
-    };
-    interactedBy: {
-      userAssociatedAddresses: [string];
-      profileName: string;
-    };
-    castedBy: {
-      profileName: string;
-    };
-    interactedByFid: number;
-    castedByFid: number;
-    isValid: boolean;
-  };
 }
 
 export type UserCanvasData = {

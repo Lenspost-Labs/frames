@@ -25,18 +25,28 @@ export const generateMetadata = async ({
 }: Props): Promise<Metadata> => {
   const id = params.id;
 
-  const { creatorSponsored, imageUrl, isFollow, isRecast, isLike, slug } =
-    await getFrameData(id);
+  const {
+    creatorSponsored,
+    gatedChannels,
+    imageUrl,
+    isFollow,
+    isRecast,
+    isLike,
+    slug
+  } = await getFrameData(id);
 
   let btns: FrameButtonMetadata[] = [
     {
       label: `${[
         isFollow ? 'Follow' : '',
         isRecast ? 'Recast' : '',
-        isLike ? 'Like' : ''
+        isLike ? 'Like' : '',
+        gatedChannels ? `Follow ${gatedChannels}` : ''
       ]
         .filter(Boolean)
-        .join(', ')} ${isLike || isRecast || isFollow ? `👉` : ''} Mint`
+        .join(
+          ', '
+        )} ${isLike || isRecast || isFollow || gatedChannels ? `👉` : ''} Mint`
     }
   ];
 
@@ -99,10 +109,10 @@ export const generateMetadata = async ({
 
 const Home = async ({ params }: Props) => {
   const {
-    isGatedCollections,
+    gatedCollections,
     creatorSponsored,
     contractAddress,
-    isGatedChannels,
+    gatedChannels,
     contractType,
     allowedMints,
     redirectLink,
@@ -124,10 +134,10 @@ const Home = async ({ params }: Props) => {
 
   return (
     <FrameCard
-      isGatedCollections={isGatedCollections}
+      gatedCollections={gatedCollections}
       creatorSponsored={creatorSponsored}
       contractAddress={contractAddress}
-      isGatedChannels={isGatedChannels}
+      gatedChannels={gatedChannels}
       contractType={contractType}
       allowedMints={allowedMints}
       redirectLink={redirectLink}
