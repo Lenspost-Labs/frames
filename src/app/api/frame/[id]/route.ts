@@ -87,10 +87,12 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
 
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
 
-  const isChannelFollow = await userFollowFcChannel(
-    interactorFid?.toString(),
-    gatedChannels as string
-  );
+  const isChannelFollow =
+    gatedChannels &&
+    (await userFollowFcChannel(
+      interactorFid?.toString(),
+      gatedChannels as string
+    ));
 
   const checkConditions = [
     {
