@@ -52,7 +52,7 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
     LENSPOST_721?.abi
   );
 
-  if (tokenAddress && tokenAddress !== NULL_ADDRESS) {
+  if (tokenAddress && !NULL_ADDRESS?.includes(tokenAddress)) {
     isLenspost721Contract = true;
   }
 
