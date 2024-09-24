@@ -1,5 +1,6 @@
 import {
   airstackFrameValidator,
+  userFollowFcChannel,
   readContractData,
   updateFrameData,
   getFrameData,
@@ -27,6 +28,7 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
   const {
     creatorSponsored,
     contractAddress,
+    gatedChannels,
     allowedMints,
     isRecast,
     isFollow,
@@ -84,46 +86,45 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
   }
 
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
-  if (minter && creatorSponsored) {
-    btnText = 'Already Minted';
-    return new NextResponse(
-      getFrameUI(false, false, imageUrl, btnText, true, frameId)
-    );
-  }
 
-  if (noOfNftsMinited >= (allowedMints ?? 0)) {
-    btnText = `Mint sold out ${minters?.length}/${allowedMints}`;
-    return new NextResponse(
-      getFrameUI(false, false, imageUrl, btnText, true, frameId)
-    );
-  }
+  const isChannelFollow = await userFollowFcChannel(
+    interactorFid?.toString(),
+    gatedChannels as string
+  );
 
-  if (isLike) {
-    if (message?.liked) {
-    } else {
-      btnText = 'Like and Mint';
-      return new NextResponse(
-        getFrameUI(false, false, imageUrl, btnText, true, frameId)
-      );
+  const checkConditions = [
+    {
+      condition: minter && creatorSponsored,
+      text: 'Already Minted'
+    },
+    {
+      condition: noOfNftsMinited >= (allowedMints ?? 0),
+      // eslint-disable-next-line perfectionist/sort-objects
+      text: `Mint sold out ${minters?.length}/${allowedMints}`
+    },
+    {
+      condition: gatedChannels && !isChannelFollow,
+      // eslint-disable-next-line perfectionist/sort-objects
+      text: `Follow channel ${gatedChannels} and Mint`
+    },
+    {
+      condition: isLike && !message?.liked,
+      text: 'Like and Mint'
+    },
+    {
+      condition: isRecast && !message?.recasted,
+      text: 'Recast and Mint'
+    },
+    {
+      condition: isFollow && !message?.following,
+      text: 'Follow and Mint'
     }
-  }
+  ];
 
-  if (isRecast) {
-    if (message?.recasted) {
-    } else {
-      btnText = 'Recast and Mint';
+  for (const { condition, text } of checkConditions) {
+    if (condition) {
       return new NextResponse(
-        getFrameUI(false, false, imageUrl, btnText, true, frameId)
-      );
-    }
-  }
-
-  if (isFollow) {
-    if (message?.following) {
-    } else {
-      btnText = 'Follow and Mint';
-      return new NextResponse(
-        getFrameUI(false, false, imageUrl, btnText, true, frameId)
+        getFrameUI(false, false, imageUrl, text, true, frameId)
       );
     }
   }

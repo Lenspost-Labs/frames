@@ -14,12 +14,13 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
 
     if (response.ok) {
       const data = await response.json();
+      console.log({ data });
       return {
         imageUrl: data?.imageUrl?.replace(S3_IMAGE_URL, CDN_IMAGE_URL),
-        isGatedCollections: data?.gatedCollections,
+        gatedCollections: data?.gatedCollections,
         creatorSponsored: data?.creatorSponsored,
         contractAddress: data?.contract_address,
-        isGatedChannels: data?.gatedChannels,
+        gatedChannels: data?.gatedChannels,
         contractType: data?.contract_type,
         redirectLink: data?.redirectLink,
         allowedMints: data?.allowedMints,
