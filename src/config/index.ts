@@ -18,6 +18,6 @@ export const config = createConfig({
     [ham.id]: http(),
     [og.id]: http()
   },
-  chains: [baseSepolia, arbitrum, degen, base, ham, og],
+  chains: [baseSepolia, polygon, arbitrum, degen, base, ham, og],
   ssr: true
 });

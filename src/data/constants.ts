@@ -63,10 +63,7 @@ export const LENSPOST_ETH_ADDRESS =
   '0x77fAD8D0FcfD481dAf98D0D156970A281e66761b';
 export const LENSPOST_SOLANA_ADDRESS =
   '2PsV6hNEUc3rSMGqKcHTnRBemaWBQX3dYgUqVtEFxkwa';
-export const NULL_ADDRESS = [
-  '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-  '0x0000000000000000000000000000000000001010'
-];
+export const NULL_ADDRESS = ['0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'];
 
 // URLs
 export const CAST_ACTION_URL =
