@@ -71,7 +71,9 @@ export const CAST_ACTION_URL =
 export const BACKEND_ENDPOINT = BACKEND_API[ENV as keyof typeof BACKEND_API];
 export const MINT_PAGE_URL = MINT_URLS[ENV as keyof typeof MINT_URLS];
 export const S3_IMAGE_URL = 'https://lenspost.s3.ap-south-1.amazonaws.com';
-export const CDN_IMAGE_URL = 'https://lenspost.b-cdn.net';
+export const R2_IMAGE_URL =
+  'https://pub-2ae8c1134d9a4424b3e00475c4421a7a.r2.dev';
+export const CDN_IMAGE_URL = 'https://lenspost-r2.b-cdn.net';
 export const AIRSTACK_API_URL = 'https://api.airstack.xyz/gql';
 
 // Zora

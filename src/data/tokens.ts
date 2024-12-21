@@ -1,5 +1,6 @@
 import {
   MFERCOIN,
+  BRUNETTE,
   WDEGEN,
   TN100x,
   DEGEN,
@@ -9,6 +10,7 @@ import {
   OG
 } from '@/contracts';
 
+const BRUNETTER_ABI = BRUNETTE?.abi;
 const MFERCOIN_ABI = MFERCOIN?.abi;
 const WDEGEN_ABI = WDEGEN?.abi;
 const TN100x_ABI = TN100x?.abi;
@@ -31,6 +33,13 @@ export const TOKENS: any = {
     chainId: 666666666,
     symbol: 'WDEGEN',
     abi: WDEGEN_ABI,
+    decimals: 18
+  },
+  '0x34C990Ee5aA627E9304234cc59b0734163eAc06b': {
+    abi: BRUNETTER_ABI,
+    symbol: 'BRUNETTE',
+    name: 'Brunette',
+    chainId: 8453,
     decimals: 18
   },
   '0xE3086852A4B125803C815a158249ae468A3254Ca': {
