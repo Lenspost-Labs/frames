@@ -3,6 +3,7 @@
 
  echo '🏗️👷 Checking --> commit message, styling, testing and building your project before committing'
 
+# Check commitlint standards
  npx --no -- commitlint --edit ${1} || 
  {
      echo '❌🚫 Your commit message does not follow the conventional commit format. 🚫❌
