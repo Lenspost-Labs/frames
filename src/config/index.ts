@@ -6,11 +6,12 @@ import {
   morph,
   base
 } from '@wagmi/core/chains';
+import { campNetworkTestnetV2, ham, og } from '@/chains';
 import { createConfig, http } from '@wagmi/core';
-import { ham, og } from '@/chains';
 
 export const config = createConfig({
   transports: {
+    [campNetworkTestnetV2.id]: http(),
     [baseSepolia?.id]: http(),
     [arbitrum.id]: http(),
     [polygon.id]: http(),
@@ -20,6 +21,16 @@ export const config = createConfig({
     [ham.id]: http(),
     [og.id]: http()
   },
-  chains: [baseSepolia, polygon, arbitrum, degen, morph, base, ham, og],
+  chains: [
+    campNetworkTestnetV2,
+    baseSepolia,
+    polygon,
+    arbitrum,
+    degen,
+    morph,
+    base,
+    ham,
+    og
+  ],
   ssr: true
 });
