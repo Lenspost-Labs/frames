@@ -13,7 +13,9 @@ import {
   getFrameMetadata
 } from '@coinbase/onchainkit/frame';
 import { FrameCard, Default } from '@/components';
+import { campNetworkTestnetV2 } from '@/chains';
 import { getFrameData } from '@/services';
+import { morph } from 'viem/chains';
 import { Metadata } from 'next';
 
 type Props = {
@@ -31,6 +33,7 @@ export const generateMetadata = async ({
     imageUrl,
     isFollow,
     isRecast,
+    chainId,
     isLike,
     slug
   } = await getFrameData(id);
@@ -49,6 +52,14 @@ export const generateMetadata = async ({
         )} ${isLike || isRecast || isFollow || gatedChannels ? `👉` : ''} Mint`
     }
   ];
+
+  // if unsponsored and morph or camp network testnet v2, add mint on poster button only
+  if (
+    (chainId === morph?.id || chainId === campNetworkTestnetV2?.id) &&
+    !creatorSponsored
+  ) {
+    btns.shift();
+  }
 
   if (!creatorSponsored) {
     btns.push({
