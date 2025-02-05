@@ -14,7 +14,6 @@ export const getFrameData = async (frameId: string): Promise<FrameData> => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       return {
         imageUrl: data?.imageUrl?.replace(R2_IMAGE_URL, CDN_IMAGE_URL),
         gatedCollections: data?.gatedCollections,
