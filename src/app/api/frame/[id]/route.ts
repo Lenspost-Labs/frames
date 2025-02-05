@@ -11,12 +11,10 @@ import {
   getFrameMessage,
   FrameRequest
 } from '@coinbase/onchainkit/frame';
-import { MINT_PAGE_URL, NULL_ADDRESS, CHAIN_HELPER, APP_URL } from '@/data';
+import { NULL_ADDRESS, CHAIN_HELPER, APP_URL } from '@/data';
 import { NextResponse, NextRequest } from 'next/server';
-import { campNetworkTestnetV2 } from '@/chains';
 import { LENSPOST_721 } from '@/contracts';
 import { getFrameUI } from '@/utils';
-import { morph } from 'viem/chains';
 
 const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
   const { id } = ctx.params;
@@ -162,22 +160,6 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
         getFrameUI(false, false, imageUrl, btnText, true, frameId)
       );
     }
-  } else if (
-    (chainId === morph?.id || chainId === campNetworkTestnetV2?.id) &&
-    !creatorSponsored
-  ) {
-    return new NextResponse(
-      getFrameHtmlResponse({
-        buttons: [
-          {
-            target: `${MINT_PAGE_URL}/mint/${slug}`,
-            label: 'Mint on Poster',
-            action: 'link'
-          }
-        ],
-        image: { aspectRatio: '1:1', src: imageUrl }
-      })
-    );
   } else if (isLenspost721Contract) {
     return new NextResponse(
       getFrameHtmlResponse({
