@@ -1,6 +1,5 @@
 import {
-  airstackFrameValidator,
-  userFollowFcChannel,
+  // userFollowFcChannel,
   readContractData,
   updateFrameData,
   getFrameData,
@@ -61,20 +60,14 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
 
   const body: FrameRequest = await req.json();
 
-  const {
-    isValid: isValidAirstackFrame,
-    interactorAddress,
-    interactorFid
-  } = await airstackFrameValidator(body?.trustedData?.messageBytes);
-
-  console.log({
-    isValidAirstackFrame,
-    interactorAddress,
-    interactorFid
-  });
-
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: process.env.NEYNAR_API_KEY
+  });
+
+  console.log({
+    fid: message?.interactor.fid,
+    isValid,
+    message
   });
 
   if (isValid) {
@@ -88,12 +81,13 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
 
   const minter = minters?.find((m) => m?.minterAddress === accountAddress);
 
-  const isChannelFollow =
-    gatedChannels &&
-    (await userFollowFcChannel(
-      interactorFid?.toString(),
-      gatedChannels as string
-    ));
+  // TODO: Update it with Neynayr API
+  // const isChannelFollow =
+  //   gatedChannels &&
+  //   (await userFollowFcChannel(
+  //     interactorFid?.toString(),
+  //     gatedChannels as string
+  //   ));
 
   const checkConditions = [
     {
@@ -105,11 +99,12 @@ const handler = async (req: NextRequest, ctx: any): Promise<NextResponse> => {
       // eslint-disable-next-line perfectionist/sort-objects
       text: `Mint sold out ${minters?.length}/${allowedMints}`
     },
-    {
-      condition: gatedChannels && !isChannelFollow,
-      // eslint-disable-next-line perfectionist/sort-objects
-      text: `Follow channel ${gatedChannels} and Mint`
-    },
+    // TODO: Uncomment it after updating with Neynayr API
+    // {
+    //   condition: gatedChannels && !isChannelFollow,
+    //   // eslint-disable-next-line perfectionist/sort-objects
+    //   text: `Follow channel ${gatedChannels} and Mint`
+    // },
     {
       condition: isLike && !message?.liked,
       text: 'Like and Mint'
