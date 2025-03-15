@@ -1,8 +1,7 @@
 import { ComposerActionFormResponse, ComposerActionMetadata } from '@/types';
+import { getFrameMessage, FrameRequest } from '@coinbase/onchainkit/frame';
 import { LENSPOST_APP_URL, NEYNAR_API_KEY, APP_URL } from '@/data';
-import { FrameRequest } from '@coinbase/onchainkit/frame';
 import { NextResponse, NextRequest } from 'next/server';
-import { airstackFrameValidator } from '@/services';
 
 if (!NEYNAR_API_KEY) {
   throw new Error('NEYNAR_API_KEY is not set in environment variables');
@@ -12,8 +11,9 @@ const handlePostRequest = async (req: NextRequest): Promise<NextResponse> => {
   try {
     const body: FrameRequest = await req.json();
 
-    const { interactorAddress, interactorFid, isValid } =
-      await airstackFrameValidator(body?.trustedData?.messageBytes);
+    const { isValid, message } = await getFrameMessage(body, {
+      neynarApiKey: process.env.NEYNAR_API_KEY
+    });
 
     if (!isValid) {
       return NextResponse.json(
@@ -23,7 +23,10 @@ const handlePostRequest = async (req: NextRequest): Promise<NextResponse> => {
     }
 
     const messageBytes = body?.trustedData?.messageBytes;
+    const interactorFid = message?.interactor?.fid;
+    const interactorAddress = message.interactor.verified_accounts[0];
     const url = new URL(LENSPOST_APP_URL);
+
     url.searchParams.append('actionType', 'composer');
     url.searchParams.append('fid', interactorFid.toString());
     url.searchParams.append('address', interactorAddress);
