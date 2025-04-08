@@ -1,5 +1,6 @@
 export * from './airstackQueriesTypes';
 export * from './composerTypes';
+export * from './framev2Types';
 
 export interface FrameData {
   minters?: {

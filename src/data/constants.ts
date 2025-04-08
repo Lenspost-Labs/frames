@@ -22,7 +22,7 @@ const CAST_ACTION_URLS = Object.freeze({
 });
 
 const LENSPOST_APP_URLS = Object.freeze({
-  development: 'https://staging.poster.fun',
+  development: 'https://8ba5-49-43-162-156.ngrok-free.app',
   production: 'https://app.poster.fun',
   local: 'https://app.poster.fun'
 });
